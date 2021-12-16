@@ -1,0 +1,15 @@
+.row
+  = form_for [:admin, @page], html: {role: "form"} do |f|
+    .col-md-12
+      = errors_for @page
+    .col-md-12
+      %h3.m-t-none.m-b Page Details
+      %p Please fill out the particulars of the page
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: "form-control"
+      .form-group
+        = f.label :content
+        = f.text_area :content, class: "form-control"
+    .col-md-12
+      = f.submit class: "btn btn-sm btn-primary pull-right"

@@ -1,0 +1,17 @@
+#new-message.social-feed-separated
+  .social-avatar
+    = link_to "#" do
+      = gravatar_for(current_student.email, 52)
+  .social-feed-box
+    = form_for [:student, order, message], html: { multipart: true } do |f|
+      .media-body
+        = f.text_area :content, class: "form-control", placeholder: "Compose message..."
+      .social-footer
+        .row
+          .col-md-6
+            .form-group
+              = f.label :attachments
+              = file_field_tag "files[]", multiple: true
+          .col-md-6
+            = f.submit "Send Message", class: "btn btn-primary pull-right send-message"
+            / end message

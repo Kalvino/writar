@@ -1,0 +1,37 @@
+= title t("meta_tags.about.title")
+- content_for :meta_tags do
+  %meta{:content => "#{t("meta_tags.about.description")}", :name => "description"}/
+  = open_graph_tags(t("meta_tags.about.title"), about_url,"website",t("meta_tags.about.description"),image_url("banner.jpg"))
+%section.jumbotron.jumbotron2
+  .container
+    %h2
+      ABOUT US
+      %small A little about us.
+%section#about-content.content
+  .container
+    .row
+      .col-md-12
+        %h3 Who we are
+        %p
+          Papersmarketplace.com is an academic site that enables students access a wide range of academic materials across
+          different disciplines. We offer a platform where students and/or tutors can share academic materials with their
+          peers and be rewarded for it. We believe by offering affordable pre-written essays, students will grasp concepts
+          with much ease and spend much less time.
+        %p
+          Our website is developed on an innovative concept that we create a marketplace where our papers are spread across
+          the all disciplines, with easy to use search tools making it easy for students to access and use our services
+          regardless of their academic background.
+        %p
+          What makes us special is how we work with our customers, your problems are our opportunity to use our knowledge
+          and skills to help you achieve academic excellence. For this reason, all uploaded papers go through a rigorous
+          quality check before they are published. End result is  reliable and high quality papers at the cheapest rates.
+          Our clients are those students who wish to solve their assignments with efficiency and experience tremendous
+          academic improvement. We are especially committed to delivering quality consistently by supporting prompt
+          response to new customer needs.
+
+
+%section#separator1.content.content-separator.text-center
+  .container
+    %p
+      Do you need a high quality custom written paper?
+      = link_to "Order Now", new_order_path, class: "btn btn-lg btn-inverse"

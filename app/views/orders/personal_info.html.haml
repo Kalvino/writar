@@ -1,0 +1,122 @@
+- heading "Login or Register to complete your order"
+
+%section.breadcrumb-wrapper
+  .container
+    %h2 Order Now
+    %ol.breadcrumb
+      = render_breadcrumbs :tag => :li, :separator => ""
+
+.row.paper-flash
+  = render 'shared/flash'
+%section.content.bg-color-2
+  .container
+    %ul.bootstrapWizard
+      %li.active{"data-target" => "#step1"}
+        %a.active{"data-toggle" => "tab", :href => "#tab1"}
+          %span.step 1
+          %span.title Paper Details
+      %li.active{"data-target" => "#step2"}
+        %a{"data-toggle" => "tab", :href => "#tab2"}
+          %span.step 2
+          %span.title Price Calculation
+      %li.active{"data-target" => "#step3"}
+        %a{"data-toggle" => "tab", :href => "#tab3"}
+          %span.step 3
+          %span.title Personal Information
+
+%section#eshop.content.bg-color-2
+  .container
+    .row
+      .col-sm-3.eshop-sidebar
+        .eshop-widget
+          = render 'shared/order_widgets'
+      .col-sm-9
+        .eshop-content
+          .eshop-detail
+            .panel.panel-default
+              .panel-heading
+                %h3.panel-title Order Summary
+              .panel-body
+                .row
+                  .col-md-12
+                    %p
+                      %em Please review your order details below.
+                  .col-lg-6
+                    %dl.dl-horizontal
+                      %dt Academic Level:
+                      %dd= @order.academic_level.titleize
+                      %dt Paper Type:
+                      %dd= @order.paper_type
+                      %dt Discipline:
+                      %dd= @order.discipline
+                      %dt Paper Format:
+                      %dd= @order.citation_style
+                      %dt Topic:
+                      %dd= @order.topic
+                      %dt Spacing:
+                      %dd= @order.spacing.titleize
+
+                  .col-lg-6
+                    %dl.dl-horizontal
+                      %dt Citation Style:
+                      %dd= @order.citation_style
+                      %dt Discipline:
+                      %dd= @order.discipline
+                      %dt Sources:
+                      %dd= @order.sources
+                      %dt Pages:
+                      %dd= @order.pages
+                      %dt Final Deadline:
+                      %dd= @order.due_at.strftime("%d %b %Y at %I:%M%p")
+                      - unless @order.inquiry
+                        %dt Order Cost:
+                        %dd= number_to_currency(@order.cost)
+            %ul.nav.nav-tabs
+              %li.active
+                %a{"aria-expanded" => "true", "data-toggle" => "tab", :href => "#newStudent"} New Student
+              %li
+                %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#returningStudent"} Returning Student
+
+            .tab-content
+              #newStudent.tab-pane.fade.active.in
+                = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "form-horizontal"})  do |f|
+                  = devise_error_messages!
+
+                  .form-group.required
+                    = f.label :name, "Name <span>*</span>".html_safe, class: "col-md-3 control-label"
+                    .col-md-8
+                      = f.text_field :name, autofocus: true, class: "form-control", placeholder: "e.g. John Smith", required: true
+
+                  .form-group.required
+                    = f.label :email, "Email <span>*</span>".html_safe, class: "col-md-3 control-label"
+                    .col-md-8
+                      = f.email_field :email, class: "form-control", required: true, placeholder: "e.g. you@example.com"
+
+                  .form-group.required
+                    = f.label :password, "Password <span>*</span>".html_safe, class: "col-md-3 control-label"
+                    .col-md-8
+                      = f.password_field :password, autocomplete: "off", class: "form-control", required: true
+
+                  .form-group.required
+                    = f.label :confirm_password, "Confirm Password <span>*</span>".html_safe, class: "col-md-3 control-label"
+                    .col-md-8
+                      = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", required: true
+                  .form-group
+                    .col-md-offset-3.col-md-9
+                      = f.submit "Create Account", class: "btn btn-primary submit-btn", data: { loading_text: "Please Wait..." }
+
+              #returningStudent.tab-pane.fade
+                = form_for(resource, as: resource_name, url: session_path(resource_name), html: {role: "form", class: "form-horizontal"}) do |f|
+                  = devise_error_messages!
+  
+                  .form-group.required
+                    = f.label :email, "Email <span>*</span>".html_safe, autofocus: true, required: true, class: "col-md-3 control-label"
+                    .col-md-8
+                      = f.email_field :email, class: "form-control"
+                  .form-group.required
+                    = f.label :password, "Password <span>*</span>".html_safe, class: "col-md-3 control-label"
+                    .col-md-8
+                      = f.password_field :password, autocomplete: "off", class: "form-control", required: true
+                  .form-group
+                    .col-md-offset-3.col-md-9
+                      = f.submit "Sign In", class: "btn btn-primary submit-btn", data: { loading_text: "Please Wait..." }

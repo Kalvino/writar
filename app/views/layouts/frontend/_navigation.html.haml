@@ -1,0 +1,80 @@
+%body
+  = render 'layouts/frontend/top_header'
+  %header.navbar.yamm.navbar-default.navbar-static-top
+    .container
+      .navbar-header
+        = link_to root_path, class: "navbar-brand" do
+          = image_tag "logo.png"
+        %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+          %i.fa.fa-bars
+      .navbar-collapse.collapse.navbar-right
+        %ul.nav.navbar-nav.navbar-main-menu
+          %li
+            = link_to "Home", root_path
+          %li
+            = link_to "About", about_path
+          %li
+            = link_to "Blog", posts_path
+          %li
+            = link_to "Revision Papers", essays_path
+          %li
+            = link_to "FAQs", faqs_path
+          %li
+            = link_to "Contact", contact_path
+          - if seller_signed_in?
+            %li
+              = link_to new_marketplace_essay_path do
+                Upload Paper
+            %li.dropdown
+              = link_to "#", class: "dropdown-toggle", data: {dropdown: "dropdown"} do
+                = current_seller.first_name
+                %i.fa.fa-chevron-down
+              %ul.dropdown-menu
+                %li
+                  = link_to marketplace_dashboard_path do
+                    %i.fa.fa-dashboard
+                    My Dashboard
+                %li
+                  = link_to marketplace_essays_path do
+                    %i.fa.fa-book
+                    My Papers
+                %li
+                  = link_to marketplace_seller_path(current_seller) do
+                    %i.fa.fa-user
+                    My Profile
+                %li
+                  = link_to destroy_seller_session_path, method: :delete do
+                    %i.fa.fa-sign-out>
+                    Log out
+          - else
+            - unless student_signed_in?
+              %li
+                = link_to "Start Selling", new_seller_registration_path
+          - if student_signed_in? && !seller_signed_in?
+            %li
+              = link_to new_order_path do
+                Order Now
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                = current_student.first_name
+                %i.fa.fa-chevron-down
+              %ul.dropdown-menu
+                %li
+                  = link_to student_dashboard_path do
+                    %i.fa.fa-dashboard>
+                    My Dashboard
+                  = link_to student_orders_path do
+                    %i.fa.fa-folder-open>
+                    Manage Orders
+                  = link_to student_profile_path do
+                    %i.fa.fa-user>
+                    Profile
+                  = link_to destroy_student_session_path, method: :delete do
+                    %i.fa.fa-sign-out>
+                    Log out
+          - else
+            - unless seller_signed_in?
+              %ul.nav.navbar-nav
+                %li.active
+                  = link_to new_order_path do
+                    Order Now

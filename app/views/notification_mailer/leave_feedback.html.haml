@@ -1,0 +1,24 @@
+%p Dear #{@user.first_name.titleize},
+
+%p
+  Thank you for your recent order with us. We hope your order (Order Number: ##{link_to @order.uid, student_order_url(@order)}) was delivered within your
+  set deadline, non-plagiarized and was of high quality! Should you have any questions or concerns related to this order,
+  please feel free to contact us directly by replying to this email.
+
+%p
+  We know you're probably busy, but if you get a moment, we would appreciate your feedback! Customer service is our
+  number one priority, as we strive to provide the best quality and service possible.
+
+%p
+  We understand this email may have been sent after you have already posted feedback for us, but if not, we ask that you
+  please follow the link below in order to do so.
+
+%p
+  = link_to "Click here", new_student_order_reviews_url(@order)
+  to submit your feedback
+
+%p
+  Regards,
+  %br/
+  = t("sitename")
+

@@ -1,0 +1,18 @@
+%p
+  Hello
+  %b= @user.first_name.titleize
+
+%p We just wanted to let you know that the status of your order has been updated
+%p
+  %b Order Details
+%p
+  Topic: #{@order.topic}
+  %br/
+  Order ID: #{@order.uid}
+  %br/
+  %br/
+  Status: #{@order.status.titleize}
+%p
+  Regards,
+  %br/
+  = t("sitename")

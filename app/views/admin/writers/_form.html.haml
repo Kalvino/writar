@@ -1,0 +1,26 @@
+= form_for [:admin, @writer], html: {class: ""} do |f|
+  = errors_for @writer
+  .row
+    .col-md-6
+      .form-group
+        = f.label :first_name
+        = f.text_field :first_name, class: "form-control"
+    .col-md-6
+      .form-group
+        = f.label :last_name
+        = f.text_field :last_name, class: "form-control"
+  .form-group
+    = f.label :email
+    = f.email_field :email, class: "form-control"
+
+  .row
+    .col-md-6
+      .form-group
+        = f.label :rate, "Rate per Page"
+        = f.number_field :rate_per_page, step: 0.1, class: "form-control"
+    .col-md-6
+      .form-group
+        = f.label :phone
+        = f.text_field :phone, class: "form-control"
+
+  = f.submit class: "btn btn-primary"

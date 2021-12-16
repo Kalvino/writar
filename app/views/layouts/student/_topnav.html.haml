@@ -1,0 +1,17 @@
+%nav.navbar.navbar-static-top{:role => "navigation", :style => "margin-bottom: 0"}
+  .navbar-header
+    %a.navbar-minimalize.minimalize-styl-2.btn.btn-primary{:href => "#"}
+      %i.fa.fa-bars
+    %form.navbar-form-custom{:action => "#", :role => "search"}
+      .form-group
+        %input#top-search.form-control{:name => "top-search", :placeholder => "Search for something...", :type => "text"}/
+  %ul.nav.navbar-top-links.navbar-right
+    %li
+      %span.m-r-sm.text-muted.welcome-message
+        Hello #{current_student.first_name}
+    %li
+      = link_to '<i class="fa fa-external-link"></i> Main Site'.html_safe, root_path, target: "_blank"
+    %li
+      = link_to destroy_student_session_path, method: :delete do
+        %i.fa.fa-sign-out
+        Log out

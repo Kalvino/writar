@@ -1,0 +1,122 @@
+- heading truncate(@order.topic.html_safe, length: 150)
+
+.row
+  .col-lg-9
+    .wrapper.wrapper-content.animated.fadeInUp
+      .ibox
+        .ibox-content
+          .row
+            .col-lg-12
+              .m-b-md
+                - if ["pending_quote","pending_payment"].include?(@order.status)
+                  = link_to edit_student_order_path(@order), class: "btn btn-white btn-xs pull-right" do
+                    %i.fa.fa-pencil
+                    Edit Order
+                %h2= @order.topic.titleize
+              %dl.dl-horizontal
+                %dt Status:
+                %dd#order-status= label_for_order(@order).html_safe
+          .row
+            .col-lg-6
+              %dl.dl-horizontal
+                %dt Student:
+                %dd= @order.student.name.titleize
+                %dt Academic Level:
+                %dd= @order.academic_level.titleize
+                %dt Paper Type:
+                %dd= @order.paper_type
+                %dt Due On:
+                %dd= @order.due_at.strftime("%d %b %Y at %I:%M%p")
+            #cluster_info.col-lg-6
+              %dl.dl-horizontal
+                %dt Citation Style:
+                %dd= @order.citation_style
+                %dt Discipline:
+                %dd= @order.discipline
+                %dt Sources:
+                %dd= @order.sources
+                %dt Pages:
+                %dd= @order.pages
+                %dt Spacing:
+                %dd= @order.spacing.titleize
+          .row
+            .col-lg-12
+              %dl.dl-horizontal
+                %dt Order Progress:
+                %dd
+                  .progress.progress-striped.active.m-b-sm
+                    .progress-bar{:style => "width: #{@order.progress}%;"}
+                  %small
+                    Order progress currently at:
+                    = succeed "." do
+                      %strong
+                        = @order.progress.round
+                        \%
+            - if @order.instructions.present?
+              .col-lg-12
+                .well.well-lg
+                  %h4 Instructions
+                  = @order.instructions.html_safe
+        .ibox-footer
+          %h4 Order Attachments
+          - if @order.attachments.any?
+            %ul.list-unstyled.project-files
+              = render @order.attachments, shorten: false
+          - else
+            %p No attachments found for this order.
+
+      = render @messages if @messages.any?
+      = render 'student/messages/form', order: @order, message: @message
+
+  .col-lg-3
+    .wrapper.wrapper-content.project-manager
+      - if @order.invoice
+        .widget.style1
+          .row
+            .col-xs-4.text-center
+              %i.fa.fa-bank.fa-5x
+            .col-xs-8.text-right
+              %span Order Cost
+              %h2.font-bold= number_to_currency(@order.invoice.amount)
+        - if @order.invoice.payment_status.present?
+          = render 'shared/payment_status', order: @order
+
+        - if @order.status == "pending_payment"
+          = link_to @paypal_url, class: "btn btn-block btn-primary submit-btn", data: { loading_text: "Please Wait..." }, style: "margin-bottom: 20px;" do
+            %i.fa.fa-paypal
+            Pay Amount
+
+          %h5.promo
+            %i.fa.fa-gift
+            Have a coupon code?
+            = link_to "#", class: "pull-right", data: { toggle: "tooltip", placement: "left"  }, title: t("promo_text") do
+              %i.fa.fa-question-circle
+          - unless @order.student.coupons.any?
+            %p.font-10
+              %small
+              Use coupon code
+              %b 02B15319
+              to receive 15% discount on your first order with us.
+          = render 'student/redemptions/form'
+
+        - if @order.status == "in_progress"
+          %p Mark Order As
+          .btn-group.btn-block{:style => "margin-bottom: 20px;"}
+            - Order.statuses.select { |k, v| ["completed", "cancelled"].include?(k) }.keys.each do |key|
+              = link_to key.titleize, student_order_path(@order), class: "btn btn-white status #{class_for(@order.status, key)}", data: {status: key}
+
+      - if @order.files_in_messages.any?
+        .ibox
+          .ibox-content
+            %h3 Files in messages
+            %ul.list-unstyled.file-list
+              = render @order.files_in_messages, shorten: true
+
+      - if ["completed","cancelled"].include?(@order.status)
+        - if @order.review.present?
+          %h4 Review
+          %p= @order.review.content
+        - else
+          %h4 Give Feedback
+          .ibox-content
+            = render 'student/reviews/form', order: @order, review: Review.new

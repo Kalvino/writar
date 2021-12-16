@@ -1,0 +1,10 @@
+/ COMMENT
+.media.comment
+  .pull-left
+    = link_to "#" do
+      = gravator_for(comment.email)
+  .media-body
+    %h4.media-heading
+      = comment.name
+      %small= comment.created_at.strftime("%d/%m/%Y at %I:%M%p")
+    %p= comment.body

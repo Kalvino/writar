@@ -1,0 +1,63 @@
+.row
+  = form_for [:admin, @order], html: { multipart: true, role: "form"  } do |f|
+    .col-md-12
+      = errors_for @order
+    .col-md-12.b-r
+      %h3.m-t-none.m-b Order Details
+      %p Please fill out the particulars of the your order to receive a quote.
+      .form-group
+        = f.label :topic
+        = f.text_field :topic, class: "form-control"
+      .row
+        .col-md-4
+          .form-group
+            = f.label :academic_level
+            = f.select :academic_level, options_for_academic_level, {}, class: "form-control chosen"
+        .col-md-4
+          .form-group
+            = f.label :type_of_paper
+            = f.select :paper_type, options_for_paper_type, {}, class: "form-control  chosen"
+        .col-md-4
+          .form-group
+            = f.label :citation_style
+            = f.select :citation_style, options_for_citation_style, {}, class: "form-control  chosen"
+      .row
+        .col-md-6
+          = f.label :discipline
+          = f.select :discipline, options_for_discipline, {}, class: "form-control  chosen"
+        .col-md-6
+          .row
+            .col-md-6
+              = f.label :due_on
+              .input-group.date
+                %span.input-group-addon
+                  %i.fa.fa-calendar
+                = text_field_tag "due_on", @order.due_at ? @order.due_at.strftime("%d/%m/%Y") : nil, class: "form-control", data: { date_format: "dd/mm/yyyy" }
+              = f.hidden_field :due_at
+            .col-md-6
+              = f.label :time
+              .input-group.clockpicker{"data-autoclose" => "true"}
+                = text_field_tag :time, @order.due_at ? @order.due_at.strftime("%H:%M") : nil, class: "form-control"
+                %span.input-group-addon
+                  %span.fa.fa-clock-o
+      %br/
+      .row
+        .col-md-4
+          = f.label :number_of_sources
+          = f.text_field :sources, class: "touchspin"
+        .col-md-4
+          = f.label :number_of_pages
+          = f.text_field :pages, class: "touchspin"
+        .col-md-4
+          = f.label :spacing
+          = f.select :spacing, options_for_spacing, {}, class: "form-control chosen"
+      %br/
+      .form-group
+        = f.label :instructions
+        .instructions-container
+          = f.text_area :instructions, class: "form-control summernote"
+      .form-group
+        = f.label :attachments
+        = file_field_tag "files[]", multiple: true
+      %br/
+      = f.submit class: "btn btn-sm btn-primary"

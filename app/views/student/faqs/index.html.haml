@@ -1,0 +1,14 @@
+- heading "Frequently Asked Questions"
+
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInRight
+      .ibox-content.m-b-sm.border-bottom
+        .text-center.p-lg
+          %h2 Do you have a custom question you need to ask us?
+          %span ask us via chat by clicking
+          = link_to "#",class: "btn btn-primary btn-sm open-chat" do
+            %i.fa.fa-plus
+            %span.bold This Button
+      = render @faqs
+

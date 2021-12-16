@@ -1,0 +1,46 @@
+= heading "Request Payment"
+.row
+  .col-md-6
+    %a.dashboard-stat{:href => "javascript:;"}
+      .visual
+        %i.fa.fa-money
+      / /.visual
+      .details
+        %span.content Available Balance
+        %span.value= number_to_currency(current_seller.balance)
+      / /.details
+      %i.fa.fa-play-circle.more
+  .col-md-6
+    %a.dashboard-stat.tertiary{:href => "javascript:;"}
+      .visual
+        %i.fa.fa-clock-o
+      / /.visual
+      .details
+        %span.content Last Payment
+        - if @recent_withdrawal
+          %span.value= number_to_currency(@recent_withdrawal)
+        - else
+          %span.value None
+      / /.details
+      %i.fa.fa-play-circle.more
+.row
+  .col-md-12
+    .portlet
+      .portlet-header
+        %h3
+          %i.fa.fa-paypal
+          Paypal
+      / /.portlet-header
+      .portlet-content
+        - if current_seller.balance > ENV["MINIMUM_REQUEST_AMOUNT"].to_i
+          - if current_seller.paypal_email
+            = form_for [:marketplace, @withdrawal] do |f|
+              = errors_for @withdrawal
+              = f.submit "Withdraw", class: "btn btn-primary"
+          - else
+            %p
+              You have not set up a payment method. #{link_to "Click here", edit_seller_registration_path} to add your paypal email address.
+        - else
+          %p
+            You can request a payment when your balance is #{number_to_currency(ENV["MINIMUM_REQUEST_AMOUNT"])} or more.
+      / /.portlet-content

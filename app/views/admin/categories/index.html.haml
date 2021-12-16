@@ -1,0 +1,25 @@
+- heading "Categories"
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Categories
+          .ibox-tools
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+                = link_to "Add Category", new_admin_category_path
+        .ibox-content
+          - if @categories.any?
+            %table#categories.table
+              %thead
+                %tr
+                  %th Name
+                  %th Essays | Posts
+                  %th Actions
+              %tbody
+                = render @categories
+          - else
+            %p No Categories found.

@@ -1,0 +1,26 @@
+- if seller_signed_in?
+  - config = { app_id: "#{ENV["INTERCOM_APP_ID"]}",
+    email: current_seller.email,
+    name: current_seller.name,
+    created_at: current_seller.created_at.to_i,
+    user_id: "seller_#{current_seller.id}",
+    papers: current_seller.essays_count,
+    user_hash: OpenSSL::HMAC.hexdigest('sha256',ENV["INTERCOM_SECRET_KEY"], "seller_#{current_seller.id}" ),
+  }
+- elsif student_signed_in?
+  - config = { app_id: "#{ENV["INTERCOM_APP_ID"]}",
+    email: current_student.email,
+    name: current_student.name,
+    created_at: current_student.created_at.to_i,
+    user_id: "student_#{current_student.id}",
+    orders: current_student.orders_count,
+    user_hash: OpenSSL::HMAC.hexdigest('sha256',ENV["INTERCOM_SECRET_KEY"], "student_#{current_student.id}" ),
+  }
+- else
+  - config = { app_id: "#{ENV["INTERCOM_APP_ID"]}" }
+
+- unless admin_signed_in?
+  :javascript
+    window.intercomSettings = JSON.parse('#{config.to_json}');
+  :javascript
+    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/fpdzb20c';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()

@@ -1,0 +1,11 @@
+.about-author{ style: "margin-top: -30px;"}
+  .media-body.text-center
+    %h4.media-heading Thank you for your purchase
+    %p.m-b-30
+      As promised, you can now download your paper by using the download button below.
+      We have additionally sent the paper to your paypal email (check spam, just incase) to confirm your purchase. Thanks again!
+    .row
+      .col-xs-12.m-b-30
+        = link_to download_essays_path, class: "btn btn-lg btn-danger download-paper" do
+          %i.fa.fa-cloud-download
+          Click to Download

@@ -1,0 +1,8 @@
+- if @message.errors.any?
+  alert("#{@message.errors.full_messages.join(",")}")
+- else
+  $('#new-message').before('#{j render @message }');
+
+$('button.send-message').removeClass("disabled").text("Send as (#{@message.user.first_name})");
+$('#message_content').prop('readonly',false);
+$('form#new_message')[0].reset();

@@ -1,0 +1,61 @@
+= title @post.title
+- content_for :meta_tags do
+  %meta{:content => "#{@post.meta_description}", :name => "description"}/
+  %link{:href => post_url(@post), :rel => "canonical"}/
+  = open_graph_tags(@post.title, post_url(@post),"article", @post.meta_description, @post.banner.url(:medium))
+
+.row.paper-flash= render 'shared/flash'
+
+%section#blog.content.bg-color-2.right-sidebar
+  .container
+    .row
+      / BLOG CONTENT - START
+      .col-md-7.col-lg-8.blog-content
+        / BLOG POST
+        .blog-post
+          = image_tag @post.banner.url(:medium), class: "img-responsive", alt: @post.title, lazy: true 
+          .blog-post-detail
+            %span
+              %i.fa.fa-calendar
+              = @post.created_at.strftime("%d/%m/%Y")
+            %span
+              %i.fa.fa-comment
+              = @post.comments.count
+            %span
+          .blog-post-body
+            /%h3= @post.title
+            = @post.body.html_safe
+            .blog-post-buttons.clearfix
+              .pull-left
+                %a.btn.btn-primary.scroll{:href => "#addcomment", style: "margin-top: 30px;"}
+                  -#%i.fa.fa-smile-o
+                  Add Comment
+              .pull-right
+                / Go to www.addthis.com/dashboard to customize your tools
+                .addthis_inline_share_toolbox_lvk6
+
+        / Order now
+        = render 'shared/order_now_widget', revision_prompt: false, search_prompt: false, question_prompt: false
+
+        / COMMENTS - START
+        .comments
+          ~# %h2= pluralize(@post.comments.count, "Comment")
+          ~# = render @post.comments
+        = render 'comments/form'
+        / COMMENTS - END
+      / BLOG CONTENT - END
+      .col-md-5.col-lg-4.blog-sidebar
+        = render 'shared/vertical_order_widgets'
+
+        .box
+          %h3 Like Us
+          = render 'shared/fb_likebox'
+        .box
+          %h3 Categories
+          %ul.list-unstyled
+            - categories.order(essays_count: :desc).limit(30).each do |category|
+              %li
+                = link_to category_essays_path(category), title: "#{category.name} papers" do
+                  %i.fa.fa-angle-double-right
+                  = category.name
+                  %span.badge= category.essays_count

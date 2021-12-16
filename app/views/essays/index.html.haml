@@ -1,0 +1,50 @@
+= title t("meta_tags.papers.index.title")
+- content_for :meta_tags do
+  %meta{:content => "#{t("meta_tags.papers.index.description")}", :name => "description"}/
+  = open_graph_tags(t("meta_tags.papers.index.title"), essays_url,"website",t("meta_tags.papers.index.description"),image_url("banner.jpg"))
+%section.content.content-separator
+  .container
+    %h2 Search our Repository
+    .row
+      .col-md-6.col-md-offset-3
+        = render 'shared/search_lg'
+%section.breadcrumb-wrapper
+  .container
+    %h2
+      - if params[:query]
+        Search Results
+      - else
+        Browse & Purchase Revision Papers
+    %ol.breadcrumb
+      = render_breadcrumbs :tag => :li, :separator => ""
+
+.row.paper-flash= render 'shared/flash'
+
+%section#eshop.content.bg-color-2
+  .container
+    .row.eshop-main.eshop-list
+      / ESHOP SIDEBAR - START
+      .col-md-3
+        .row
+          .col-md-12
+            = render 'shared/vertical_order_widgets'
+          .col-md-12.eshop-sidebar.hidden-xs.hidden-sm.col-lg-12
+
+            %h3 Categories
+            %ul.nav.vertical-nav
+              - @categories.each do |category|
+                %li
+                  = link_to  category_essays_path(category), title: "#{category.name} papers" do
+                    %i.fa.fa-angle-double-right
+                    = category.name
+      .col-md-9.col-lg-9.eshop-content
+        - if @essays.any?
+          = render @essays
+        - else
+          = render 'shared/order_now_widget', revision_prompt: false, search_prompt: true, question_prompt: false
+    .row.eshop-footer
+      .col-md-9.col-md-offset-3.text-right
+        = will_paginate @essays, inner_window: 3, renderer: BootstrapPagination::Rails
+
+- content_for :scripts do
+  -#= render 'shared/videopal'

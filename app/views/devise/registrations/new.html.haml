@@ -1,0 +1,73 @@
+= title resource.is_a?(Seller) ? t("meta_tags.sellers.signup.title") : "Register Student Account"
+- content_for :meta_tags do
+  %meta{:content => "#{t("meta_tags.sellers.signup.description")}", :name => "description"}/
+  = open_graph_tags(t("meta_tags.sellers.signup.title"), new_seller_registration_url,"website",t("meta_tags.sellers.signup.description"),image_url("banner.jpg"))
+%section.content-full.bg-color-2
+  = render 'shared/header'
+  .container
+    .forms-only
+      %h1= resource.is_a?(Seller) ? "BECOME A SELLER" : "REGISTER"
+      = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+        = errors_for resource
+        %fieldset
+          %h2 CREATE A FREE ACCOUNT
+          %p
+            Already have an account? Then you can #{link_to "sign in", new_session_path(resource_name)} with your existing username and password.
+          .row
+            .form-group.col-sm-6
+              %label{:for => "name"}
+                First name:
+                %span *
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-user
+                = f.text_field :first_name, class: "form-control", placeholder: "First name: ", required: true, autofocus: true
+            .form-group.col-sm-6
+              %label{:for => "name"}
+                Last name:
+                %span *
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-user
+                = f.text_field :last_name, class: "form-control", placeholder: "Last name: ", required: true
+          .row
+            .form-group.col-sm-12
+              %label{:for => "email"}
+                Your email:
+                %span *
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-envelope
+                = f.email_field :email, class: "form-control", placeholder: "Your email: ", required: true
+          .row
+            .form-group.col-sm-6
+              %label{:for => "password"}
+                Your password:
+                %span *
+                - if @minimum_password_length
+                  %em
+                    (#{@minimum_password_length} characters minimum)
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-key
+                = f.password_field :password, class: "form-control", autocomplete: "off", placeholder: "Your password:", required: true
+            .form-group.col-sm-6
+              %label{:for => "password2"}
+                Confirm password:
+                %span *
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-key
+                = f.password_field :password_confirmation, class: "form-control", placeholder: "Your password:", autocomplete: "off", required: true
+          %p I agree to the Terms and Conditions and Privacy Policy, including the use of cookies.
+          .pull-left
+            %span.form-info
+              %span.required *
+              These fields are required
+          .pull-right
+            = button_tag(type: 'submit', class: "btn btn-primary submit-btn", data: { loading_text: "Please Wait..."}) do
+              %i.fa.fa-check
+              Sign Up
+      - if resource.respond_to?(:confirmed?)
+        .text-center{:style => "margin: 30px 30px;"}
+          = link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)

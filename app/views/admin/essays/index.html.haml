@@ -1,0 +1,32 @@
+- heading "Papers"
+.wrapper.wrapper-content.animated.fadeInRight
+  = render 'shared/analytics_widgets', klass: Essay, records_today: @papers_today, records_this_week: @papers_this_week,
+  records_this_month: @papers_this_month, records_this_year: @papers_this_year
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Papers
+          .pull-right
+            .btn-group
+              %button.btn.btn-xs.btn-white.filter-papers.active{ type:  "button", data: { source: admin_essays_url(format: "json") } } All
+              - Essay.statuses.keys.each do |key|
+                %button.btn.btn-xs.btn-white.filter-papers{ type: "button", data: { source: admin_essays_url(status: key, format: "json") } }= key.titleize
+
+        .ibox-content
+          %table#essays.table{"data-source" => "#{admin_essays_url(format: "json")}"}
+            %thead
+              %tr
+                %th Title
+                %th Price
+                %th Pages
+                %th Downloads
+                %th Status
+                %th Uploaded
+                %th Seller
+                %th Actions
+            %tbody
+          %form.form-inline.text-center
+            .form-group
+              %input#skip2page.form-control{:placeholder => "skip to page", :type => "text"}/
+            %button#skip.btn.btn-default{:style => "margin-top: 6px;", :type => "submit"} Skip

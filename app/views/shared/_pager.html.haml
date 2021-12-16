@@ -1,0 +1,25 @@
+- previous_record = record.previous
+- next_record     = record.next
+
+%ul.pager
+  - unless previous_record.nil?
+    %li.previous
+      = link_to [:admin, previous_record] do
+        %i.fa.fa-chevron-left
+        Previous
+  - else
+    %li.previous.disabled
+      = link_to '#' do
+        %i.fa.fa-chevron-left
+        Previous
+
+  - unless next_record.nil?
+    %li.next
+      = link_to [:admin, next_record] do
+        Next
+        %i.fa.fa-chevron-right
+  - else
+    %li.next.disabled
+      = link_to '#' do
+        Next
+        %i.fa.fa-chevron-right

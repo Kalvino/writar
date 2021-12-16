@@ -1,0 +1,36 @@
+= title t("meta_tags.blog.index.title")
+
+- content_for :meta_tags do
+  %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %meta{:content => "#{t("meta_tags.blog.index.description")}", :name => "description"}/
+  = open_graph_tags(t("meta_tags.blog.index.title"), posts_url,"website", t("meta_tags.blog.index.description"), @posts.any? ? @posts.first.banner.url(:medium) : image_url("banner.jpg"))
+%section#blog.content.bg-color-2.right-sidebar
+  .container
+    .row
+      / BLOG CONTENT - START
+      .col-md-7.col-lg-8.blog-content
+        - if @posts.any?
+          = render @posts
+        - else
+          %p No blog posts yet. Check back soon
+        / PAGINATION - START
+        = will_paginate @posts, renderer: BootstrapPagination::Rails
+        .m-t-30
+        = render 'shared/order_now_widget', revision_prompt: false, search_prompt: false, question_prompt: false
+        / PAGINATION - END
+      / BLOG CONTENT - END
+      .col-md-5.col-lg-4.blog-sidebar
+        = render 'shared/vertical_order_widgets'
+        .box
+          .box
+            %h3 Like Us
+            = render 'shared/fb_likebox'
+        .box
+          %h3 Categories
+          %ul.list-unstyled
+            - categories.order(essays_count: :desc).limit(30).each do |category|
+              %li
+                = link_to category_essays_path(category), title: "#{category.name} papers" do
+                  %i.fa.fa-angle-double-right
+                  = category.name
+                  %span.badge= category.essays_count

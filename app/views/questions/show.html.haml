@@ -1,0 +1,55 @@
+= title @question.title.titleize
+
+- content_for :meta_tags do
+  %meta{:content => truncate(strip_tags(@question.content), length: 150), :name => "description"}/
+%section#blog.content.bg-color-2.right-sidebar
+
+  .container
+    .row
+      / BLOG CONTENT - START
+      .col-md-7.col-lg-8.blog-content
+        / BLOG POST
+        .blog-post
+          .blog-post-detail
+            %span
+              %i.fa.fa-calendar
+              = @question.created_at.strftime("%d/%m/%Y")
+            %span
+              %i.fa.fa-comment
+              0
+            %span
+          .blog-post-body
+            %h3= @question.title.titleize
+            = @question.content.html_safe
+            .blog-post-buttons.clearfix
+              .pull-left
+                = link_to "Order This Paper Now", new_order_path(utm_source: "papersmarketplace", utm_medium: "cpc", utm_campaign: "make_order", utm_content: "#{controller_name}_#{action_name}_link"), class: "btn btn-danger btn-lg"
+              .pull-right
+                / Go to www.addthis.com/dashboard to customize your tools
+                .addthis_inline_share_toolbox_lvk6
+
+        / Order now
+        = render 'shared/order_now_widget', revision_prompt: false, search_prompt: false, question_prompt: true
+
+      / COMMENTS - END
+      / BLOG CONTENT - END
+      .col-md-5.col-lg-4.blog-sidebar
+        = link_to new_order_path(utm_source: "papersmarketplace", utm_medium: "banner", utm_campaign: "make_order") do
+          = image_tag "order_banner.png", title: "Make an Order", alt: "Order Now", class: "img-responsive"
+        = render 'order_prompt'
+
+        .box
+          %h3 Like Us
+          = render 'shared/fb_likebox'
+        .box
+          %h3 Categories
+          %ul.list-unstyled
+            - categories.order(essays_count: :desc).limit(30).each do |category|
+              %li
+                = link_to category_essays_path(category), title: "#{category.name} papers" do
+                  %i.fa.fa-angle-double-right
+                  = category.name
+                  %span.badge= category.essays_count
+
+- content_for :scripts do
+  -#= render 'shared/videopal'

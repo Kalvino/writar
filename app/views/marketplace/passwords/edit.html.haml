@@ -1,0 +1,45 @@
+= heading "Update Password"
+
+#not-main.row
+  .col-md-3.col-sm-4
+    = render 'shared/settings_nav'
+  / /.col
+  .col-md-9.col-sm-8
+    .tab-content.stacked-content
+      #password-tab.tab-pane.fade.active.in
+        %h3 Change Your Password
+        %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.
+        %br/
+        = form_for(current_seller, :url => marketplace_password_path, :html => {:class => 'form-horizontal'}) do |f|
+          = errors_for current_seller
+          .form-group
+            %label.col-md-3 Old Password
+            .col-md-7
+              = f.password_field :current_password, autocomplete: "off", class: "form-control"
+            / /.col
+          / /.form-group
+          %hr/
+          .form-group
+            %label.col-md-3 New Password
+            .col-md-7
+              = f.password_field :password, autocomplete: "off", class: "form-control"
+            / /.col
+          / /.form-group
+          .form-group
+            %label.col-md-3 New Password Confirm
+            .col-md-7
+              = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
+            / /.col
+          / /.form-group
+          %br/
+          .form-group
+            .col-md-7.col-md-push-3
+              = f.submit 'Update Password', class: "btn btn-primary"
+               
+              \#{link_to "Cancel", :back, class: "btn btn-default"}
+            / /.col
+          / /.form-group
+  / /.col
+/ <h3>Cancel my account</h3>
+/ <p>Unhappy? <haml_silent></haml_silent></p>
+/ <haml_silent></haml_silent>

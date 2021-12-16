@@ -1,0 +1,13 @@
+%tr
+  %td= link_to truncate(essay.title.titleize, length: 35), [:admin, essay], title: essay.title, data: { toggle: "tooltip", placement: "right"}
+  %td= number_to_currency(essay.price)
+  %td= essay.page_count
+  %td= essay.download_count
+  %td= essay.referencing_style.name
+  %td= truncate essay.category.name, length: 25
+  %td
+    .btn-group{:role => "group"}
+      - if can? :update, @essay
+        = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, edit_admin_essay_path(essay), class: "btn-white btn btn-xs"
+      - if can? :destroy, @essay
+        = link_to "<i class='fa fa-times'></i> Delete".html_safe, "#", method: :delete, class: "btn-white btn btn-xs"

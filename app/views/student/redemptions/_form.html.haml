@@ -1,0 +1,8 @@
+= form_for [:student, Redemption.new] do |f|
+  .input-group{ style: "margin-bottom: 20px;" }
+    = hidden_field_tag :order_id, @order.id
+    = text_field_tag :code, nil, class: "form-control"
+    %span.input-group-btn
+      = button_tag(:class => "btn btn-default", :type => "submit", id: "apply-coupon") do
+        Apply
+        %i.fa.fa-bolt

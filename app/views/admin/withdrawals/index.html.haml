@@ -1,0 +1,20 @@
+- heading "Withdrawals"
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Withdrawals
+          .ibox-tools
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+        .ibox-content
+          %table#withdrawals.table.table-striped.table-hover.table-highlight{"data-source" => "#{admin_withdrawals_path(format: "json")}"}
+            %thead
+              %tr
+                %th Date
+                %th Seller
+                %th Amount
+            %tbody

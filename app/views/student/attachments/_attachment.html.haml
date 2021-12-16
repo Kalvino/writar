@@ -1,0 +1,4 @@
+%li
+  = link_to student_attachment_download_path(attachment) do
+    %i.fa.fa-file
+    = shorten ? simple_filename(attachment.file_file_name) : attachment.file_file_name

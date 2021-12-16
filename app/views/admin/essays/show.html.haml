@@ -1,0 +1,68 @@
+- heading @essay.title
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.product-detail
+        .ibox-content
+          .row
+            .col-md-5
+              - if @essay.approved?
+                .product-images.essay-thumbnails
+                  - if @essay.thumbnails.any?
+                    - @essay.thumbnails.each do |thumbnail|
+                      %div
+                        = image_tag thumbnail.file.url(:medium), class: "thumbnail img-responsive"
+                  - else
+                    = image_tag "no-preview-lg.jpg", class: "img-responsive thumbnail"
+              - else
+                = embed(@essay).html_safe
+              - if can? :update, @essay
+                .m-t-70.text-center
+                  .btn-group
+                    - Essay.statuses.keys.each do |key|
+                      = link_to key.titleize, admin_essay_path(@essay), class: "btn btn-white status #{class_for(@essay.status, key)}", data: {status: key }
+            .col-md-7
+              %h2.font-bold.m-b-xs
+                = @essay.title.titleize
+              %small= @essay.short_description
+              .m-t-md
+                %h2.product-main-price
+                  = number_to_currency(@essay.price)
+                  %small.text-muted Exclude Tax
+              %hr/
+              %h4 Question
+              .small.fr-view
+                = @essay.question.html_safe
+              %br/
+              %h5 Answer Preview
+              .small.fr-view
+                = @essay.preview? ? @essay.preview.html_safe : "**Add Preview**"
+              %dl.small.m-t-md
+                %dt Pages/Slides
+                %dd= @essay.page_count
+                %dt Word Count
+                %dd
+                  = @essay.word_count
+                  \.
+                %dt Category
+                %dd= @essay.category.name
+                %dt Referencing Style
+                %dd= @essay.referencing_style.name
+                %dt Uploaded By
+                %dd= link_to @essay.owner.name, [:admin, @essay.owner]
+              %hr/
+              %div
+                .btn-group
+                  = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, edit_admin_essay_path(@essay), class: "btn btn-primary btn-sm" if can? :update, @essay
+                  = link_to "<i class='fa fa-eye'></i> View in app".html_safe, essay_path(@essay), target: "_blank", class: "btn btn-white btn-sm"
+                .pull-right
+                  = render 'shared/pager', record: @essay
+        .ibox-footer
+          %span.pull-right
+            Uploaded on -
+            %i.fa.fa-clock-o
+            = @essay.created_at.strftime("%d %b %Y at %I:%M%p")
+          - if can? :refresh_thumbnails, @essay
+            = link_to "<i class='fa fa-refresh'></i> Refresh Thumbnails".html_safe, admin_essay_refresh_thumbnails_path(@essay), id: "refresh-thumbnails"
+          - else
+            %span Info

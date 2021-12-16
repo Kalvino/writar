@@ -1,0 +1,81 @@
+= heading "Purchase Details"
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInRight
+      .ibox-content.p-xl
+        .row
+          .col-sm-6
+            %h5 From:
+            %address
+              %strong= @purchase.payer_name
+              %br/
+              = @purchase.payer_email
+              %br/
+              Payer ID: #{@purchase.payer_id}
+              %br/
+              Country: #{@purchase.residence_country}
+              %br/
+              %h5 Status:
+              %p
+                - if @purchase.payment_status == "Completed"
+                  %span.label.label-primary Completed
+                - else
+                  %span.label.label-primary= @purchase.payment_status
+          .col-sm-6.text-right
+            %h4 Transaction ID.
+            %h4.text-navy= @purchase.txn_id
+            %span To:
+            %address
+              %strong
+                = t('sitename')
+                \.
+              %br/
+              = ENV["SUPPORT_EMAIL"]
+              %br/
+            %p
+              %span
+                %strong Purchase Date:
+                = @purchase.created_at.strftime("%B %d, %Y at %I:%M%p")
+              %br/
+              %span
+                %strong Payment Token:
+                = @purchase.payment_token
+        .table-responsive.m-t
+          %table.table.invoice-table
+            %thead
+              %tr
+                %th Paper Details
+                %th Price
+                %th Downloads
+                %th User
+            %tbody
+              %tr
+                %td
+                  %div
+                    %strong= truncate(@essay.title, length: 100)
+                  %small= truncate(@essay.short_description, length: 200)
+                %td= number_to_currency(@essay.price)
+                %td= number_with_delimiter(@essay.download_count)
+                %td= link_to @essay.owner.first_name, [:admin, @essay.owner]
+        / /table-responsive
+        %table.table.invoice-total
+          %tbody
+            %tr
+              %td
+                %strong Gross :
+              %td= number_to_currency(@purchase.mc_gross)
+            %tr
+              %td
+                %strong FEE :
+              %td= number_to_currency(@purchase.mc_fee)
+            %tr
+              %td
+                %strong NET :
+              %td= number_to_currency(@purchase.mc_gross - @purchase.mc_fee) if @purchase.mc_gross
+        .text-right
+          = link_to [:admin, @purchase.essay], class: "btn btn-primary" do
+            %i.fa.fa-book
+            View Paper
+        .well.m-t
+          %strong Verify sign:
+          = @purchase.verify_sign

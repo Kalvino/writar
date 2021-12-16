@@ -1,0 +1,28 @@
+#new-message.social-feed-separated
+  .social-avatar
+    = link_to "#" do
+      = gravatar_for(current_admin.email, 52)
+  .social-feed-box
+    = form_for [:admin, order, message], html: { multipart: true } do |f|
+      = f.hidden_field :user_id, value: current_admin.id
+      .media-body
+        = f.text_area :content, class: "form-control", placeholder: "Compose message..."
+      .social-footer
+        .row
+          .col-md-6
+            .form-group
+              = f.label :attachments
+              = file_field_tag "files[]", multiple: true
+          .col-md-6.text-right
+            / Split button
+            .btn-group
+              = button_tag(type: 'submit', class: "btn btn-primary send-message") do
+                = "Send as (#{current_admin.first_name})"
+              %button.btn.btn-primary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                %span.caret
+                %span.sr-only Toggle Dropdown
+              %ul.dropdown-menu
+                - Admin.admin.each do |admin|
+                  %li= link_to admin.name, "#", data: { id: admin.id, name: admin.first_name, md5: Digest::MD5.hexdigest(admin.email) }, class: "send-as"
+
+            / end message

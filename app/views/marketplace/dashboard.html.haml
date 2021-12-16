@@ -1,0 +1,157 @@
+- heading "Dashboard"
+.row
+  .col-md-3.col-sm-6
+    %a.dashboard-stat.primary{:href => "javascript:;"}
+      .visual
+        %i.fa.fa-star
+      / /.visual
+      .details
+        %span.content Published Papers
+        %span.value= number_with_delimiter @published_essays
+      / /.details
+      %i.fa.fa-play-circle.more
+    / /.dashboard-stat
+  / /.col-md-3
+  .col-md-3.col-sm-6
+    %a.dashboard-stat.secondary{:href => "javascript:;"}
+      .visual
+        %i.fa.fa-download
+      / /.visual
+      .details
+        %span.content Total Downloads
+        %span.value= number_with_delimiter @downloads
+      / /.details
+      %i.fa.fa-play-circle.more
+    / /.dashboard-stat
+  / /.col-md-3
+  .col-md-3.col-sm-6
+    %a.dashboard-stat.tertiary{:href => "javascript:;"}
+      .visual
+        %i.fa.fa-clock-o
+      / /.visual
+      .details
+        %span.content Pending Payments
+        %span.value= number_to_currency(current_seller.balance)
+      / /.details
+      %i.fa.fa-play-circle.more
+    / /.dashboard-stat
+  / /.col-md-3
+  .col-md-3.col-sm-6
+    %a.dashboard-stat{:href => "javascript:;"}
+      .visual
+        %i.fa.fa-money
+      / /.visual
+      .details
+        %span.content Total Sales
+        %span.value= number_to_currency(current_seller.sales)
+      / /.details
+      %i.fa.fa-play-circle.more
+    / /.dashboard-stat
+  / /.col-md-9
+/ <div class="row">
+/ <div class="col-md-9">
+/ <div class="portlet">
+/ <div class="portlet-header">
+/ <h3>
+/ <i class="fa fa-bar-chart-o"></i>
+/ Area Chart
+/ </h3>
+/ </div> &lt;!&ndash; /.portlet-header &ndash;&gt;
+/ <div class="portlet-content">
+/ <div class="pull-left">
+/ <div class="btn-group" data-toggle="buttons">
+/ <label class="btn btn-sm btn-default">
+/ <input type="radio" name="options" id="option1"> Day
+/ </label>
+/ <label class="btn btn-sm btn-default">
+/ <input type="radio" name="options" id="option2"> Week
+/ </label>
+/ <label class="btn btn-sm btn-default active">
+/ <input type="radio" name="options" id="option3"> Month
+/ </label>
+/ </div>
+/ &nbsp;
+/ <div class="btn-group">
+/ <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+/ Custom Date
+/ <span class="caret"></span>
+/ </button>
+/ <ul class="dropdown-menu">
+/ <li><a href="javascript:;">Dropdown link</a></li>
+/ <li><a href="javascript:;">Dropdown link</a></li>
+/ </ul>
+/ </div>
+/ </div>
+/ <div class="pull-right">
+/ <div class="btn-group">
+/ <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+/ <i class="fa fa-cog"></i> &nbsp;&nbsp;<span class="caret"></span>
+/ </button>
+/ <ul class="dropdown-menu pull-right" role="menu">
+/ <li><a href="javascript:;">Action</a></li>
+/ <li><a href="javascript:;">Another action</a></li>
+/ <li><a href="javascript:;">Something else here</a></li>
+/ <li class="divider"></li>
+/ <li><a href="javascript:;">Separated link</a></li>
+/ </ul>
+/ </div>
+/ </div>
+/ <div class="clear"></div>
+/ <hr />
+/ <div id="area-chart" class="chart-holder" style="height: 250px"></div> &lt;!&ndash; /#bar-chart &ndash;&gt;
+/ </div> &lt;!&ndash; /.portlet-content &ndash;&gt;
+/ </div> &lt;!&ndash; /.portlet &ndash;&gt;
+/ </div>
+/ <div class="col-md-3">
+/ <div class="portlet">
+/ <div class="portlet-header">
+/ <h3>
+/ <i class="fa fa-bar-chart-o"></i>
+/ Donut Chart
+/ </h3>
+/ </div> &lt;!&ndash; /.portlet-header &ndash;&gt;
+/ <div class="portlet-content">
+/ <div id="donut-chart" class="chart-holder" style="height: 250px"></div>
+/ </div> &lt;!&ndash; /.portlet-content &ndash;&gt;
+/ </div> &lt;!&ndash; /.portlet &ndash;&gt;
+/ </div>
+/ </div>
+.row
+  .col-md-12
+    .portlet
+      .portlet-header
+        %h3
+          %i.fa.fa-book
+          Recent Papers
+        %ul.portlet-tools.pull-right
+          %li
+            = link_to "Upload Paper", new_marketplace_essay_path, class: "btn btn-sm btn-default"
+      / /.portlet-header
+      .portlet-content
+        .table-responsive
+          %table.table
+            %thead
+              %tr
+                %th Title
+                %th Price
+                %th Page Count
+                %th Downloads
+                %th Status
+                %th
+            %tbody
+              - if @essays.any?
+                - @essays.each do |essay|
+                  %tr
+                    %td= truncate(essay.title.titleize, length: 35)
+                    %td= number_to_currency(essay.price)
+                    %td= essay.page_count
+                    %td= essay.download_count
+                    %td= label_for(essay.status).html_safe
+                    %td
+                      = link_to [:marketplace, essay], class: "btn btn-xs btn-tertiary" do
+                        View   
+                        %i.fa.fa-chevron-right
+        / /.table-responsive
+        %hr/
+        = link_to "View All Papers", marketplace_essays_path, class: "btn btn-sm btn-secondary"
+      / /.portlet-content

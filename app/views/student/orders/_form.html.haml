@@ -1,0 +1,120 @@
+= form_for [:student, @order], html: { multipart: true, role: "form", class: "form-horizontal", id: "order-form"  } do |f|
+  = f.hidden_field :uid
+  .col-md-12
+    = errors_for @order
+
+  #paper-details
+    %h3.m-t-none.m-b 1. Paper Details
+    .hr-line-dashed
+
+    .form-group
+      = f.label :academic_level, class: "col-md-2 control-label"
+      .col-md-10
+        .btn-group{ data: { toggle: "buttons"} }
+          - options_for_academic_level.each do |level|
+            %label.btn.btn-white{ class: @order.academic_level == level[1] ? "active" : "" }
+              = f.radio_button :academic_level, level[1], checked: @order.academic_level == level[1]
+              = level[0]
+
+    .form-group
+      = f.label :type_of_paper, class: "col-md-2 control-label"
+      .col-md-10
+        = f.select :paper_type, options_for_paper_type, {}, class: "form-control  chosen"
+
+    .form-group
+      = f.label :discipline, class: "col-md-2 control-label"
+      .col-md-10
+        = f.select :discipline, options_for_discipline, {}, class: "form-control  chosen"
+
+    .form-group
+      = f.label :topic, class: "col-md-2 control-label"
+      .col-md-10
+        = f.text_field :topic, class: "form-control", maxlength: 250
+
+    .form-group
+      = f.label :instructions, class: "col-md-2 control-label"
+      .col-md-10
+        .instructions-container
+          = f.text_area :instructions, class: "form-control summernote", placeholder: "Optional Field"
+
+    .form-group
+      = f.label :attachments, class: "col-md-2 control-label"
+      .col-md-10
+        = file_field_tag "files[]", multiple: true
+
+    .form-group
+      = f.label :citation_style, class: "col-md-2 control-label"
+      .col-md-10
+        .btn-group{ data: { toggle: "buttons"} }
+          - options_for_citation_style.each do |style|
+            %label.btn.btn-white{ class: @order.citation_style == style ? "active" : "" }
+              = f.radio_button :citation_style, style, checked: @order.citation_style == style
+              = style
+
+    .form-group
+      .col-md-offset-9.col-md-3.text-right
+        = link_to "#", class: "btn btn-primary", id: "next" do
+          Proceed to Price Calculation
+          %i.fa.fa-arrow-right
+
+
+
+  #price-calculation.hidden
+    .row
+      .col-md-9.b-r
+        %h3.m-t-none.m-b 2. Price Calculation
+        .hr-line-dashed
+
+        .form-group
+          = f.label :deadline, class: "col-md-3 control-label"
+          .col-md-9
+            .btn-group{ data: { toggle: "buttons"} }
+              - options_for_deadline.each do |hour|
+                %label.btn.btn-white{ class: @order.hours_to_deadline == hour[1] ? "active" : "" }
+                  = f.radio_button :hours_to_deadline, hour[1], checked: @order.hours_to_deadline == hour[1]
+                  = hour[0]
+            %small.help-block
+              We estimate that your final submission deadline is
+              %b#estimated-deadline
+
+        .form-group
+          = f.label :number_of_pages, class: "col-md-3 control-label"
+          .col-md-9
+            = f.number_field :pages, class: "touchspin"
+            %small.help-block#words-per-page 275 Words
+
+        .form-group
+          = f.label :spacing, class: "col-md-3 control-label"
+          .col-md-9
+            .btn-group{ data: { toggle: "buttons"} }
+              - options_for_spacing.each do |spacing|
+                %label.btn.btn-white{ class: @order.spacing == spacing[1] ? "active" : "" }
+                  = f.radio_button :spacing, spacing[1], checked: @order.spacing == spacing[1]
+                  = spacing[0]
+
+        .form-group
+          = f.label :number_of_sources, class: "col-md-3 control-label"
+          .col-md-9
+            = f.number_field :sources, class: "touchspin"
+
+        .form-group
+          .col-md-offset-3.col-md-9
+            .row
+              .col-md-6
+                = link_to "#", id: "back" do
+                  %i.fa.fa-arrow-left
+                  Back to Paper Details
+              .col-md-6.text-right
+                = f.submit class: "btn btn-primary submit-btn", data: { loading_text: "Please Wait..." }
+
+      .col-md-3.text-center
+        %h3.m-t-none.m-b Total Price
+        .hr-line-dashed
+
+        .widget.style1
+          .row
+            .col-xs-4.text-center
+              %i.fa.fa-paypal.fa-5x
+            .col-xs-8.text-right
+              %span Order Cost
+              %h1.font-bold#order-cost $ 0

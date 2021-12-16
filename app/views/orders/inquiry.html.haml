@@ -1,0 +1,112 @@
+- heading "Place an Inquiry"
+
+%section.breadcrumb-wrapper
+  .container
+    %h2 Free Inquiry
+    %ol.breadcrumb
+      = render_breadcrumbs :tag => :li, :separator => ""
+.row.paper-flash
+  = render 'shared/flash'
+
+%section#eshop.content.bg-color-2
+  .container
+    .row
+      .col-sm-3.eshop-sidebar
+        .eshop-widget
+          = render 'shared/order_widgets'
+
+      .col-sm-9
+        .eshop-content
+          .eshop-detail
+            .eshop-product
+              = form_for @order, html: { multipart: true, role: "form", class: "form-horizontal", id: "inquiry" } do |f|
+
+                = errors_for @order
+                = f.hidden_field :uid
+                = f.hidden_field :inquiry
+
+                .form-group
+                  = f.label :academic_level, class: "col-md-3 control-label"
+                  .col-md-8
+                    .btn-group{ data: { toggle: "buttons"} }
+                      - options_for_academic_level.each do |level|
+                        %label.btn.btn-default{ class: @order.academic_level == level[1] ? "active" : "" }
+                          = f.radio_button :academic_level, level[1], checked: @order.academic_level == level[1]
+                          = level[0]
+
+                .form-group
+                  = f.label :type_of_paper, class: "col-md-3 control-label"
+                  .col-md-8
+                    = f.select :paper_type, options_for_paper_type, {}, class: "form-control  chosen"
+
+                .form-group
+                  = f.label :discipline, class: "col-md-3 control-label"
+                  .col-md-8
+                    = f.select :discipline, options_for_discipline, {}, class: "form-control  chosen"
+
+                .form-group
+                  = f.label :topic, class: "col-md-3 control-label"
+                  .col-md-8
+                    = f.text_field :topic, class: "form-control", maxlength: 250
+
+                .form-group
+                  = f.label :instructions, class: "col-md-3 control-label"
+                  .col-md-8
+                    .instructions-container
+                      = f.text_area :instructions, rows: 4, class: "form-control summernote-v1", placeholder: "Please provide specific and detailed instructions about your paper"
+                      .placeholder Please provide specific and detailed instructions about your paper
+
+                .form-group
+                  = f.label :attachments, class: "col-md-3 control-label"
+                  .col-md-8
+                    = file_field_tag "files[]", multiple: true
+
+                .form-group
+                  = f.label :citation_style, class: "col-md-3 control-label"
+                  .col-md-8
+                    .btn-group{ data: { toggle: "buttons"} }
+                      - options_for_citation_style.each do |style|
+                        %label.btn.btn-default{ class: @order.citation_style == style ? "active" : "" }
+                          = f.radio_button :citation_style, style, checked: @order.citation_style == style
+                          = style
+
+                .row
+                  .col-md-12
+                    .form-group
+                      = f.label :deadline, class: "col-md-3 control-label"
+                      .col-md-9
+                        .btn-group{ data: { toggle: "buttons"}, style: "display: inline-block" }
+                          - options_for_deadline.each do |hour|
+                            %label.btn.btn-default{ class: @order.hours_to_deadline == hour[1] ? "active" : "" }
+                              = f.radio_button :hours_to_deadline, hour[1], checked: @order.hours_to_deadline == hour[1]
+                              = hour[0]
+                        %small.help-block
+                          We estimate that your final submission deadline is
+                          %b#estimated-deadline
+                    .form-group
+                      = f.label :number_of_pages, class: "col-md-3 control-label"
+                      .col-md-9
+                        = f.number_field :pages, class: "touchspin form-control", min: "1"
+                        %small.help-block#words-per-page 275 Words
+
+                    .form-group
+                      = f.label :spacing, class: "col-md-3 control-label"
+                      .col-md-9
+                        .btn-group{ data: { toggle: "buttons"} }
+                          - options_for_spacing.each do |spacing|
+                            %label.btn.btn-default{ class: @order.spacing == spacing[1] ? "active" : "" }
+                              = f.radio_button :spacing, spacing[1], checked: @order.spacing == spacing[1]
+                              = spacing[0]
+                        %small.help-block
+
+                    .form-group
+                      = f.label :number_of_sources, class: "col-md-3 control-label"
+                      .col-md-9
+                        = f.number_field :sources, class: "touchspin form-control"
+
+                    .form-group
+                      .col-md-offset-3.col-md-9
+                        .row.m-t-30
+                          .col-md-6
+                          .col-md-6.text-right
+                            = f.submit "Place free inquiry", class: "btn btn-primary submit-btn", data: { loading_text: "Please Wait..." }

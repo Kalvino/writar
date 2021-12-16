@@ -1,0 +1,17 @@
+= form_for @student, url: student_pass_path, html: {class: ""} do |f|
+  = errors_for @student
+  .form-group
+    = f.label :old_password
+    = f.password_field :current_password, autocomplete: "off", class: "form-control"
+  .row
+    .col-md-6
+      .form-group
+        = f.label :new_password
+        = f.password_field :password, autocomplete: "off", class: "form-control"
+    .col-md-6
+      .form-group
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
+  %br/
+  = f.submit "Update Password", class: "btn btn-primary"
+  = link_to "Cancel", :back, class: "btn btn-default"

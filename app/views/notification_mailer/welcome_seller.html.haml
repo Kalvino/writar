@@ -1,0 +1,23 @@
+ 
+%p
+  Hi
+  %b
+    = @seller.first_name
+    \!
+%p
+  Welcome to Papers Market Place! Thanks so much for joining us. You’re on your way to helping thousands of students
+  study using the papers you have completed in the past and also make some money while at it.
+%p
+  We are an academic platform that enables students access a wide range of academic materials across different disciplines.
+  We offer a marketplace where students and/or tutors can share academic materials with their peers and be rewarded for it.
+%p
+  Its really simple, you upload your paper and once approved, it becomes available for purchase on our marketplace. When
+  a user buys this paper we credit your account with the paper's price less a small fee for using the platform.
+%p
+  Super simple right? Why don't you #{link_to "upload your first paper", new_marketplace_essay_url} right away?
+%p
+  Have any questions? Just shoot us an email on #{ENV["SUPPORT_EMAIL"]}! We’re always here to help.
+%p
+  Cheerfully yours,
+  %br/
+  = t("sitename")

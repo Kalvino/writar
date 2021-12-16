@@ -1,0 +1,17 @@
+.panel.panel-info
+  .panel-heading
+    %h3.panel-title Order this paper now
+  .panel-body
+    .widget.p-lg
+      .m-b-md
+        %h4.m-xs
+          %i.fa.fa-certificate.fa-2x
+          %span.pull-right 100% Original Work
+        %p
+          Order this paper now and it will be delivered within its deadline.
+
+        %p
+          All papers are written from scratch based on the instructions you provide to ensure it is original and is of high quality.
+
+      %p
+        = link_to "Make Order Now", new_order_path(utm_source: "papersmarketplace", utm_medium: "cpc", utm_campaign: "make_order", utm_content: "#{controller_name}_#{action_name}_link"), class: "btn btn-danger btn-block btn-lg"

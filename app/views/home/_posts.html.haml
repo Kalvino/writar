@@ -1,0 +1,9 @@
+- @posts.each do |post|
+  .col-sm-6
+    .recent-blog-post
+      .post-date= post.created_at.strftime("%d %B %Y")
+      %h3= truncate post.title, length: 55
+      %p= truncate strip_tags(post.body), length: 225
+      = link_to post do
+        Read More
+        %i.fa.fa-arrow-circle-right

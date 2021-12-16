@@ -1,0 +1,68 @@
+- heading "Dashboard"
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .ibox-content.m-b-sm.border-bottom
+    .text-center.p-lg
+      %h2 Have a new assignment you need help with?
+      %span don't worry, we are here to help
+      = link_to new_student_order_path,class: "btn btn-primary btn-sm" do
+        %i.fa.fa-plus
+        %span.bold Order Now
+
+  .row
+    %div.col-lg-3
+      .widget.style1.lazur-bg
+        .row
+          .col-xs-4
+            %i.fa.fa-pencil.fa-5x
+          .col-xs-8.text-right
+            %span In Progress
+            %h2.font-bold= number_with_delimiter(@in_progress)
+
+    %div.col-lg-3
+      .widget.style1.yellow-bg
+        .row
+          .col-xs-4
+            %i.fa.fa-clock-o.fa-5x
+          .col-xs-8.text-right
+            %span Pending Payment
+            %h2.font-bold= number_with_delimiter(@pending_payment)
+
+    %div.col-lg-3
+      .widget.style1.navy-bg
+        .row
+          .col-xs-4
+            %i.fa.fa-thumbs-up.fa-5x
+          .col-xs-8.text-right
+            %span Orders Completed
+            %h2.font-bold= number_with_delimiter(@completed)
+
+    %div.col-lg-3
+      .widget.style1.red-bg
+        .row
+          .col-xs-4.text-center
+            %i.fa.fa-star.fa-5x
+          .col-xs-8.text-right
+            %span Total Orders
+            %h2.font-bold=  number_with_delimiter(@total)
+
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Your Recent Orders
+          .ibox-tools
+
+        .ibox-content
+          %table.table.dataTable
+            %thead
+              %tr
+                %th Order ID
+                %th Topic
+                %th Ordered
+                %th Status
+                %th Due On
+                %th
+            %tbody
+              = render @recent_orders
+

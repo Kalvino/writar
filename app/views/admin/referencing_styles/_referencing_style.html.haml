@@ -1,0 +1,7 @@
+%tr
+  %td= referencing_style.name
+  %td
+    .btn-group{:role => "group"}
+      = link_to "<i class='fa fa-eye'></i> View".html_safe, [:admin, referencing_style], class: "btn-white btn btn-xs" if can? :read, referencing_style
+      = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, edit_admin_referencing_style_path(referencing_style), class: "btn-white btn btn-xs" if can? :update, referencing_style
+      = link_to "<i class='fa fa-times'></i> Delete".html_safe, admin_referencing_style_path(referencing_style), method: :delete, class: "btn-white btn btn-xs" if can? :destroy, referencing_style

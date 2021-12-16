@@ -1,0 +1,33 @@
+= title "Forgot Password"
+%section.content-full.bg-color-2
+  = render 'shared/header'
+  .container
+    .forms-only
+      %h1= t("sitename")
+      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, role: "form" }) do |f|
+        = errors_for(resource)
+        %fieldset
+          %h2 Forgot password?
+          %p No worries, enter your email address below. We will send you instructions on how to reset your password.
+          .row
+            .col-md-12= render 'shared/flash'
+            .form-group.col-sm-12
+              %label{:for => "email"}
+                Your email:
+                %span *
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-envelope
+                = f.email_field :email, autofocus: true, class: "form-control", placeholder: "Your email: ", required: true
+          .pull-left
+            = button_tag(:class => "btn", :type => "submit") do
+              %i.fa.fa-paper-plane
+              Send me reset password instructions
+          .pull-right
+            - if controller_name != 'sessions'
+              = link_to "Back to Login", new_session_path(resource_name)
+              %br/
+    .text-center{:style => "margin-top: 30px;"}
+      - if devise_mapping.confirmable? && controller_name != 'confirmations'
+        = link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)
+        %br/

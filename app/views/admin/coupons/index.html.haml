@@ -1,0 +1,29 @@
+- heading "Coupons"
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Coupons
+          .ibox-tools
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+        .ibox-content
+          %table.table.dataTable
+            %thead
+              %tr
+                %th Code
+                %th Amount
+                %th Description
+                %th Expiration
+                %th Created On
+                %th
+            %tbody
+              = render @coupons
+
+
+
+

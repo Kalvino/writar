@@ -1,0 +1,9 @@
+/ FAQ ITEM
+.panel.panel-default
+  .panel-heading
+    %h4.panel-title
+      = link_to "##{faq.id}", data: { parent: "#accordion", toggle: "collapse"}, class: "collapsed" do
+        = faq.question
+  %div{ id: faq.id, class: "panel-collapse collapse #{faq_counter == 0 ? 'in' : '' }" }
+    .panel-body
+      = faq.answer.html_safe

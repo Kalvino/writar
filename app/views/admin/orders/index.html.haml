@@ -1,0 +1,36 @@
+- heading "Orders"
+
+.wrapper.wrapper-content.animated.fadeInRight
+  = render 'shared/analytics_widgets', klass: Order, records_today: @orders_today, records_this_week: @orders_this_week,
+  records_this_month: @orders_this_month, records_this_year: @orders_this_year
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Orders
+          .ibox-tools
+            %a#selected-filter.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-filter
+              Filter
+            %ul.dropdown-menu.dropdown-user
+              %li
+                = link_to "#", class: "filter-orders", data: { source: admin_orders_url(format: "json") } do
+                  = icon_for("all")
+                  All
+              - Order.statuses.keys.each do |key|
+                %li
+                  = link_to "#", class: "filter-orders", data: { source: admin_orders_url(status: key, format: "json") } do
+                    = icon_for(key)
+                    = key.titleize
+
+        .ibox-content
+          %table#admin-orders.table{"data-source" => "#{admin_orders_path(is_admin: "true", format: "json")}"}
+            %thead
+              %tr
+                %th Order ID
+                %th Topic
+                %th Ordered
+                %th Status
+                %th Due On
+                %th
+            %tbody

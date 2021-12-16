@@ -1,0 +1,53 @@
+%nav.navbar-default.navbar-static-side{:role => "navigation"}
+  .sidebar-collapse
+    %ul#side-menu.nav.metismenu
+      %li.nav-header
+        .dropdown.profile-element
+          %span
+            = gravatar_for(current_student.email)
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            %span.clear
+              %span.block.m-t-xs
+                %strong.font-bold= current_student.name
+              %span.text-muted.text-xs.block
+                Details
+                %b.caret
+          %ul.dropdown-menu.animated.fadeInRight.m-t-xs
+            %li= link_to "Profile", student_profile_path
+            %li.divider
+            %li
+              = link_to 'Logout', destroy_student_session_path, :method => :delete
+        .logo-element
+          PMP+
+      %li{:class => "#{active_section(:dashboard)}"}
+        = link_to student_dashboard_path do
+          %i.fa.fa-th-large
+          %span.nav-label Dashboard
+      %li{:class => "#{active_section(:orders)}"}
+        = link_to student_orders_path do
+          %i.fa.fa-book
+          %span.nav-label Orders
+          %span.fa.arrow
+        %ul.nav.nav-second-level.collapse
+          %li{:class => "#{current_action(:index)}"}= link_to "View Orders", student_orders_path
+          %li{:class => "#{current_action(:new)}"}= link_to "New Order", new_student_order_path
+      %li{:class => "#{active_section(:profile)}"}
+        = link_to student_profile_path do
+          %i.fa.fa-user
+          %span.nav-label My Profile
+          %span.fa.arrow
+        %ul.nav.nav-second-level.collapse
+          %li{:class => "#{current_action(:show)}"}= link_to "Profile", student_profile_path
+          %li{:class => "#{current_action(:edit)}"}= link_to "Update Password", edit_student_pass_path
+      %li{:class => "#{active_section(:how_it_works)}"}
+        = link_to student_how_it_works_path do
+          %i.fa.fa-code-fork
+          %span.nav-label How it Works
+      %li{:class => "#{active_section(:faqs)}"}
+        = link_to student_faqs_path do
+          %i.fa.fa-question-circle
+          %span.nav-label FAQs
+      %li
+        = link_to contact_path, class: "open-chat" do
+          %i.fa.fa-comments
+          %span.nav-label Contact Support

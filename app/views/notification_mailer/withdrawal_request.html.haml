@@ -1,0 +1,8 @@
+%p
+  %b= @seller.name
+  has requested a withdrawal
+%p Withdrawal Details
+%p
+  Seller: #{@seller.name}
+  %br/
+  Amount: #{number_to_currency(@withdrawal.amount)}

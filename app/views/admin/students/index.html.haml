@@ -1,0 +1,28 @@
+- heading "Students"
+
+.wrapper.wrapper-content.animated.fadeInRight
+  = render 'shared/analytics_widgets', klass: Student, records_today: @students_today, records_this_week: @students_this_week,
+  records_this_month: @students_this_month, records_this_year: @students_this_year
+
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Students
+          .ibox-tools
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+        .ibox-content
+          %table#students.table{"data-source" => "#{admin_students_path(format: "json")}"}
+            %thead
+              %tr
+                %th First Name
+                %th Last Name
+                %th Email
+                %th Country
+                %th Orders
+                %th Joined
+                %th Actions
+            %tbody

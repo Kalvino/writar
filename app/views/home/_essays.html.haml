@@ -1,0 +1,16 @@
+- @essays.each do |essay|
+  .col-md-3
+    %article.portfolio-item
+      - if essay.thumbnails.any?
+        = image_tag essay.thumbnails.first.file.url(:thumbnail), class: "img-responsive", title: essay.title
+      - else
+        = image_tag "no-preview-sm.jpg", class: "img-responsive"
+      .hover-overlay
+        %p
+          Category: #{essay.category.name}
+          %br/
+          Style: #{essay.referencing_style.name} Pages: #{essay.page_count}
+        = link_to '<i class="fa fa-plus"></i>'.html_safe, essay.thumbnails.any? ? image_path(essay.thumbnails.first.file.url(:blurred)) : "#", class: "show-image"
+        = link_to '<i class="fa fa-link"></i>'.html_safe, essay
+    .portfolio-item-description
+      %h3= truncate essay.title.titleize, length: 31

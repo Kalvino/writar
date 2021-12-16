@@ -1,0 +1,27 @@
+- heading "Papers"
+.row
+  .col-md-12
+    .portlet
+      .portlet-header
+        %h3
+          %i.fa.fa-book
+          Papers
+      / /.portlet-header
+      .portlet-content
+        .table-responsive
+          %table#seller-essays.table.table-striped.table-hover.table-highlight{"data-seller-id" => "#{encrypt(current_seller.id)}", "data-source" => "#{marketplace_essays_url(format: "json")}"}
+            %thead
+              %tr
+                %th Title
+                %th Price
+                %th Pages
+                %th Downloads
+                %th Status
+                %th Uploaded
+                %th Seller
+                %th Actions
+            %tbody
+        / /.table-responsive
+      / /.portlet-content
+    / /.portlet
+  / /.col

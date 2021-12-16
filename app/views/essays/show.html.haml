@@ -1,0 +1,136 @@
+= title @essay.title.titleize
+- content_for :meta_tags do
+  %meta{:content => "Paper Marketplace Writers", :name => "author"}/
+  - if @essay.approved?
+    %meta{:content => "#{$coder.decode @essay.short_description.strip.gsub("\n", "")}", :name => "description"}/
+    = open_graph_tags(@essay.title.titleize, essay_url(@essay), "website", @essay.short_description.strip.gsub("\n", ""), image_url(@essay.thumbnails.any? ? @essay.thumbnails.first.file.url(:medium) : image_url("banner.jpg")))
+    %link{:href => essay_url(@essay), :rel => "canonical"}/
+
+%section.content.content-separator
+  .container
+    %h2 Search our Repository
+    .row
+      .col-md-6.col-md-offset-3
+        = render 'shared/search_lg'
+
+%section.breadcrumb-wrapper
+  .container
+    %h2 Paper Details
+    %ol.breadcrumb
+      = render_breadcrumbs :tag => :li, :separator => ""
+
+.row.paper-flash= render 'shared/flash'
+
+%section#eshop.content.bg-color-2
+  .container
+    .eshop-main.eshop-detail
+      - if session[:essay_id] && session[:essay_id] == @essay.id
+        = render 'download_widget'
+      - else
+        = render 'shared/order_now_widget', revision_prompt: true, search_prompt: false, question_prompt: false
+      / ESHOP PRODUCT
+      .eshop-product.m-b-0
+        .product-sale-label
+          %span.text Price
+          %span.number= number_to_currency @essay.price, precision: 0
+        .row
+          .col-md-5
+
+            - if @essay.thumbnails.any?
+              #portfolio-slider.owl-carousel.owl-theme
+                - @essay.thumbnails.each do |thumbnail|
+                  .item= image_tag thumbnail.file.url(:blurred), class: "img-responsive", alt: "#{@essay.title} - Page #{thumbnail.page_no}", title: "#{@essay.title} - Page #{thumbnail.page_no}", lazy: true
+            - else
+              = image_tag "no-preview-lg.jpg", class: "img-responsive", alt: @essay.title, title: @essay.title
+            .purchase.m-b-30
+              - if session[:essay_id] && session[:essay_id] == @essay.id
+                = link_to download_essays_path, class: "btn btn-lg btn-danger addtocart btn-block download-paper" do
+                  %i.fa.fa-cloud-download
+                  Click to Download
+              - else
+                %p.text-center
+                  = link_to purchase_essay_path(@essay), rel: "nofollow" do
+                    = image_tag "paypal_express_checkout.gif", title: "Pay with paypal", alt: "Pay with paypal"
+                %p
+                %blockquote
+                  * Once your purchase is processed by paypal you will be redirected back to this page and you'll have
+                  the option to download the paper. We'll also send the paper to your paypal email address as proof of purchase.
+                = link_to purchase_essay_path(@essay), class: "btn btn-lg btn-danger addtocart  btn-block", rel: "nofollow" do
+                  %i.fa.fa-cloud-download
+                  Download Paper
+
+          .col-md-7
+            .eshop-product-body
+              .product-tags
+                %span.label.label-info= link_to @essay.category.name, category_essays_path(@essay.category)
+                %span.label.label-danger
+                  = pluralize @essay.page_count, "Page"
+              %h3= @essay.title.titleize
+              %h5
+                %b Question
+              .fr-view
+                = @essay.question.html_safe
+              %h5
+                %b Solution
+              %p
+                %b Title:
+                = @essay.title.titleize
+                %br/
+                %b Length:
+                = pluralize @essay.page_count, "pages"
+                (#{pluralize @essay.word_count, "Words"})
+                %br/
+                %b Style:
+                = @essay.referencing_style.name
+              - if @essay.preview
+                .well.well-sm.fr-view
+                  %p
+                    %b Preview
+                  .readmore
+                    = @essay.preview.html_safe
+              %form
+                %fieldset
+                  .row
+                    .col-sm-6
+                      .product-price
+                        %span.new-price= number_to_currency @essay.price
+                    .col-sm-6.form-group.purchase.text-right
+                      = link_to purchase_essay_path(@essay), rel: "nofollow" do
+                        = image_tag "paypal_express_checkout.gif", title: "Pay with paypal", alt: "Pay with paypal"
+              .blog-post-buttons.clearfix
+                .pull-left
+                  %p.p-t-15
+                    Do you need an affordable high quality custom written paper?
+                .pull-right
+                  = link_to "Order Now", new_order_path(utm_source: "papersmarketplace", utm_medium: "cpc", utm_campaign: "make_order", utm_content: "#{controller_name}_#{action_name}_link"), class: "btn btn-lg btn-danger"
+      .alert.text-center
+        %p.text-info
+
+      = render 'shared/order_now_widget', revision_prompt: false, search_prompt: false, question_prompt: false
+
+    .row.eshop-main.eshop-grid
+      / ESHOP CONTENT - START
+      .col-md-12.eshop-content
+        .row
+          %h2.text-center Related Essays
+          - @related_essays.each do |essay|
+            / ESHOP PRODUCT
+            .col-md-4
+              .eshop-product
+                = link_to essay do
+                  - if essay.thumbnails.any?
+                    = image_tag essay.thumbnails.first.file.url(:thumbnail), class: "img-responsive", alt: essay.title
+                  - else
+                    = image_tag "no-preview-sm.jpg", class: "img-responsive", title: "no preview", alt: "no preview"
+                .product-tags
+                  %span.label.label-info= link_to essay.category.name, category_essays_path(essay.category)
+                  %span.label.label-danger= pluralize essay.page_count, "Page"
+                .eshop-product-body
+                  %h3= link_to truncate(essay.title, length: 25), essay, title: essay.title
+                  .product-price
+                    %span.new-price= number_to_currency(essay.price)
+                  = link_to "View Paper", essay, class: "btn btn-danger btn-sm", style: "color: white"
+      / ESHOP CONTENT - END
+
+- content_for :scripts do
+  -#= render 'shared/videopal'

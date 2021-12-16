@@ -1,0 +1,20 @@
+/ BLOG POST
+.blog-post
+  = link_to image_tag(post.banner.url(:medium), class: "img-responsive", alt: post.title, lazy:true), post
+  .blog-post-detail
+    %span
+      %i.fa.fa-calendar
+      = post.created_at.strftime("%d/%m/%Y")
+    %span
+      %i.fa.fa-comment
+      = post.comments.count
+    %span
+
+  .blog-post-body
+    = link_to post do
+      %h3= post.title
+    /%p= truncate post.body.html_safe.gsub("&nbsp;", " "), length: 500
+    %p= truncate(post.body, :length => 500, :omission => "" , :escape => false)
+    = link_to post, class: "btn btn-primary" do
+      %i.fa.fa-chevron-right
+      Read More

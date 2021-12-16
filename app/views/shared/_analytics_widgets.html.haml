@@ -1,0 +1,32 @@
+- type = klass.to_s == "Essay" ? "Papers" : klass.to_s.pluralize
+- box_width ||= 3
+
+.row
+  %div{ class: "col-lg-#{box_width}"}
+    .ibox
+      .ibox-content
+        %h5 #{type} today
+        %h1.no-margins= number_with_delimiter(records_today)
+        = difference(klass, :day).html_safe
+        %small today vs yesterday
+  %div{ class: "col-lg-#{box_width}"}
+    .ibox
+      .ibox-content
+        %h5 #{type} this week
+        %h1.no-margins= number_with_delimiter(records_this_week)
+        = difference(klass, :week).html_safe
+        %small this week vs last week
+  %div{ class: "col-lg-#{box_width}"}
+    .ibox
+      .ibox-content
+        %h5 #{type} this month
+        %h1.no-margins= number_with_delimiter(records_this_month)
+        = difference(klass, :month).html_safe
+        %small this month vs last month
+  %div{ class: "col-lg-#{box_width}"}
+    .ibox
+      .ibox-content
+        %h5 #{type} this year
+        %h1.no-margins= number_with_delimiter(records_this_year)
+        = difference(klass, :year).html_safe
+        %small this year vs last year

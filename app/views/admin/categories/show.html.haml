@@ -1,0 +1,29 @@
+- heading @category.name
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5
+            = @category.name
+            Category
+          .ibox-tools
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+        .ibox-content
+          - if @category.content
+            = @category.content.html_safe
+          - else
+            %table#category-essays.table{"data-category-id" => "#{@category.id}", "data-source" => "#{admin_essays_url(format: "json")}"}
+              %thead
+                %tr
+                  %th Title
+                  %th Price
+                  %th Pages
+                  %th Downloads
+                  %th Approved
+                  %th Uploaded
+                  %th Seller
+                  %th Actions
+              %tbody

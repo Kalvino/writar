@@ -1,0 +1,26 @@
+// Place all the styles related to the student/orders controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.note-editor .note-editable {
+  border: solid thin rgba(204, 204, 204, 0.4);
+}
+
+.note-editor {
+  min-height: 100px;
+}
+
+.bootstrap-touchspin{
+  width: 25%;
+}
+
+.touchspin {
+  text-align: center;
+}
+
+.promo {
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 5px;
+}
+.font-10{
+  font-size: 10px;
+}

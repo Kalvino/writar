@@ -1,0 +1,56 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  sitename: "Papers Marketplace"
+  contact:
+    help_text: Our support staff is available 24/7 to assist you throughout the process.
+  disclaimer: This revision paper should be used as a source of ideas / reasoning / inspiration for your own research. You should never submit it as your own work.
+  promo_text: If you have a coupon code, please enter it below to receive your credit.
+  meta_tags:
+    home:
+      title:  Cheap Essay Writing Service | Custom Term & Research Papers
+      description: Past Papers, Professional Custom Writing Service Providing High Quality Affordable Written Essays, Research, & Term Papers. Homework Help for Writing, Math & Statistics.
+    about:
+      title: About Papers Marketplace
+      description: Professional Custom Writing Service Providing High Quality Affordable Written Essays, Research, & Term Papers. Homework Help for Writing, Math & Statistics.
+    contact:
+      title: Contact Us
+      description: Our support staff is available 24/7 to assist you throught the process.
+    sellers:
+      signup:
+        title: Create Seller Account
+        description: Create a seller account and start selling your papers today!
+    papers:
+      index:
+        title: Browse and Purchase Past Academic Papers
+        description: Search our rich collection of past academic papers to help you complete your assignments and also help you prepare for your exams
+      category:
+        title: Browse %{category_name} papers
+        description: Search our rich collection of %{category_name} papers to help you complete your assignments and prepare for your exams
+    blog:
+      index:
+        title: Welcome to Papers Marketplace Blog
+        description: Papers Marketplace helps students learn and revise more effectively! On our blog you&#039;ll find education insights and essential tips for students
+  bio:
+    student: Since joining on %{date}, %{username} has made %{orders_count} orders with a total revenue of %{revenue}
+
+

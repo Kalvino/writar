@@ -1,0 +1,36 @@
+- content_for :title, "Coupon: %s | %s " % [ @coupon.code, t("sitename")]
+- content_for :page_heading, "Coupon: %s" % [ @coupon.code ]
+
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInRight
+      .ibox-content.p-xl
+        .row
+          .col-sm-6
+            %h5 Details:
+            %address
+              %strong
+              Amount: #{@coupon.amount_to_s}
+              %br/
+              Coupon Type: #{@coupon.coupon_type.titleize}
+              %br/
+          .col-sm-6.text-right
+            %h4 Coupon Code:
+            %h4.text-navy= @coupon.code
+
+            %p
+              %span
+                %strong Created On:
+                #{@coupon.created_at.strftime("%B %d, %Y")}
+              %br/
+              %span
+                %strong Expires:
+                #{@coupon.valid_until ? @coupon.valid_until.strftime("%B %d, %Y") : "Never"}
+        .table-responsive.m-t
+          %table.table.invoice-table#redemptions.table{"data-source" => "#{admin_redemptions_path(format: "json")}"}
+            %thead
+              %tr
+                %th Redemptions
+                %th Redeemed On
+                %th Order ID
+            %tbody

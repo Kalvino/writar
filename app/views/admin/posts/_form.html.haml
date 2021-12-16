@@ -1,0 +1,33 @@
+.row
+  = form_for [:admin, @post], html: { id: "blog-editor", role: "form", multipart: true, data: { froala_upload_url: admin_froala_uploads_path } } do |f|
+    .col-md-12
+      = errors_for @post
+    .col-md-12
+      %h3.m-t-none.m-b Post Details
+      %p Please fill out the particulars of the post
+      .form-group
+        = f.label :category
+        = f.select :category_id, options_for_categories, { prompt: "Select a Category"},  class: "form-control"
+      .form-group
+        = f.label :title
+        = f.text_field :title, class: "form-control"
+      .form-group
+        = f.label :body
+        = f.text_area :body, class: "form-control"
+      .form-group
+        = f.label :meta_description
+        = f.text_area :meta_description, class: "form-control", placeholder: "Max 255 xters"
+      .form-group
+        = f.label :banner
+        = f.file_field :banner
+      .form-group
+        = f.label :draft
+        %br/
+        .btn-group{ data: { toggle: "buttons"} }
+          - ["true","false"].each do |status|
+            %label.btn.btn-default{ class: @post.draft.to_s == status ? "active" : "" }
+              = f.radio_button :draft, status, checked: @post.draft.to_s == status
+              = status.titleize
+
+    .col-md-12
+      = f.submit class: "btn btn-sm btn-primary pull-right"

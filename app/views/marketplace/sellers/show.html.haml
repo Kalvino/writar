@@ -1,0 +1,214 @@
+= heading "My Profile"
+.row
+  .col-md-9
+    .row
+      .col-md-4.col-sm-5
+        .thumbnail
+          = gravator_for(@seller.email,400,"")
+        / /.thumbnail
+        %br/
+        .list-group
+          = link_to marketplace_essays_path, class: "list-group-item" do
+            %i.fa.fa-book
+              Papers
+            %i.fa.fa-chevron-right.list-group-chevron
+            %span.badge= @seller.essays_count
+          = link_to edit_seller_registration_path, class: "list-group-item" do
+            %i.fa.fa-cogs
+              Update Profile
+            %i.fa.fa-chevron-right.list-group-chevron
+          = link_to edit_marketplace_password_path, class: "list-group-item" do
+            %i.fa.fa-lock
+              Update Password
+            %i.fa.fa-chevron-right.list-group-chevron
+        / /.list-group
+      / /.col
+      .col-md-8.col-sm-7
+        %h2= @seller.name
+        %h4= @seller.username
+        %hr/
+        %p
+          = link_to new_marketplace_essay_path, class: "btn btn-primary" do
+            %i.fa.fa-upload Upload Paper
+            
+          = link_to marketplace_transactions_path, class: "btn btn-secondary" do
+            %i.fa.fa-money My Transactions
+        %hr/
+        %ul.icons-list
+          %li
+            %i.icon-li.fa.fa-envelope
+            = @seller.email
+          %li
+            %i.icon-li.fa.fa-calendar
+            Joined #{@seller.created_at.strftime("%b %d, %Y")}
+          %li
+            %i.icon-li.fa.fa-bank
+            = number_to_currency(@seller.balance)
+          %li
+            %i.icon-li.fa.fa-globe
+            = timezone(@seller.timezone)
+        %br/
+        / <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec.</p>
+        %hr/
+        %br/
+        / <h3 class="heading">Social Feed</h3>
+        / <div class="feed-item feed-item-idea">
+        / <div class="feed-icon">
+        / <i class="fa fa-lightbulb-o"></i>
+        / </div> &lt;!&ndash; /.feed-icon &ndash;&gt;
+        / <div class="feed-subject">
+        / <p><a href="javascript:;">Rod Howard</a> shared an idea: <a href="javascript:;">Create an Awesome Idea</a></p>
+        / </div> &lt;!&ndash; /.feed-subject &ndash;&gt;
+        / <div class="feed-content">
+        / <ul class="icons-list">
+        / <li>
+        / <i class="icon-li fa fa-quote-left"></i>
+        / Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.
+        / </li>
+        / </ul>
+        / </div> &lt;!&ndash; /.feed-content &ndash;&gt;
+        / <div class="feed-actions">
+        / <a href="javascript:;" class="pull-left"><i class="fa fa-thumbs-up"></i> 123</a>
+        / <a href="javascript:;" class="pull-left"><i class="fa fa-comment-o"></i> 29</a>
+        / <a href="javascript:;" class="pull-right"><i class="fa fa-clock-o"></i> 2 days ago</a>
+        / </div> &lt;!&ndash; /.feed-actions &ndash;&gt;
+        / </div> &lt;!&ndash; /.feed-item &ndash;&gt;
+        / <div class="feed-item feed-item-image">
+        / <div class="feed-icon">
+        / <i class="fa fa-picture-o"></i>
+        / </div> &lt;!&ndash; /.feed-icon &ndash;&gt;
+        / <div class="feed-subject">
+        / <p><a href="javascript:;">John Doe</a> posted the <strong>4 files</strong>: <a href="javascript:;">Annual Reports</a></p>
+        / </div> &lt;!&ndash; /.feed-subject &ndash;&gt;
+        / <div class="feed-content">
+        / <div class="thumbnail" style="width: 375px">
+        / <div class="thumbnail-view">
+        / <a class="thumbnail-view-hover ui-lightbox" href="img/mockup.png">
+        / </a>
+        / <img src="img/mockup.png" style="width: 100%;" alt="Gallery Image">
+        / </div>
+        / </div> &lt;!&ndash; /.thumbnail &ndash;&gt;
+        / </div> &lt;!&ndash; /.feed-content &ndash;&gt;
+        / <div class="feed-actions">
+        / <a href="javascript:;" class="pull-left"><i class="fa fa-thumbs-up"></i> 123</a>
+        / <a href="javascript:;" class="pull-left"><i class="fa fa-comment-o"></i> 29</a>
+        / <a href="javascript:;" class="pull-right"><i class="fa fa-clock-o"></i> 2 days ago</a>
+        / </div> &lt;!&ndash; /.feed-actions &ndash;&gt;
+        / </div> &lt;!&ndash; /.feed-item &ndash;&gt;
+        / <div class="feed-item feed-item-file">
+        / <div class="feed-icon">
+        / <i class="fa fa-cloud-upload"></i>
+        / </div> &lt;!&ndash; /.feed-icon &ndash;&gt;
+        / <div class="feed-subject">
+        / <p><a href="javascript:;">John Doe</a> posted the <strong>4 files</strong>: <a href="javascript:;">Annual Reports</a></p>
+        / </div> &lt;!&ndash; /.feed-subject &ndash;&gt;
+        / <div class="feed-content">
+        / <ul class="icons-list">
+        / <li>
+        / <i class="icon-li fa fa-file-text-o"></i>
+        / <a href="javascript:;">Annual Report 2007</a> - annual_report_2007.pdf
+        / </li>
+        / <li>
+        / <i class="icon-li fa fa-file-text-o"></i>
+        / <a href="javascript:;">Annual Report 2008</a> - annual_report_2007.pdf
+        / </li>
+        / <li>
+        / <i class="icon-li fa fa-file-text-o"></i>
+        / <a href="javascript:;">Annual Report 2009</a> - annual_report_2007.pdf
+        / </li>
+        / <li>
+        / <i class="icon-li fa fa-file-text-o"></i>
+        / <a href="javascript:;">Annual Report 2010</a> - annual_report_2007.pdf
+        / </li>
+        / </ul>
+        / </div> &lt;!&ndash; /.feed-content &ndash;&gt;
+        / <div class="feed-actions">
+        / <a href="javascript:;" class="pull-left"><i class="fa fa-thumbs-up"></i> 123</a>
+        / <a href="javascript:;" class="pull-left"><i class="fa fa-comment-o"></i> 29</a>
+        / <a href="javascript:;" class="pull-right"><i class="fa fa-clock-o"></i> 2 days ago</a>
+        / </div> &lt;!&ndash; /.feed-actions &ndash;&gt;
+        / </div> &lt;!&ndash; /.feed-item &ndash;&gt;
+        / <div class="feed-item feed-item-bookmark">
+        / <div class="feed-icon">
+        / <i class="fa fa-bookmark"></i>
+        / </div> &lt;!&ndash; /.feed-icon &ndash;&gt;
+        / <div class="feed-subject">
+        / <p><a href="javascript:;">Rod Howard</a> bookmarked a page on Delicious: <a href="javascript:;">Jumpstart Themes</a></p>
+        / </div> &lt;!&ndash; /.feed-subject &ndash;&gt;
+        / <div class="feed-content">
+        / </div> &lt;!&ndash; /.feed-content &ndash;&gt;
+        / <div class="feed-actions">
+        / <a href="javascript:;" class="pull-left"><i class="fa fa-thumbs-up"></i> 123</a>
+        / <a href="javascript:;" class="pull-left"><i class="fa fa-comment-o"></i> 29</a>
+        / <a href="javascript:;" class="pull-right"><i class="fa fa-clock-o"></i> 2 days ago</a>
+        / </div> &lt;!&ndash; /.feed-actions &ndash;&gt;
+        / </div> &lt;!&ndash; /.feed-item &ndash;&gt;
+        / <div class="feed-item feed-item-question">
+        / <div class="feed-icon">
+        / <i class="fa fa-question"></i>
+        / </div> &lt;!&ndash; /.feed-icon &ndash;&gt;
+        / <div class="feed-subject">
+        / <p><a href="javascript:;">Rod Howard</a> posted the question: <a href="javascript:;">Who can I call to get a new parking pass for the Rowan Building?</a></p>
+        / </div> &lt;!&ndash; /.feed-subject &ndash;&gt;
+        / <div class="feed-content">
+        / <ul class="icons-list">
+        / <li>
+        / <i class="icon-li fa fa-quote-left"></i>
+        / Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.
+        / </li>
+        / </ul>
+        / </div> &lt;!&ndash; /.feed-content &ndash;&gt;
+        / <div class="feed-actions">
+        / <a href="javascript:;" class="pull-left"><i class="fa fa-thumbs-up"></i> 123</a>
+        / <a href="javascript:;" class="pull-left"><i class="fa fa-comment-o"></i> 29</a>
+        / <a href="javascript:;" class="pull-right"><i class="fa fa-clock-o"></i> 2 days ago</a>
+        / </div> &lt;!&ndash; /.feed-actions &ndash;&gt;
+        / </div> &lt;!&ndash; /.feed-item &ndash;&gt;
+  .col-md-3.col-sm-6.col-sidebar-right
+    %h4 Your Statistics
+    .list-group
+      %a.list-group-item{:href => "javascript:;"}
+        %h3.pull-right
+          %i.fa.fa-print
+        %h4.list-group-item-heading= number_with_delimiter @published_essays
+        %p.list-group-item-text Published Papers
+      %a.list-group-item{:href => "javascript:;"}
+        %h3.pull-right
+          %i.fa.fa-exclamation-circle
+        %h4.list-group-item-heading= number_with_delimiter @pending_essays
+        %p.list-group-item-text Not yet Published
+      %a.list-group-item{:href => "javascript:;"}
+        %h3.pull-right
+          %i.fa.fa-shopping-basket
+        %h4.list-group-item-heading= number_with_delimiter(@seller.purchases.count)
+        %p.list-group-item-text Total Purchases
+      %a.list-group-item{:href => "javascript:;"}
+        %h3.pull-right
+          %i.fa.fa-dollar
+        %h4.list-group-item-heading= number_to_currency(@seller.sales)
+        %p.list-group-item-text Total Sales
+    / /.list-group
+    %br/
+    / <div class="well">
+    / <h4>Recent Activity</h4>
+    / <ul class="icons-list text-md">
+    / <li>
+    / <i class="icon-li fa fa-location-arrow"></i>
+    / <strong>Rod</strong> uploaded 6 files.
+    / <br>
+    / <small>about 4 hours ago</small>
+    / </li>
+    / <li>
+    / <i class="icon-li fa fa-location-arrow"></i>
+    / <strong>Rod</strong> followed the research interest: <a href="javascript:;">Open Access Books in Linguistics</a>.
+    / <br>
+    / <small>about 23 hours ago</small>
+    / </li>
+    / <li>
+    / <i class="icon-li fa fa-location-arrow"></i>
+    / <strong>Rod</strong> added 51 papers.
+    / <br>
+    / <small>2 days ago</small>
+    / </li>
+    / </ul>
+    / </div>

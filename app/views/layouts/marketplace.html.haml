@@ -1,0 +1,58 @@
+!!!
+/[if lt IE 7]
+  <html class="no-js lt-ie9 lt-ie8 lt-ie7">
+/[if IE 7]
+  <html class="no-js lt-ie9 lt-ie8">
+/[if IE 8]
+  <html class="no-js lt-ie9">
+/ [if gt IE 8]><!
+%html.no-js
+  / <![endif]
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title= yield :title
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    = render 'shared/favicons'
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+    %link{:href => "https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,800italic,400,600,800", :rel => "stylesheet", :type => "text/css"}/
+    = stylesheet_link_tag 'marketplace', media: 'all'
+    = csrf_meta_tags
+  %body
+    #wrapper
+      %header#header
+        %h1#site-logo
+          = link_to marketplace_dashboard_path do
+            = image_tag "mp-logo.png", alt: "Site Logo"
+        %a#top-bar-toggle.navbar-toggle.collapsed{"data-target" => ".top-bar-collapse", "data-toggle" => "collapse", :href => "javascript:;"}
+          %i.fa.fa-cog
+        %a#sidebar-toggle.navbar-toggle.collapsed{"data-target" => ".sidebar-collapse", "data-toggle" => "collapse", :href => "javascript:;"}
+          %i.fa.fa-reorder
+      / header
+      = render 'layouts/marketplace/top_nav'
+      #sidebar-wrapper.collapse.sidebar-collapse
+        #search
+          %form
+            %input.form-control.input-sm{:name => "search", :placeholder => "Search...", :type => "text"}/
+            %button#search-btn.btn{:type => "submit"}
+              %i.fa.fa-search
+        / #search
+        = render 'layouts/marketplace/side_nav'
+      / /#sidebar-wrapper
+      #content
+        #content-header
+          %h1= yield :page_heading
+        / #content-header
+        #content-container
+          = render 'shared/flash'
+          = yield
+        / /#content-container
+      / #content
+    / #wrapper
+    = render 'layouts/marketplace/footer'
+    = javascript_include_tag 'marketplace'
+    = render 'shared/tawk'
+    - if Rails.env == "production"
+      = render "shared/analytics"
+      = render 'shared/hotjar'

@@ -1,0 +1,56 @@
+- heading @essay.title
+.row
+  .col-lg-12
+    .portlet
+      .portlet-header
+        %h3
+          %i.fa.fa-book
+          = @essay.title.titleize
+      / /.portlet-header
+      .portlet-content
+        .col-md-5
+          .product-images.essay-thumbnails
+            - if @essay.thumbnails.any?
+              - @essay.thumbnails.each do |thumbnail|
+                %div
+                  = image_tag thumbnail.file.url(:medium), class: "thumbnail img-responsive"
+            - else
+              = image_tag "no-preview-lg.jpg", class: "img-responsive thumbnail"
+          %table.table.table-bordered.table-striped.m-t-80
+            %tbody
+              %tr
+                %th{:scope => "row"} Pages
+                %td= @essay.page_count
+              %tr
+                %th{:scope => "row"} Words
+                %td= @essay.word_count
+              %tr
+                %th{:scope => "row"} Category
+                %td= @essay.category.name
+              %tr
+                %th{:scope => "row"} Referencing Style
+                %td= @essay.referencing_style.name
+        .col-md-7
+          %h2.font-bold.m-b-xs
+            = @essay.title.titleize
+          %small= @essay.short_description
+          .m-t-md
+            %h2.product-main-price
+              = number_to_currency(@essay.price)
+              %small= label_for(@essay.status).html_safe
+          %hr/
+          %h5
+            %strong Question
+          .fr-view
+            = @essay.question.html_safe
+          - if @essay.preview
+            %h5
+              %strong Answer Preview
+            .well.fr-view
+              = @essay.preview.html_safe
+          %hr/
+          %div
+            .btn-group
+              = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, edit_marketplace_essay_path(@essay), class: "btn btn-default btn-sm" if can? :update, @essay
+              = link_to "<i class='fa fa-eye'></i> View as User".html_safe, essay_path(@essay), target: "_blank", class: "btn btn-success btn-sm"
+      / /.portlet-content

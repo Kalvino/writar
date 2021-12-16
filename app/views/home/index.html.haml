@@ -1,0 +1,78 @@
+- content_for :meta_tags do
+  %meta{:content => "#{t("meta_tags.home.description")}", :name => "description"}/
+  = open_graph_tags(t("meta_tags.home.title"), root_url,"website",t("meta_tags.home.description"),image_url("banner.jpg"))
+  %link{:href => "https://papersmarketplace.com/", :rel => "canonical"}/
+  = title t("meta_tags.home.title")
+
+.jumbotron.jumbotron4
+  .container
+    %h2.text-center
+      Search Our Repository
+    .row
+      .col-md-8.col-md-offset-2
+        = render 'shared/search_lg'
+= render 'shared/flash'
+
+%section.content
+  .container
+    %h1
+      Professional Writing Service For students
+    %ul
+      %li{:dir => "ltr"}
+        %p{:dir => "ltr"} SAVE TIME AND ENERGY By taking advantage of this essay writing service, you can spend more time in your busy schedule taking a much needed, restful break from the overwhelming homework you are faced with 
+      %li{:dir => "ltr"}
+        %p{:dir => "ltr"} ANY TYPE OF PAPER, ANY TIME Whether you need research papers, theses, essays, term papers or any other style of writing, you will find what you need through this cheap paper writing service
+      %li{:dir => "ltr"}
+        %p{:dir => "ltr"} FULL RANGE OF TOPICS This paper writing service will take the stress out of having to determine what to write about, how to research it and how to add citations, as all of these services and more are provided for you. Even the formatting and editing is completed on your behalf 
+      %li{:dir => "ltr"}
+        %p{:dir => "ltr"} SWIFT DELIVERY ON A DEADLINE No matter if your deadline is at the end of the week or in only a few hours, this cheap essay writing service will deliver your well-written paper right on time 
+      %li{:dir => "ltr"}
+        %p{:dir => "ltr"} SUITABLE FOR ANY ACADEMIC LEVEL Regardless of the difficulty of your course or your grade level, this professional paper writing service has you covered
+    %p{:dir => "ltr"} As a student, trying to balance your life between academics, work, rest and free time can be difficult. It seems that no matter how much work you accomplish in the classroom, there are always assignments weighing you down and demanding your attention, when all you'd like to do is take a breath and relax. With essay writing services, you can take a step back from your course load and trust that whatever paper you need written, whatever the style and whatever the topic, you can have it prepared by a professional writer, leaving you only needing to hand it into your professor. 
+    %p{:dir => "ltr"} This cheap essay writing service offers pre-written papers on any number of topics, no matter what it is you are studying. What's more, you won't even have to worry about choosing a specific topic within your discipline, as the writers will do so for you. All of the research needed to write the paper will be taken care of, and the necessary citations will be included and properly formatted all on your behalf. The writing services are available for students of any academic level in subjects of any level of difficulty, providing you a full range of services from the start to finish of your academic career. 
+    %p{:dir => "ltr"} Whether you need a thesis, a term paper or just a simple essay, you'll be able to find it here. This cheap essay writing service is able to provide you with your paper as soon as within a few hours, ensuring that no matter how soon your deadline is, you'll have the paper ready to turn in on a moment's notice. 
+    %p{:dir => "ltr"} Give yourself the break you deserve without missing a beat in your academic life with our cheap paper writing services and see what a difference pre-written essays can make for you. 
+
+
+%section#section-features.content.bg-color-2
+  .container
+    .row
+      .col-sm-6.col-md-3
+        .feature
+          %i.fa.fa-dollar
+          %h3 Affordable Essays
+          %p Get a varietly of well written, high quality done papers for as little as $1
+      .col-sm-6.col-md-3
+        .feature
+          %i.fa.fa-eye
+          %h3 Transparency
+          %p Preview the papers before buying. Know of what you’re buying before you commit your funds
+      .col-sm-6.col-md-3
+        .feature
+          %i.fa.fa-magic
+          %h3 Easy to use
+          %p We have made it easy for you to get what you’re looking for using our user friendly interface and search tools
+      .col-sm-6.col-md-3
+        .feature
+          %i.fa.fa-trophy
+          %h3 Quality Guarantee
+          %p All our papers go through a rigorous quality check from a team dedicated to Quality control. Buy with confidence  
+
+%section#separator1.content.content-separator.text-center
+  .container
+    %p
+      Sell papers you have completed in the past and start earning money today #{link_to "Start Selling", new_seller_registration_path, class: "btn btn-lg btn-inverse"}
+%section#section-portfolio.content.bg-color-2
+  .container
+    %h2 Recent Papers
+    .row
+      = render partial: "essays" if @essays.any?
+%section#section-blog-posts.content
+  .container
+    %h2.text-center Recent Blog Post
+    .row
+      = render partial: "posts" if @posts.any?
+    .text-center
+      = link_to posts_path, class: "btn btn-inverse btn-lg" do
+        %i.fa.fa-arrow-circle-down>
+        See more Posts

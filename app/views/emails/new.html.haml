@@ -1,0 +1,49 @@
+= title t("meta_tags.contact.title")
+- content_for :meta_tags do
+  %meta{:content => "#{t("meta_tags.contact.description")}", :name => "description"}/
+  = open_graph_tags(t("meta_tags.contact.title"), contact_url,"website",t("meta_tags.contact.description"),image_url("banner.jpg"))
+%section.jumbotron2
+  .container
+    %h2
+      Stay in touch
+      %small How would you like to contact us?
+.row.paper-flash= render 'shared/flash'
+%section#contact.content
+  .container
+    .row
+      .col-sm-6
+        %h2 Leave a message
+        = form_for @email, html: {class: ""} do |f|
+          = errors_for @email
+          %fieldset
+            .row
+              .form-group.col-sm-6
+                = f.label :first_name, 'First Name<span>*</span>'.html_safe
+                = f.text_field :first_name, class: "form-control", placeholder: "First Name", required: true
+              .form-group.col-sm-6
+                = f.label :last_name, 'Last Name<span>*</span>'.html_safe
+                = f.text_field :last_name, class: "form-control", placeholder: "Last Name", required: true
+            .row
+              .form-group.col-sm-6
+                = f.label :subject, 'Subject<span>*</span>'.html_safe
+                = f.text_field :subject, class: "form-control", placeholder: "Subject"
+              .form-group.col-sm-6
+                = f.label :email, 'Email<span>*</span>'.html_safe
+                = f.email_field :address, class: "form-control", placeholder: "Email Address", required: true
+            .row
+              .form-group.col-sm-12.m
+                = f.label :message, 'Message<span>*</span>'.html_safe
+                = f.text_area :message, class: "form-control m-b-30", placeholder: "Your message: "
+                = recaptcha_tags
+                = button_tag(type: 'submit', class: "btn btn-primary btn-sm") do
+                  %i.fa.fa-check>
+                  Submit
+                %span.form-info
+                  %span.required *
+                  These fields are required
+      .col-sm-6
+        %h2 Contact Us
+        %p= t("contact.help_text")
+        = render 'shared/contacts'
+        %ul.brands.brands-md.brands-inline.brands-transition.brands-circle.main
+          = render 'shared/social_profiles'

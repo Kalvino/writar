@@ -1,0 +1,17 @@
+%tr
+  %td= coupon.code
+  %td= coupon.coupon_type == "amount" ? number_to_currency(coupon.amount) : number_to_percentage(coupon.amount, precision: 0)
+  %td= coupon.description
+  %td= coupon.valid_until ? coupon.valid_until.strftime("%d %b %Y") : "Never"
+  %td= coupon.created_at.strftime("%d %b %Y")
+  %td.text-right
+    .btn-group{ role: "group" }
+      = link_to  [:admin, coupon], class: "btn-default btn-white btn btn btn-xs" do
+        %i.fa.fa-eye
+        View
+      = link_to edit_admin_coupon_path(coupon), class: "btn-default btn-white btn btn btn-xs" do
+        %i.fa.fa-pencil
+        Edit
+      = link_to admin_coupon_path(coupon), method: :delete, data: { confirm: "Are you sure you want to delete this coupon?" }, class: "btn-default btn-danger btn btn btn-xs" do
+        %i.fa.fa-trash
+        Delete

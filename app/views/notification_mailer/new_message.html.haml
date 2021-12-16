@@ -1,0 +1,17 @@
+%p
+  Hello
+  %b= @user.is_a?(Admin) ? @message.order.student.first_name : "Admin"
+%p
+  You have a new message for your order:
+  %b
+    \##{@message.order.uid} #{@message.order.topic}
+%p
+  %b Message
+%p= @message.content
+%p
+  = link_to "Click here", @url
+  to view and reply to this message
+%p
+  Regards,
+  %br/
+  = t("sitename")

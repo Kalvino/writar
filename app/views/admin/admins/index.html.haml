@@ -1,0 +1,29 @@
+- heading "Admins"
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Admins
+          .ibox-tools
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+                = link_to "Add Admin", new_admin_admin_path
+        .ibox-content
+          - if @admins.any?
+            %table.table
+              %thead
+                %tr
+                  %th First Name
+                  %th Last Name
+                  %th Email
+                  %th Role
+                  %th Signin Count
+                  %th Last signed in
+                  %th Actions
+              %tbody
+                = render @admins
+          - else
+            %p No admins found.

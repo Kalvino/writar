@@ -1,0 +1,13 @@
+---
+:verbose: true
+:pidfile: ./tmp/pids/sidekiq.pid
+:concurrency: 10
+:timeout: 60
+:queues:
+  - paypal
+  - default
+  - intercom
+  - thumbnails
+  - scrapers
+production:
+  :logfile: ./log/sidekiq.log

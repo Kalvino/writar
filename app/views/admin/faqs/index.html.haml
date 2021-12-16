@@ -1,0 +1,13 @@
+- heading "Frequently Asked Questions"
+
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInRight
+      .ibox-content.m-b-sm.border-bottom
+        .text-center.p-lg
+          %h2 Have a new question-answer to add?
+          %span add your question by clicking
+          = link_to new_admin_faq_path,class: "btn btn-primary btn-sm" do
+            %i.fa.fa-plus
+            %span.bold This Button
+      = render @faqs

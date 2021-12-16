@@ -1,0 +1,24 @@
+- heading "Transaction"
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Transactions
+          .ibox-tools
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+        .ibox-content
+          %table#transactions.table{"data-source" => "#{admin_transactions_path(format: "json")}"}
+            %thead
+              %tr
+                %th Date
+                %th Type
+                %th Amount
+                %th Bal Before
+                %th Bal After
+                %th User
+                %th Ref ID
+            %tbody

@@ -1,0 +1,23 @@
+= form_for [:student, @student], html: {class: ""} do |f|
+  = errors_for @student
+  .row
+    .col-md-6
+      .form-group
+        = f.label :first_name
+        = f.text_field :first_name, class: "form-control"
+    .col-md-6
+      .form-group
+        = f.label :last_name
+        = f.text_field :last_name, class: "form-control"
+  .row
+    .col-md-12
+      .form-group
+        = f.label :email
+        = f.text_field :email, class: "form-control"
+
+    -#.col-md-6
+    -#  .form-group
+    -#    = f.label :timezone
+    -#    = f.time_zone_select :timezone, nil, {}, class: "form-control"
+  %br/
+  = f.submit "Update Profile", class: "btn btn-primary"

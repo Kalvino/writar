@@ -1,0 +1,142 @@
+- heading @order.topic
+
+.row
+  .col-lg-9
+    .wrapper.wrapper-content.animated.fadeInUp.m-b-100
+      .ibox
+        .ibox-content
+          .row
+            .col-lg-12
+              .m-b-md
+                .btn-group.pull-right
+                  - if can? :update, @order
+                    = link_to edit_admin_order_path(@order), class: "btn btn-white btn-xs" do
+                      %i.fa.fa-pencil
+                      Edit Order
+                  - if can? :destroy, @order
+                    = link_to admin_order_path(@order), method: :delete, class: "btn btn-danger btn-xs", data: { confirm: "Are you sure you want to delete this order?" } do
+                      %i.fa.fa-trash
+                      Delete Order
+                %h2= @order.topic.titleize
+              %dl.dl-horizontal
+                %dt Status:
+                %dd#order-status= label_for_order(@order).html_safe
+          .row
+            .col-lg-6
+              %dl.dl-horizontal
+                %dt Student:
+                %dd
+                  - if @order.student
+                    = @order.student.name
+                    = link_to [:admin, @order.student] do
+                      %i.fa.fa-external-link-square
+                  - else
+                    No student
+                %dt Academic Level:
+                %dd= @order.academic_level.titleize
+                %dt Paper Type:
+                %dd= @order.paper_type
+                %dt Discipline:
+                %dd= @order.discipline
+                %dt Due On:
+                %dd= @order.due_at.strftime("%d %b %Y at %I:%M%p")
+
+            #cluster_info.col-lg-6
+              %dl.dl-horizontal
+                %dt Assigned Writer:
+                %dd
+                  - if @order.assigned_to
+                    = @order.assigned_to.name
+                    = link_to [:admin, @order.assigned_to] do
+                      %i.fa.fa-external-link-square
+                  - else
+                    None
+                %dt Citation Style:
+                %dd= @order.citation_style
+                %dt Sources:
+                %dd= @order.sources
+                %dt Pages:
+                %dd= @order.pages
+                %dt Spacing:
+                %dd= @order.spacing.titleize
+          .row
+            .col-lg-12
+              %dl.dl-horizontal
+                %dt Order Progress:
+                %dd
+                  .progress.progress-striped.active.m-b-sm
+                    .progress-bar{:style => "width: #{@order.progress}%;"}
+                  %small
+                    Order progress currently at:
+                    = succeed "." do
+                      %strong
+                        = @order.progress.round
+                        \%
+            .col-lg-12
+              .well.well-lg
+                %h4 Instructions
+                = @order.instructions.html_safe
+        .ibox-footer
+          %h4 Order Attachments
+          - if @order.attachments.any?
+            %ul.list-unstyled.project-files
+              = render @order.attachments
+          - else
+            %p No attachments found for this order.
+
+      - if @messages.any?
+        = render @messages
+
+      - if @order.student
+        = render 'admin/messages/form', order: @order, message: @message if can? :create, Message
+
+  .col-lg-3
+    .wrapper.wrapper-content.project-manager
+      - if @order.invoice
+        .widget.style1
+          .row
+            .col-xs-4.text-center
+              %i.fa.fa-bank.fa-5x
+            .col-xs-8.text-right
+              %span
+                Order Quote #{link_to_if @order.invoice.payment_status.eql?("pending") && can?(:update, @order.invoice), "<i class='fa fa-pencil'></i>".html_safe, edit_admin_order_invoices_path(@order), title: "Edit Quote"}
+              %h2.font-bold= number_to_currency(@order.invoice.amount)
+        - if @order.invoice.payment_status.present?
+          = render 'shared/payment_status', order: @order
+
+      - unless @order.assigned_to
+        .ibox
+          .ibox-title
+            %h5 Assign Writer
+          .ibox-content
+            = form_for [:admin, @order] do |f|
+              .form-group
+                = f.select :assigned_to_id, Writer.all.map {|w| [w.name, w.id]}, { prompt: "Select Writer"}, class: "form-control chosen"
+
+              = f.submit "Assign Order", class: "btn btn-primary btn-block submit-btn", data: { loading_text: "Please Wait..." }
+
+      - if can?(:create, Invoice) && @order.status == "pending_quote"
+        - unless @order.invoice.present?
+          .ibox
+            .ibox-title
+              %h5 Send Quote
+            .ibox-content
+              = render 'admin/invoices/form', order: @order, invoice: Invoice.new
+
+      - if @order.status == "in_progress"
+        .btn-group.btn-block{:style => "margin-bottom: 20px;"}
+          - Order.statuses.select { |k, v| ["completed", "cancelled"].include?(k) }.keys.each do |key|
+            = link_to key.titleize, admin_order_path(@order), class: "btn btn-white status #{class_for(@order.status, key)}", data: {type: "Order", status: key}
+
+      - if ["completed","cancelled"].include?(@order.status)
+        .ibox
+          .ibox-title
+            %h5 Order Review
+          .ibox-content
+            %span.small
+              - if @order.review.present?
+                = @order.review.content
+              - else
+                No review left for this order
+
+      = render 'shared/pager', record: @order

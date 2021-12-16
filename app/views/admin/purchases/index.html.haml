@@ -1,0 +1,30 @@
+= heading "Purchased Papers"
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      #purchase-map{:style => "height: 300px;"}
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Purchase History
+          .ibox-tools
+        .ibox-content
+          .table-responsive
+            %table#essay-purchases.table.table-striped.table-hover{"data-source" => "#{admin_purchases_path(format: "json")}"}
+              %thead
+                %tr
+                  %th Name
+                  %th Email
+                  %th Paper
+                  %th Amount
+                  %th Date
+                  %th Actions
+              %tbody
+              %tfoot
+                %tr
+                  %th Name
+                  %th Email
+                  %th Essay
+                  %th Status
+                  %th Date
+                  %th Actions

@@ -1,0 +1,13 @@
+%ul#myTab.nav.nav-pills.nav-stacked
+  %li{:class => "#{current_action(:profile)}"}
+    = link_to edit_seller_registration_path(:anchor => "profile-tab"), data: {toggle: "tab"} do
+      %i.fa.fa-user
+        Profile Settings
+  %li{:class => "#{current_action(:password)}"}
+    = link_to edit_seller_registration_path(:anchor => "password-tab"), data: {toggle: "tab"} do
+      %i.fa.fa-lock
+        Change Password
+  %li{:class => "#{current_action(:payments)}"}
+    = link_to edit_seller_registration_path(:anchor => "payments"), data: {toggle: "tab"} do
+      %i.fa.fa-dollar
+        Payment Methods

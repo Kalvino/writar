@@ -1,0 +1,31 @@
+.panel.panel-info
+  .panel-heading
+    %h3.panel-title Make Order
+  .panel-body
+    .widget.p-lg
+      .m-b-md
+        %h4.m-xs
+          %i.fa.fa-user-secret.fa-2x
+          %span.pull-right Private And Secure
+        %p Information about your order is will never be shared with any third parties. You can trust us!
+
+      .widget.p-lg
+        .m-b-md
+          %h4.m-xs
+            %i.fa.fa-briefcase.fa-2x
+            %span.pull-right Money Back Guarantee
+          %p
+            Quality of our services and 100% satisfaction of our clients are ensured by our money back policy.
+            Your satifaction is our aim.
+
+      .widget.p-lg
+        .m-b-md
+          %h4.m-xs
+            %i.fa.fa-certificate.fa-2x
+            %span.pull-right 100% Original Work
+          %p
+            Every paper delivered by our writers is unique, plagiarism free and absolutely authentic.
+            It is written from scratch to meet your requirements and academic needs.
+
+      %p
+        = link_to "Make Order Now", new_order_path(utm_source: "papersmarketplace", utm_medium: "cpc", utm_campaign: "make_order", utm_content: "#{controller_name}_#{action_name}_link"), class: "btn btn-danger btn-block btn-lg"

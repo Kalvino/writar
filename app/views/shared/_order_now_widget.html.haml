@@ -1,0 +1,38 @@
+.about-author{ style: revision_prompt ? "margin-top: -30px;" : ""}
+  .media-body.text-center
+    %h4.media-heading Order a high quality custom written paper
+    %p.m-b-30
+      - if revision_prompt
+        #{t("disclaimer")}
+        Need something custom and original? Choose from a wide range of academic writing tasks and get the one you need.
+      - elsif search_prompt
+        We could not find any papers matching
+        %b= "#{params[:query]}."
+        You can order a high quality custom written paper that is 100% original that has been written from scratch
+        to meet your requirements.
+      - elsif question_prompt
+        Order this paper now and it will be delivered within its deadline. All papers are written from scratch based on
+        the instructions you provide to ensure it is original and is of high quality.
+      - else
+        With a team of proficient and enthusiastic writers, we are able to produce a compelling text on practically any topic.
+    .row
+      - unless revision_prompt
+        .col-md-4
+          .widget.p-lg.text-center
+            .m-b-md
+              %i.fa.fa-shield.fa-4x
+              %h3.m-xs Plagiarism Free
+        .col-md-4
+          .widget.p-lg.text-center
+            .m-b-md
+              %i.fa.fa-magic.fa-4x
+              %h3.m-xs Excellent Quality
+        .col-md-4
+          .widget.p-lg.text-center
+            .m-b-md
+              %i.fa.fa-briefcase.fa-4x
+              %h3.m-xs 100% MONEYBACK
+      .col-xs-12.m-b-30{ class: revision_prompt ? "" : "m-t-30" }
+        = link_to "Free Quote", inquiry_orders_path(utm_source: "papersmarketplace", utm_medium: "cpc", utm_campaign: "make_order", utm_content: "#{controller_name}_#{action_name}_link"), class: "btn btn-primary btn-lg"
+        %span.spacer Or
+        = link_to "Order Now", new_order_path(utm_source: "papersmarketplace", utm_medium: "cpc", utm_campaign: "make_order", utm_content: "#{controller_name}_#{action_name}_link"), class: "btn btn-danger btn-lg"

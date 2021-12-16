@@ -1,0 +1,35 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require shared/bootstrap.min
+ *= require font-awesome
+ *= require frontend/animate
+ *= require frontend/yamm
+ *= require frontend/jquery.bootstrap-touchspin
+ *= require frontend/owl.carousel
+ *= require frontend/owl.theme
+ *= require frontend/owl.transitions
+ *= require frontend/magnific-popup
+ *= require frontend/creative-brands
+ *= require frontend/typeahead
+ *= require frontend/color
+ *= require frontend/custom
+ *= require shared/froala/froala_style
+ *= require shared/bootstrap-chosen
+ *= require student/summernote
+ * require student/summernote-bs3
+ *= require home
+ *= require essays
+ *= require orders
+ *= require faqs
+ *= require_self
+ */

@@ -1,0 +1,60 @@
+- heading "Transaction Details"
+
+.row
+  .col-lg-12
+    .wrapper.wrapper-content.animated.fadeInRight
+      .ibox-content.p-xl
+        .row
+          .col-lg-12
+            %dl.dl-horizontal
+              %dt Transaction ID:
+              %dd.text-navy= @transaction.txn_id.insert(0, "#")
+          .col-lg-6
+            %dl.dl-horizontal
+              %dt User:
+              %dd= @transaction.owner.name
+              %dt Transaction Type:
+              %dd= @transaction.txn_type
+              %dt Date:
+              %dd= @transaction.created_at.strftime("%B %d, %Y at %I:%M%p")
+          .col-lg-6
+            %dl.dl-horizontal
+              %dt Balance Before:
+              %dd= number_to_currency(@transaction.balance_before)
+              %dt Amount:
+              %dd= number_to_currency(@transaction.amount)
+              %dt Balance After:
+              %dd= number_to_currency(@transaction.balance_after)
+
+        .table-responsive.m-t
+          %table.table.invoice-table
+            %thead
+              %tr
+                %th Description
+                %th Amount
+                %th User
+            %tbody
+              %tr
+                %td
+                  %div
+                    %strong= @transaction.txn_type
+                  %small= @transaction.description
+                %td= number_to_currency(@transaction.amount)
+                %td= link_to @transaction.owner.name, [:admin, @transaction.owner]
+        / /table-responsive
+        %table.table.invoice-total
+          %tbody
+            %tr
+              %td
+                %strong BALANCE BEFORE :
+              %td= number_to_currency(@transaction.balance_before)
+            %tr
+              %td
+                %strong AMOUNT :
+              %td= number_to_currency(@transaction.amount)
+            %tr
+              %td
+                %strong BALANCE AFTER :
+              %td= number_to_currency(@transaction.balance_after)
+      .col-md-12
+        = render 'shared/pager', record: @transaction

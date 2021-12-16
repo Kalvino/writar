@@ -1,0 +1,19 @@
+ 
+%p
+  Hello
+  %b
+    = @seller.first_name
+    \!
+%p
+  Just wanted to let you know that your paper
+  %b= link_to @paper.title, essay_url(@paper)
+  has been approved
+  for listing in our marketplace.
+%p
+  Once this paper sells, we will notify you via email. Keep up the good job and upload more papers to boost your chances
+  of selling.
+%p= link_to "Upload More Papers", new_marketplace_essay_url
+%p
+  Cheerfully yours,
+  %br/
+  = t("sitename")

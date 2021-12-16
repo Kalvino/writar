@@ -1,0 +1,14 @@
+.social-feed-separated
+  .social-avatar
+    = link_to [:admin, message.user] do
+      = gravatar_for(message.user.email, 52)
+  .social-feed-box
+    .social-avatar
+      = link_to message.user.name, [:admin, message.user]
+      %small.text-muted.pull-right= message.created_at.strftime("%b %d, %Y at %I:%M%p")
+    .social-body
+      %p= message.content
+    - if message.attachments.any?
+      .social-footer
+        %ul.list-unstyled.project-files
+          = render message.attachments

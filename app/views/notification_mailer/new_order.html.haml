@@ -1,0 +1,23 @@
+%p
+  %b Hi Admin
+%p Notification of a new order posted
+%p
+  Topic: #{@order.topic}
+  %br/
+  Paper Type: #{@order.paper_type}
+  %br/
+  Discipline: #{@order.discipline}
+  %br/
+  Academic Level: #{@order.academic_level}
+  %br/
+  Due At: #{@order.due_at.strftime("%a, %d %B at %I:%M%p")}
+  %br/
+  %br/
+  Student: #{@order.student.name}
+%p
+  = link_to "Click here", admin_order_url(@order)
+  to view more details about this order and get in touch with the student
+%p
+  Regards,
+  %br/
+  #{t("sitename")}

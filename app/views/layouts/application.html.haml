@@ -1,0 +1,35 @@
+!!!
+%html{:lang => "en"}
+  %head
+    /
+      \==========================
+      Meta Tags
+      \===========================
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %meta{:content => "en", :name => "Language"}/
+    %meta{:content => "global", :name => "distribution"}/
+    %meta{:content => "© #{Date.today.year} | Paper Marketplace", :name => "copyright"}/
+    %meta{:content => "0qtlkq5yS6qoUCnraC_1pmfrqTFFErnM3buXGybb3FM", :name => "google-site-verification"}/
+    %meta{:content => "593D3D6367D78FCDDEF84B0593DFF7BF", :name => "msvalidate.01"}/
+    = yield :meta_tags if content_for?(:meta_tags)
+    %title= yield :title
+    = render "shared/favicons"
+
+    = stylesheet_link_tag 'application', media: 'all'
+    = csrf_meta_tags
+    /[if lt IE 9]
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  %body.color-blue{:id => "#{controller_name}_#{action_name}"}
+    #page-wrapper
+      = render 'layouts/frontend/navigation' unless ["sessions", "registrations","passwords","confirmations"].include?(controller_name)
+      = yield
+      = render 'layouts/frontend/footer'  unless ["sessions", "registrations","passwords","confirmations"].include?(controller_name)
+    = javascript_include_tag 'application', async: true
+    = render 'shared/tawk', async: true
+    - if Rails.env == "production"
+      = render "shared/analytics", async: true
+      = render 'shared/addthis' if ["essays","posts"].include?(controller_name)
+      = render 'shared/hotjar'
+      = yield :scripts if content_for?(:scripts)

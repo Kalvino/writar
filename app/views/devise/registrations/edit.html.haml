@@ -1,0 +1,120 @@
+= heading "Update Info"
+.row
+  .col-md-3.col-sm-4
+    = render 'shared/settings_nav'
+  / /.col
+  .col-md-9.col-sm-8
+    .tab-content.stacked-content
+      #profile-tab.tab-pane.fade.active.in
+        %h3 Edit Profile Settings
+        %p Use the form below to update your profile info. You can update your first name, last name, email address and also make changes to your timezone.
+        %hr/
+        %br/
+        = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal" }) do |f|
+          = errors_for resource
+          .form-group
+            %label.col-md-3 Username
+            .col-md-7
+              = f.text_field :username, class: "form-control", disabled: true
+            / /.col
+          / /.form-group
+          .form-group
+            %label.col-md-3 First Name
+            .col-md-7
+              = f.text_field :first_name, class: "form-control", autofocus: true
+            / /.col
+          / /.form-group
+          .form-group
+            %label.col-md-3 Last Name
+            .col-md-7
+              = f.text_field :last_name, class: "form-control"
+            / /.col
+          / /.form-group
+          .form-group
+            %label.col-md-3 Email Address
+            .col-md-7
+              = f.email_field :email, class: "form-control"
+              - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+                %div
+                  Currently waiting confirmation for: #{resource.unconfirmed_email}
+            / /.col
+          / /.form-group
+          -#.form-group
+          -#  %label.col-md-3 Time Zone
+          -#  .col-md-7
+          -#    = f.time_zone_select :timezone, nil, {}, class: "form-control select-2"
+            / /.col
+          / /.form-group
+          .form-group
+            .col-md-7.col-md-push-3
+              = f.submit "Save Changes", class: "btn btn-primary"
+               
+              \#{link_to "Cancel", :back, class: "btn btn-default"}
+            / /.col
+          / /.form-group
+      #password-tab.tab-pane.fade
+        %h3 Change Your Password
+        %p If you wish to update your password, fill in your current password (we require it for security purposes) and then fill in your new password and password confirmation.
+        %br/
+        = form_for(current_seller, :url => marketplace_password_path, :html => {:class => 'form-horizontal'}) do |f|
+          = errors_for current_seller
+          .form-group
+            %label.col-md-3 Old Password
+            .col-md-7
+              = f.password_field :current_password, autocomplete: "off", class: "form-control"
+            / /.col
+          / /.form-group
+          %hr/
+          .form-group
+            %label.col-md-3 New Password
+            .col-md-7
+              = f.password_field :password, autocomplete: "off", class: "form-control"
+            / /.col
+          / /.form-group
+          .form-group
+            %label.col-md-3 New Password Confirm
+            .col-md-7
+              = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
+            / /.col
+          / /.form-group
+          %br/
+          .form-group
+            .col-md-7.col-md-push-3
+              = f.submit 'Update Password', class: "btn btn-primary"
+               
+              \#{link_to "Cancel", :back, class: "btn btn-default"}
+            / /.col
+          / /.form-group
+      #payments.tab-pane.fade
+        %h3 Payments Methods
+        %p We currently support withdrawals to Paypal at the moment. Fill in the paypal email you wish to receive payments to. More withdrawal methods coming soon.
+        %hr/
+        = form_for(current_seller, :url => marketplace_seller_path(current_seller), :html => {id: "update-paypal-email-form" ,:class => "form-horizontal #{current_seller.paypal_email.nil? ? "" : "hidden" }"}, remote: true) do |f|
+          .alert.alert-danger.hidden.text-center{:role => "alert"}
+          .form-group
+            %label.col-md-3 Paypal Email
+            .col-md-7
+              = f.email_field :paypal_email, class: "form-control"
+            / /.col
+          / /.form-group
+          .form-group
+            .col-md-7.col-md-push-3
+              = f.submit 'Submit', class: "btn btn-primary", id: "submit-paypal-form"
+            / /.col
+          / /.form-group
+        .alert.alert-success.hidden.text-center{:role => "alert"}
+        %table#tb{:class => "table #{current_seller.paypal_email.nil? ? "hidden" : ""}"}
+          %thead
+            %tr
+              %th #
+              %th Email
+              %th
+          %tbody
+            %tr
+              %th{:scope => "row"} 1
+              %td#pp-email= current_seller.paypal_email
+              %td= link_to "Edit", "#", id: "edit-paypal-email"
+  / /.col
+/ <h3>Cancel my account</h3>
+/ <p>Unhappy? <haml_silent></haml_silent></p>
+/ <haml_silent></haml_silent>

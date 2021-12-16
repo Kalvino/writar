@@ -1,0 +1,27 @@
+= heading "Pricing Guide"
+.row
+  .col-md-12
+    .portlet
+      .portlet-header
+        %h3
+          %i.fa.fa-map-signs
+          Pricing Guide
+      / /.portlet-header
+      .portlet-content
+        .row
+          .col-md-12
+            %table.table.table-hover
+              %caption Our Recommended Prices
+              %thead
+                %tr
+                  %th #
+                  %th No. of Pages
+                  %th Recommended Price
+              %tbody
+                - pricing_table_data.each_with_index do |row, index|
+                  %tr
+                    %th{:scope => "row"}= index += 1
+                    %td= row[0]
+                    %td= number_to_currency(row[1])
+        / /.row
+      / /.portlet-content

@@ -1,0 +1,38 @@
+= title "Change Password"
+%section.content-full.bg-color-2
+  = render 'shared/header'
+  .container
+    .forms-only
+      %h1= t("sitename")
+      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+        = errors_for(resource)
+        = f.hidden_field :reset_password_token
+        %fieldset
+          %h2 Change your password
+          %p Type in your new password and confirm it.
+          .row
+            .form-group.col-sm-6
+              %label{:for => "password"}
+                Your password:
+                %span *
+                - if @minimum_password_length
+                  %em
+                    (#{@minimum_password_length} characters minimum)
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-key
+                = f.password_field :password, class: "form-control",autofocus: true,  autocomplete: "off", placeholder: "Your password:", required: true
+            .form-group.col-sm-6
+              %label{:for => "password2"}
+                Confirm new password:
+                %span *
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-key
+                = f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm new password:", autocomplete: "off", required: true
+          .pull-left
+            = button_tag(:class => "btn", :type => "submit") do
+              %i.fa.fa-wrench
+              Change my password
+    .text-center{:style => "margin-top: 30px;"}
+      = render "devise/shared/links"

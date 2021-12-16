@@ -1,0 +1,63 @@
+- heading "Questions"
+
+.wrapper.wrapper-content.animated.fadeInRight
+  = render 'shared/analytics_widgets', klass: Question, records_today: @questions_today, records_this_week: @questions_this_week,
+  records_this_month: @questions_this_month, records_this_year: @questions_this_year
+
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Questions
+          .pull-right
+            .btn-group
+              %button.btn.btn-xs.btn-white.filter-questions.active{ type:  "button", data: { source: admin_questions_url(format: "json") } } All
+              - Question.statuses.keys.each do |key|
+                %button.btn.btn-xs.btn-white.filter-questions{ type: "button", data: { source: admin_questions_url(status: key, format: "json") } }= key.titleize
+
+              %button.btn.btn-white.btn-xs.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                %span.caret
+                %span.sr-only Toggle Dropdown
+              %ul.dropdown-menu
+                %li
+                  = link_to new_admin_question_path do
+                    %i.fa.fa-plus-circle
+                    Add Question
+                %li
+                  = link_to import_admin_questions_path do
+                    %i.fa.fa-cloud-download
+                    Import from Google Sheet
+                %li
+                  = link_to remove_duplicates_admin_questions_path do
+                    %i.fa.fa-times
+                    Remove Duplicates
+
+
+        .ibox-content
+          %table#questions.table{"data-source" => "#{admin_questions_path(format: "json")}"}
+            %thead
+              %tr
+                %th Title
+                %th Status
+                %th Created At
+                %th Actions
+            %tbody
+
+          .row
+            .col-md-4.col-md-offset-4
+              .input-group.input-group-sm
+                %input#skip2page.form-control{:placeholder => "Skip to page", :type => "text"}/
+                %span.input-group-btn
+                  %button.btn.btn-default#qskip{:type => "button"} Skip!
+  //input-group
+
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Analytics
+          .ibox-tools
+        .ibox-content
+          #questions-chart{"data-url" => admin_question_statuses_path}
+
+

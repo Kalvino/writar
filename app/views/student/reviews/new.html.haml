@@ -1,0 +1,12 @@
+- heading "Review Your Recent Order"
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .row
+      .col-lg-12
+        .ibox.float-e-margins
+          .ibox-title
+            %h5 Review Order
+            .ibox-tools
+          .ibox-content
+            = render 'form', order: @order, review: @review

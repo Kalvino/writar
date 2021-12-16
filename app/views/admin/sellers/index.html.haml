@@ -1,0 +1,26 @@
+- heading "Sellers"
+.wrapper.wrapper-content.animated.fadeInRight
+  = render 'shared/analytics_widgets', klass: Seller, records_today: @sellers_today, records_this_week: @sellers_this_week,
+  records_this_month: @sellers_this_month, records_this_year: @sellers_this_year
+
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Sellers
+          .ibox-tools
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+        .ibox-content
+          %table#users.table{"data-source" => "#{admin_sellers_path(format: "json")}"}
+            %thead
+              %tr
+                %th First Name
+                %th Last Name
+                %th Email
+                %th Papers
+                %th Joined
+                %th.text-right Actions
+            %tbody

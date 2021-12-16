@@ -1,0 +1,23 @@
+ 
+%p
+  Hello
+  %b
+    = @seller.first_name
+    \!
+%p
+  We are more than excited to let you know that your paper
+  %b= @paper.title
+  has been purchased at our marketplace
+%p
+  Paper Title: #{link_to @paper.title, marketplace_essay_url(@paper)}
+  %br/
+  You Earn: #{number_to_currency(@earnings)}
+  %br/
+  Current Bank Balance: #{number_to_currency(@transaction.balance_after)}
+%p
+  = link_to "Upload More Papers", new_marketplace_essay_url
+  to increase your chances of selling and earn more!
+%p
+  Cheerfully yours,
+  %br/
+  = t("sitename")

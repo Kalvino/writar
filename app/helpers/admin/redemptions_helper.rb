@@ -1,0 +1,2 @@
+module Admin::RedemptionsHelper
+end

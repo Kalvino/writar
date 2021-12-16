@@ -1,0 +1,31 @@
+= title @category.title
+
+- content_for :meta_tags do
+  %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %meta{:content => "#{@category.meta_description}", :name => "description"}/
+
+%section#blog.content.bg-color-2.right-sidebar
+  .container
+    .row
+      / BLOG CONTENT - START
+      .col-md-7.col-lg-8.blog-content
+        = @category.content.html_safe
+
+        .m-t-30
+        = render 'shared/order_now_widget', revision_prompt: false, search_prompt: false, question_prompt: false
+        / PAGINATION - END
+      / BLOG CONTENT - END
+      .col-md-5.col-lg-4.blog-sidebar
+        .box
+          %h3 Related Content
+          %ul.list-unstyled
+            - @category.posts.each do |post|
+              %li
+                = link_to category_post_path(post.category.name, post), title: "#{post.title}" do
+                  %i.fa.fa-angle-double-right
+                  = post.title
+        = render 'shared/vertical_order_widgets'
+        .box
+          .box
+            %h3 Like Us
+            = render 'shared/fb_likebox'

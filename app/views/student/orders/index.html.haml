@@ -1,0 +1,25 @@
+- heading "My Orders"
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 My Orders
+          .ibox-tools
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+        .ibox-content
+          %table#student-orders.table{"data-source" => "#{student_orders_path(format: "json")}", "data-student-id" => "#{current_student.id}"}
+            %thead
+              %tr
+                %th Order ID
+                %th Topic
+                %th Ordered
+                %th Status
+                %th Due On
+                %th
+            %tbody
+

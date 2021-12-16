@@ -1,0 +1,8 @@
+- if @message.errors.any?
+  alert("#{@message.errors.full_messages.join(",")}")
+- else
+  $('#new-message').before('#{j render @message }');
+
+$('.send-message').removeClass("disabled").val("Send Message");
+$('#message_content').prop('readonly',false);
+$('form#new_message')[0].reset();

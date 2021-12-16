@@ -1,0 +1,10 @@
+// Place all the styles related to the admin/questions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.pull-right .pager{
+  margin-top: 0px;
+}
+
+.pull-right .pager li:first-child {
+  padding-right: 10px;
+}

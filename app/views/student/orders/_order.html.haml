@@ -1,0 +1,9 @@
+%tr
+  %td= link_to "##{order.uid}", [:student, order]
+  %td= link_to(truncate(order.topic.titleize, length: 45), [:student, order], title: order.topic, data: { toggle: "tooltip", placement: "right"})
+  %td= order.created_at.strftime("%d %b %Y")
+  %td= label_for_order(order).html_safe
+  %td= order.due_at.strftime("%d %b %Y at %I:%M%p")
+  %td
+    .btn-group
+      = link_to "<i class='fa fa-eye'></i> View".html_safe, [:student, order], class: "btn-default btn-white btn btn-xs"

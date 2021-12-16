@@ -1,0 +1,167 @@
+- heading @seller.name.upcase
+.wrapper.wrapper-content.animated.fadeInRight
+  .row.m-b-lg.m-t-lg
+    .col-md-6
+      .profile-image
+        = gravator_for(@seller.email, 96, "circle-border m-b-md")
+      .profile-info
+        %div
+          %div
+            %h2.no-margins
+              = @seller.name.upcase
+            %h4
+              Timezone: #{@seller.timezone}
+            %small
+              = bio(@seller)
+    .col-md-3
+      %table.table.small.m-b-xs
+        %tbody
+          %tr
+            %td
+              %strong= @seller.essays_count
+              Papers
+            %td
+              %strong= @seller.purchases.count
+              Purchases
+          %tr
+            %td
+              %strong= @pending_essays.count
+              Unpublished
+            %td
+              %strong= @published_essays.count
+              Published
+          %tr
+            %td
+              %strong= number_to_currency(@seller.balance)
+              Pending
+            %td
+              %strong= number_to_currency(@seller.sales)
+              Sales
+    .col-md-3
+      %small Uploads last 7 days
+      %h2.no-margins= @uploads.count
+      #seller-uploads{"data-upload-count" => "#{uploads_per_day(@uploads)}"}
+        %canvas{:height => "50", :style => "display: inline-block; width: 228px; height: 50px; vertical-align: top;", :width => "228"}
+  .row
+    .col-md-12
+      .tabs-container
+        %ul.nav.nav-tabs
+          %li.active
+            %a{"aria-expanded" => "true", "data-toggle" => "tab", :href => "#tab-1"} Papers
+          %li
+            %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab-2"} Transactions
+          %li
+            %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab-3"} Payment History
+          %li
+            %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab-4"} Seller Details
+        .tab-content
+          #tab-1.tab-pane.active
+            .panel-body
+              %p
+                %strong
+                  = @seller.first_name.titleize
+                  's Papers
+                - if @seller.essays.count > 0 && can?( :take_ownership, @seller )
+                  %span.pull-right= link_to "<i class='fa fa-exchange'></i> Take Ownership".html_safe, admin_seller_transfer_ownership_path(@seller), class: "btn btn-xs btn-danger", id: "take-ownership"
+              %br/
+              %table#seller-essays.table.table-striped.table-hover.table-highlight{"data-seller-id" => "#{encrypt(@seller.id)}", "data-source" => "#{admin_essays_url(format: "json")}", :style => "width: 100%"}
+                %thead
+                  %tr
+                    %th Title
+                    %th Price
+                    %th Page Count
+                    %th Downloads
+                    %th Status
+                    %th Uploaded
+                    %th Seller
+                    %th Actions
+                %tbody
+          #tab-2.tab-pane
+            .panel-body
+              %strong
+                = @seller.first_name.titleize
+                's Transactions
+              %p
+                %br/
+              %table#seller-transactions.table.table-striped.table-hover.table-highlight{"data-seller-id" => "#{encrypt(@seller.id)}", "data-source" => "#{admin_transactions_path(format: "json")}", :style => "width: 100%"}
+                %thead
+                  %tr
+                    %th Date
+                    %th Type
+                    %th Amount
+                    %th Bal Before
+                    %th Bal After
+                    %th Description
+                    %th Ref ID
+                %tbody
+          #tab-3.tab-pane
+            .panel-body
+              %strong
+                = @seller.first_name.titleize
+                's Payment History
+              %p
+                %br/
+              %table#seller-withdrawals.table.table-striped.table-hover.table-highlight{"data-seller-id" => "#{encrypt(@seller.id)}", "data-source" => "#{admin_withdrawals_path(format: "json")}", :style => "width: 100%"}
+                %thead
+                  %tr
+                    %th Date
+                    %th User
+                    %th Amount
+                %tbody
+          #tab-4.tab-pane
+            .panel-body
+              %strong
+                = @seller.first_name.titleize
+                's Details
+              %p
+                %br/
+              %table.table.table-striped.table-bordered.table-hover.table-highlight
+                %tbody
+                  %tr
+                    %th{:scope => "row"} First Name
+                    %td= @seller.first_name.titleize
+                  %tr
+                    %th{:scope => "row"} Last Name
+                    %td= @seller.last_name.titleize
+                  %tr
+                    %th{:scope => "row"} Email
+                    %td= @seller.email
+                  %tr
+                    %th{:scope => "row"} Username
+                    %td= @seller.username
+                  %tr
+                    %th{:scope => "row"} Timezone
+                    %td= @seller.timezone
+                  %tr
+                    %th{:scope => "row"}= "Time in #{@seller.timezone}"
+                    %td= Time.now.in_time_zone(@seller.timezone).strftime("%d %B, %I:%M%p")
+                  %tr
+                    %th{:scope => "row"} Paypal Email
+                    %td= @seller.paypal_email
+                  %tr
+                    %th{:scope => "row"} Bank Balance
+                    %td= number_to_currency @seller.balance
+                  %tr
+                    %th{:scope => "row"} Registration Date
+                    %td= @seller.created_at.strftime("%d %B, %Y at  %I:%M%p")
+                  %tr
+                    %th{:scope => "row"} Confirmed
+                    %td= @seller.confirmed_at.nil? ? "Not Confirmed" :  @seller.confirmed_at.strftime("%d %B, %Y at  %I:%M%p")
+                  %tr
+                    %th{:scope => "row"} Signin count
+                    %td= @seller.sign_in_count
+                  %tr
+                    %th{:scope => "row"} Current signin
+                    %td= @seller.current_sign_in_at.nil? ? "No signin" : @seller.current_sign_in_at.strftime("%d %B, %Y at  %I:%M%p")
+                  %tr
+                    %th{:scope => "row"} Current signin IP
+                    %td= @seller.current_sign_in_ip
+                  %tr
+                    %th{:scope => "row"} Last signin
+                    %td= @seller.last_sign_in_at.nil? ? "No signin" : @seller.last_sign_in_at.strftime("%d %B, %Y at  %I:%M%p")
+                  %tr
+                    %th{:scope => "row"} Last signin IP
+                    %td= @seller.last_sign_in_ip
+                  %tr
+                    %th{:scope => "row"} Reset Password Sent
+                    %td= @seller.reset_password_sent_at.nil? ? "No reset request" : @seller.reset_password_sent_at.strftime("%d %B, %Y at  %I:%M%p")

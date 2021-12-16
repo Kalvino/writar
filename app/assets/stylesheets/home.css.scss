@@ -1,0 +1,43 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.portfolio-item img {
+  border: solid thin #CCCCCC;
+}
+
+.footer .list-unstyled a{
+  color: #555555;
+}
+
+form .alert h3 {
+  color: #ffffff;
+}
+
+.m-r-15{
+  margin-right: 15px;
+}
+
+h4.m-xs{
+  font-weight: 700;
+}
+
+.panel h4.m-xs{
+  font-size: 15px;
+}
+
+.panel h4.m-xs span{
+  padding-top: 5px;
+}
+
+h3.m-xs{
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.spacer {
+  margin-right: 15px;
+  margin-left: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+

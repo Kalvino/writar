@@ -1,0 +1,19 @@
+= title @page.name
+- content_for :meta_tags do
+  %meta{:content => "Learn more about #{t("sitename")}'s #{@page.name}", :name => "description"}/
+%section.breadcrumb-wrapper
+  .container
+    %h2= @page.name
+    %ol.breadcrumb
+      = render_breadcrumbs :tag => :li, :separator => ""
+%section#features.content
+  .container
+    .row
+      .col-md-12
+        .features-content
+          / FEATURES ITEM
+          #features-typography.features-item
+            %h3.features-title
+              %i.fa.fa-info
+              = @page.name
+            = @page.content.gsub("{page_updated_at}", "Updated #{@page.updated_at.strftime("%d %b %Y")}").html_safe

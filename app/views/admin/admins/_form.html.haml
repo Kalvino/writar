@@ -1,0 +1,44 @@
+= form_for [:admin, @admin], html: {class: ""} do |f|
+  = errors_for @admin
+  .row
+    .col-md-6
+      .form-group
+        = f.label :first_name
+        = f.text_field :first_name, class: "form-control"
+    .col-md-6
+      .form-group
+        = f.label :last_name
+        = f.text_field :last_name, class: "form-control"
+  .row
+    %div{:class => "#{current_admin.role.eql?("admin") ? "col-md-4" : "col-md-6"}"}
+      .form-group
+        = f.label :email
+        = f.text_field :email, class: "form-control"
+    - if current_admin.role.eql?("admin")
+      .col-md-4
+        .form-group
+          = f.label :role
+          = f.select :role, options_for_select(Admin.roles, Admin.roles[@admin.role]), {}, class: "form-control"
+    %div{:class => "#{current_admin.role.eql?("admin") ? "col-md-4" : "col-md-6"}"}
+      .form-group
+        = f.label :timezone
+        = f.time_zone_select :timezone, nil, {}, class: "form-control select-2"
+  - if @admin.new_record?
+    .row
+      .col-md-6
+        = f.label :password
+        = f.password_field :password, class: "form-control"
+      .col-md-6
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, class: "form-control"
+  - else
+    - if @admin == current_admin
+      .row
+        .col-md-6
+          = f.label :password
+          = f.password_field :password, class: "form-control"
+        .col-md-6
+          = f.label :password_confirmation
+          = f.password_field :password_confirmation, class: "form-control"
+  %br/
+  = f.submit class: "btn btn-primary"

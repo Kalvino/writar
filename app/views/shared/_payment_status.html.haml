@@ -1,0 +1,11 @@
+- payment_status = order.invoice.payment_status.downcase
+
+%dl.dl-horizontal
+  %dt{ style: ["refunded","pending"].include?(payment_status) ? "width: 140px" : "" } Payment Status:
+  %dd{ style: ["refunded","pending"].include?(payment_status) ? "margin-left: 152px;" : "" }
+    - if payment_status == "completed"
+      %span.label.label-primary Paid
+    - elsif payment_status == "refunded"
+      %span.label.label-danger Refunded
+    - else
+      %span.label.label-warning= payment_status

@@ -1,0 +1,43 @@
+= title "Login to your Account"
+%section.content-full.bg-color-2
+  = render 'shared/header'
+  .container
+    .forms-only
+      %h1 WELCOME BACK
+      = form_for(resource, as: resource_name, url: session_path(resource_name), html: {role: ""}) do |f|
+        %fieldset
+          %h2 SIGN IN
+          .row
+            .col-md-12= render 'shared/flash'
+            .form-group.col-sm-12
+              %label{:for => "email"}
+                Your email:
+                %span *
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-envelope
+                = f.email_field :email, autofocus: true, class: "form-control", placeholder: "Your email: ", required: true
+          .row
+            .form-group.col-sm-12
+              %label{:for => "password"}
+                Your password:
+                %span *
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-key
+                = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Your password: ", required: true
+            .form-group.col-sm-12
+              - if devise_mapping.rememberable?
+                %label
+                  = f.check_box :remember_me
+                  Keep me logged in
+          .pull-left
+            = button_tag(:class => "btn", :type => "submit") do
+              %i.fa.fa-sign-in
+              Log in
+          .pull-right
+            - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+              = link_to "Forgot your password?", new_password_path(resource_name)
+              %br/
+    .text-center{:style => "margin-top: 30px;"}
+      = render "devise/shared/links"

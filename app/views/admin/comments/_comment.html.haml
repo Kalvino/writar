@@ -1,0 +1,9 @@
+.social-feed-box
+  .social-avatar
+    = link_to "#", class: "pull-left" do
+      = admin_gravator_for(comment.email)
+    .media-body
+      = link_to comment.name, "#"
+      %small.text-muted= comment.created_at.strftime("%d/%m/%Y at %I:%M%p")
+  .social-body
+    %p= comment.body

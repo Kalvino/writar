@@ -1,0 +1,20 @@
+.eshop-product
+  .row
+    .col-lg-3.col-md-4.col-xs-5
+      = link_to essay do
+        - if essay.thumbnails.any?
+          = image_tag essay.thumbnails.first.file.url(:blurred), class: "img-responsive", title: essay.title, alt: essay.title, lazy: true
+        - else
+          = image_tag "no-preview-md.jpg", class: "img-responsive", alt: essay.title, title: essay.title, lazy: true
+    .col-lg-9.col-md-8.col-xs-7
+      .eshop-product-body
+        .product-tags
+          %span.label.label-info= link_to essay.category.name, category_essays_path(essay.category)
+          %span.label.label-danger= pluralize(essay.page_count, "Page")
+        %h3= link_to essay.title.titleize, essay
+        %p= truncate strip_tags($coder.decode essay.preview.gsub("&nbsp;","")), length: 300
+        .clearfix
+          .product-price.pull-left
+            %span.new-price= number_to_currency essay.price
+          .pull-right
+            = link_to "View Paper", essay, class: "btn btn-primary btn-sm", style: "color: #ffffff"

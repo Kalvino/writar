@@ -1,0 +1,27 @@
+%p
+  %b>
+    Hi #{@purchase.first_name},
+%p Thank you for your purchase. Attached is the paper you just purchased.
+%p
+  Title: #{@essay.title}
+  %br/
+  Transaction ID: #{@purchase.txn_id}
+  %br/
+  Payment Date: #{@purchase.created_at.strftime("%a, %d %B at %I:%M%p")} UTC
+
+%p
+  Did you know we also offer affordable high quality custom written papers? Every paper produced by our writers is unique,
+  plagiarism free and absolutely authentic. It is created from scratch to meet your requirements and academic needs.
+
+%p
+  =link_to "Make Order Now", new_order_url(utm_source: "send_paper_email", utm_medium: "email", utm_campaign: "make_order", utm_content: "email_link")
+  and qualify for a 15% discount on your very first order.
+%p
+  We wish you the best of luck in your academics! Feel free to contact us with any questions or suggestions to improve
+  our service by replying to this email.
+%p
+  PS: #{t("disclaimer")}
+%p
+  Cheerfully yours,
+  %br/
+  = t("sitename")

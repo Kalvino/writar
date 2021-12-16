@@ -1,0 +1,29 @@
+%p Hello #{@student.first_name},
+
+%p
+  First off, we’d like to extend a warm welcome and ‘thank you’ for joining #{t("sitename")}.
+
+%p
+  #{t("sitename")} is a professional research paper, essay, dissertation and thesis writing company designed to serve the
+  needs of college and graduate students through experienced authors and editors. Its very fast,
+  simply #{link_to "complete", new_order_url(utm_source: "welcome_email", utm_medium: "email", utm_campaign: "make_order", utm_content: "email_link") } and submit our short order form.
+
+%p
+  After you pay for your order, we'll assign a qualified writer to handle your assignment and you will then receive
+  from us an email confirming your payment within 20 minutes.
+
+%p
+  In addition, we also offer a #{link_to "marketplace", essays_url } where students and/or tutors can share academic materials with their peers
+  and be rewarded for it. You can browse the papers in our marketplace and use them as a source of ideas / reasoning / inspiration for your own research.
+
+%p
+  Remember, if you need something custom and unique, you can always #{link_to "Make an Order", new_order_url(utm_source: "welcome_email", utm_medium: "email", utm_campaign: "make_order", utm_content: "email_link")} with us.
+  All orders are written from scratch, based on the instructions you provide to ensure it is original and not plagiarized.
+
+%p
+  Have any other questions?, please feel free to shoot us an email at #{ENV["SUPPORT_EMAIL"]}.
+
+%p
+  Best,
+  %br
+  = t("sitename")

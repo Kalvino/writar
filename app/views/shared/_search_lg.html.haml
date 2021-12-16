@@ -1,0 +1,9 @@
+= form_tag essays_path, method: :get do
+  %fieldset
+    .form-group.nospace
+      .input-group
+        = text_field_tag :query, params[:query], class: "form-control", placeholder: "Essays, Thesis, Term Papers etc", required: true
+        %span.input-group-btn
+          = button_tag(type: 'submit', class: "btn btn-primary", name: nil) do
+            %i.fa.fa-search
+            Search

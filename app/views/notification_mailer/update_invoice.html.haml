@@ -1,0 +1,27 @@
+%p
+  Hello
+  %b= @student.first_name
+%p
+  A quote for your order ##{@order.uid} has been updated.
+%p
+  Paper Topic: #{@order.topic}
+  %br
+    Quoted Amount: #{number_to_currency(@invoice.amount)}
+
+- if @invoice.message.present?
+  %p
+    %b Additional Message:
+    %br= @invoice.message
+%p
+  = link_to "Click here", student_order_url(@order)
+  to view and pay the amount. Work on your assignment will begin as soon as we receive your payment.
+
+%h4 100% Satisfaction Money Back Guarantees
+%p
+  We want you to be totally delighted with our service and so we are pleased to offer you this powerful guarantee &#x2013; the final
+  document you receive will be plagiarism free, accurate and tailored towards your requirements.
+
+%p Feel free to contact support if you have any problems or questions in general by replying to this email or by using the message section in your order page.
+%p
+  Regards,
+  %br= t("sitename")

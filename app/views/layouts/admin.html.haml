@@ -1,0 +1,33 @@
+!!!
+%html.no-js
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    = render 'shared/favicons'
+    %title= yield :title
+    = stylesheet_link_tag student_signed_in? ? 'student' : 'admin', media: 'all'
+    = csrf_meta_tags
+  %body{ class: student_signed_in? ? "skin-1" : "" }
+    #wrapper
+      = render admin_signed_in? ? 'layouts/admin/sidenav' : 'layouts/student/sidenav'
+      #page-wrapper.gray-bg
+        .row.border-bottom
+          = render admin_signed_in? ? 'layouts/admin/topnav' : 'layouts/student/topnav'
+        .row.wrapper.border-bottom.white-bg.page-heading
+          .col-sm-10
+            %h2= yield :page_heading
+            %ol.breadcrumb
+              = render_breadcrumbs :tag => :li, :separator => ""
+          .col-sm-2
+            .title-action
+              = yield :page_action
+        .row
+          = render 'shared/flash'
+        = yield
+        = render admin_signed_in? ? 'layouts/admin/footer' : 'layouts/student/footer'
+    / Mainly scripts
+    = javascript_include_tag student_signed_in? ? 'student' : 'admin'
+    = render 'shared/tawk'
+    = render 'shared/hotjar' if student_signed_in? && Rails.env == "production"
+  %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}/

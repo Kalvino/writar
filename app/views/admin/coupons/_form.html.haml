@@ -1,0 +1,23 @@
+= form_for [:admin, @coupon], html: { role: "form", class: "form-horizontal" } do |f|
+  = errors_for @coupon
+
+  .form-group
+    = f.label :discount_code, class: "col-md-2 control-label"
+    .col-md-8
+      = f.text_field :code, class: "form-control"
+  .form-group
+    = f.label :amount, class: "col-md-2 control-label"
+    .col-md-8
+      = f.number_field :amount, class: "form-control"
+  .form-group
+    = f.label :description, class: "col-md-2 control-label"
+    .col-md-8
+      = f.text_area :description, class: "form-control"
+  .form-group
+    = f.label :type, class: "col-md-2 control-label"
+    .col-md-8
+      = f.select :coupon_type, options_for_coupon_type, {},  class: "form-control"
+
+  .form-group
+    .col-md-offset-2.col-md-8
+      = f.submit class: "btn btn-primary submit-btn", data: { loading_text: "Please Wait..." }

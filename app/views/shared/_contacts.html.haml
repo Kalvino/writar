@@ -1,0 +1,5 @@
+%ul.list-unstyled.contact-address
+  - if current_page?(contact_path)
+    / <li>2nd Floor Jooi Center, 843 Kikuyu, Nairobi, Kenya</li>
+  %li= link_to ENV["SUPPORT_EMAIL"], "mailto:#{ENV["SUPPORT_EMAIL"]}"
+  %li= link_to ENV["HOST"], root_path

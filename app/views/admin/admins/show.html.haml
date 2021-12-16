@@ -1,0 +1,126 @@
+- heading @admin.name.upcase
+.wrapper.wrapper-content.animated.fadeInRight
+  .row.m-b-lg.m-t-lg
+    .col-md-5
+      .profile-image
+        = gravator_for(@admin.email, 96, "circle-border m-b-md")
+      .profile-info
+        %div
+          %div
+            %h2.no-margins
+              = @admin.name.upcase
+            %h4
+              Role: #{@admin.role.titleize}
+
+    .col-md-4
+      %table.table.small.m-b-xs
+        %tbody
+          %tr
+            %td
+              %strong= number_with_delimiter(@papers_today)
+              Papers Today
+            %td
+              %strong= number_with_delimiter(@papers_this_week)
+              Papers this week
+          %tr
+            %td
+              %strong= number_with_delimiter(@papers_this_month)
+              Papers this month
+            %td
+              %strong= number_with_delimiter(@papers_this_year)
+              Papers this year
+          %tr
+            %td
+              %strong= number_with_delimiter(@admin.approved_questions.current_month.count)
+              Questions approved this month
+            %td
+              %strong= number_to_currency(@admin.balance)
+              Balance
+    .col-md-3
+      %small Uploads last week
+      %h2.no-margins= @papers_last_week.count
+      #seller-uploads{"data-upload-count" => "#{uploads_per_day(@papers_last_week)}"}
+        %canvas{:height => "50", :style => "display: inline-block; width: 228px; height: 50px; vertical-align: top;", :width => "228"}
+  .row
+    .col-md-12
+      .tabs-container
+        %ul.nav.nav-tabs
+          %li.active
+            %a{"aria-expanded" => "true", "data-toggle" => "tab", :href => "#tab-1"} Papers
+          %li
+            %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab-2"} Admin Details
+          - if can? :update, @admin
+            %li
+              %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab-3"} Update Profile
+        .tab-content
+          #tab-1.tab-pane.active
+            .panel-body
+              %strong
+                = @admin.first_name.titleize
+                's Papers
+              %p
+                %br/
+              %table#admin-essays.table.table-striped.table-hover.table-highlight{"data-admin-id" => "#{encrypt(@admin.id)}", "data-source" => "#{admin_essays_url(format: "json")}", :style => "width: 100%"}
+                %thead
+                  %tr
+                    %th Title
+                    %th Price
+                    %th Page Count
+                    %th Downloads
+                    %th Status
+                    %th Uploaded
+                    %th Seller
+                    %th Actions
+                %tbody
+          #tab-2.tab-pane
+            .panel-body
+              %strong
+                = @admin.first_name.titleize
+                's Details
+              %p
+                %br/
+              %table.table.table-striped.table-bordered.table-hover.table-highlight
+                %tbody
+                  %tr
+                    %th{:scope => "row"} First Name
+                    %td= @admin.first_name.titleize
+                  %tr
+                    %th{:scope => "row"} Last Name
+                    %td= @admin.last_name.titleize
+                  %tr
+                    %th{:scope => "row"} Email
+                    %td= @admin.email
+                  %tr
+                    %th{:scope => "row"} Role
+                    %td= @admin.role
+                  %tr
+                    %th{:scope => "row"} Timezone
+                    %td= @admin.timezone
+                  %tr
+                    %th{:scope => "row"} Bank Balance
+                    %td= number_to_currency @admin.balance
+                  %tr
+                    %th{:scope => "row"} Registration Date
+                    %td= @admin.created_at.strftime("%d %B, %Y at  %I:%M%p")
+                  %tr
+                    %th{:scope => "row"} Signin count
+                    %td= @admin.sign_in_count
+                  %tr
+                    %th{:scope => "row"} Current signin
+                    %td= @admin.current_sign_in_at.nil? ? "No signin" : @admin.current_sign_in_at.strftime("%d %B, %Y at  %I:%M%p")
+                  %tr
+                    %th{:scope => "row"} Current signin IP
+                    %td= @admin.current_sign_in_ip
+                  %tr
+                    %th{:scope => "row"} Last signin
+                    %td= @admin.last_sign_in_at.nil? ? "No signin" : @admin.last_sign_in_at.strftime("%d %B, %Y at  %I:%M%p")
+                  %tr
+                    %th{:scope => "row"} Last signin IP
+                    %td= @admin.last_sign_in_ip
+                  %tr
+                    %th{:scope => "row"} Reset Password Sent
+                    %td= @admin.reset_password_sent_at.nil? ? "No reset request" : @admin.reset_password_sent_at.strftime("%d %B, %Y at  %I:%M%p")
+          - if can? :update, @admin
+            #tab-3.tab-pane
+              .panel-body
+                = render 'form'

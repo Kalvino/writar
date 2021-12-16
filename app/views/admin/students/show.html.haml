@@ -1,0 +1,145 @@
+- heading @student.name.titleize
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row.m-b-lg.m-t-lg
+    .col-md-5
+      .profile-image
+        = gravatar_for(@student.email, 96, "circle-border m-b-md")
+      .profile-info
+        %div
+          %div
+            %h2.no-margins
+              = @student.name.upcase
+            %h4
+              Timezone: #{@student.timezone}
+              %span.user-time{ data: {timezone: @student.timezone } }
+            %small
+              = bio(@student)
+    .col-md-4
+      %table.table.small.m-b-xs
+        %tbody
+          %tr
+            %td
+              %strong= @student.orders.count
+              Total Orders
+            %td
+              %strong= @student.orders.pending_quote.count
+              Orders pending quote
+          %tr
+            %td
+              %strong= @student.orders.pending_payment.count
+              Orders pending payment
+            %td
+              %strong= @student.orders.in_progress.count
+              Orders in progress
+          %tr
+            %td
+              %strong= @student.orders.completed.count
+              Orders Completed
+            %td
+              %strong= @student.orders.cancelled.count
+              Orders Cancelled
+    .col-md-3
+      %small Orders past 30 days
+      %h2.no-margins= @student.orders.past_30_days.count
+      #sparkline{"data-items" => "#{orders_per_day(@student.orders.past_30_days)}"}
+        %canvas{:height => "50", :style => "display: inline-block; width: 228px; height: 50px; vertical-align: top;", :width => "228"}
+  .row
+    .col-md-12
+      .tabs-container
+        %ul.nav.nav-tabs
+          %li.active
+            %a{"aria-expanded" => "true", "data-toggle" => "tab", :href => "#tab-1"} Orders
+          %li
+            %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab-2"} User Details
+          %li
+            %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab-3"} Redemptions
+        .tab-content
+          #tab-1.tab-pane.active
+            .panel-body
+              %p
+                %strong
+                  = @student.first_name.titleize
+                  's Orders
+              %br/
+              %table#student-orders.table.table-striped.table-hover.table-highlight{"data-source" => "#{admin_orders_path(student_id: @student.id, is_admin: "true", format: "json")}"}
+                %thead
+                  %tr
+                    %th Order ID
+                    %th Topic
+                    %th Created At
+                    %th Status
+                    %th Due On
+                    %th
+                %tbody
+          #tab-2.tab-pane
+            .panel-body
+              %strong
+                = @student.first_name.titleize
+                's Details
+              %p
+                %br/
+              %table.table.table-striped.table-bordered.table-hover.table-highlight
+                %tbody
+                  %tr
+                    %th{:scope => "row"} Name
+                    %td= @student.name
+                  %tr
+                    %th{:scope => "row"} Email
+                    %td= @student.email
+                  %tr
+                    %th{:scope => "row"} Country
+                    %td= ISO3166::Country.new(@student.country).name
+                  %tr
+                    %th{:scope => "row"} Timezone
+                    %td= @student.timezone
+                  %tr
+                    %th{:scope => "row"}= "Time in #{@student.timezone}"
+                    %td= Time.now.in_time_zone(@student.timezone).strftime("%d %B, %I:%M%p")
+                  %tr
+                    %th{:scope => "row"} Registration Date
+                    %td= @student.created_at.strftime("%d %B, %Y at  %I:%M%p")
+                  -#%tr
+                  -#  %th{:scope => "row"} Reedemed Discount
+                  -#  %td= @student.discount_redeemed.to_s.titleize
+                  %tr
+                    %th{:scope => "row"} Signin count
+                    %td= @student.sign_in_count
+                  %tr
+                    %th{:scope => "row"} Current signin
+                    %td= @student.current_sign_in_at.nil? ? "No signin" : @student.current_sign_in_at.strftime("%d %B, %Y at  %I:%M%p")
+                  %tr
+                    %th{:scope => "row"} Current signin IP
+                    %td= @student.current_sign_in_ip
+                  %tr
+                    %th{:scope => "row"} Last signin
+                    %td= @student.last_sign_in_at.nil? ? "No signin" : @student.last_sign_in_at.strftime("%d %B, %Y at  %I:%M%p")
+                  %tr
+                    %th{:scope => "row"} Last signin IP
+                    %td= @student.last_sign_in_ip
+                  %tr
+                    %th{:scope => "row"} Reset Password Sent
+                    %td= @student.reset_password_sent_at.nil? ? "No reset request" : @student.reset_password_sent_at.strftime("%d %B, %Y at  %I:%M%p")
+
+          #tab-3.tab-pane
+            .panel-body
+              %p
+                %strong
+                  = @student.first_name.titleize
+                  's Redemptions
+              %br/
+              %table.table.table-hover.table-highlight.dataTable
+                %thead
+                  %tr
+                    %th Order
+                    %th Code
+                    %th Description
+                    %th Date
+                %tbody
+                  - @student.redemptions.each do |redemption|
+                    %tr
+                      %td= link_to "##{redemption.order.uid}", [:admin, redemption.order]
+                      %td= link_to redemption.coupon.code, [:admin, redemption.coupon]
+                      %td= redemption.description
+                      %td= redemption.created_at.strftime("%d %B, %Y")
+

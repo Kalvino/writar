@@ -1,0 +1,8 @@
+.media
+  .media-body
+    %h4.media-heading= link_to page.name, [:admin, page]
+    %p= truncate strip_tags(page.content.gsub("{page_updated_at}","").gsub("","")), length: 1000
+    .btn-group{"aria-label" => "", :role => "group"}
+      = link_to "<i class='fa fa-eye'></i> View".html_safe, [:admin, page], class: "btn btn-white btn-xs" if can? :read, page
+      = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, edit_admin_page_path(page), class: "btn btn-white btn-xs" if can? :update, page
+      = link_to "<i class='fa fa-trash'></i> Delete".html_safe, admin_page_path(page), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-danger btn-xs" if can? :destroy, page

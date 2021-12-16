@@ -1,0 +1,31 @@
+= title "Frequently Asked Questions"
+
+- content_for :meta_tags do
+  %meta{:content => "free essays, research papers and term papers", :name => "description"}/
+
+%section.breadcrumb-wrapper
+  .container
+    %h2 FAQs
+    %ol.breadcrumb
+      = render_breadcrumbs :tag => :li, :separator => ""
+
+.row.paper-flash= render 'shared/flash'
+
+%section#faq.content.bg-color-2
+  .container
+    .row
+      .col-sm-9
+        %h2 Frequently Asked Questions
+        %p
+          The questions and answers below will provide you with a better understanding of our service. We love to receive
+          email! Please feel free to reach out if you have any questions.
+
+        #accordion.panel-group
+          = render @faqs
+
+        %p
+          Did you have a custom question you need to ask?
+          %b= link_to "Contact Us", contact_path, class: "open-chat"
+
+      .col-sm-3
+        = render 'shared/vertical_order_widgets'

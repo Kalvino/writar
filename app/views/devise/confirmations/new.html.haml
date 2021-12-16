@@ -1,0 +1,27 @@
+= title "Resend Confirmation Instructions"
+%section.content-full.bg-color-2
+  = render 'shared/header'
+  .container
+    .forms-only
+      %h1= t("sitename")
+      = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+        = errors_for(resource)
+        %fieldset
+          %h2 Resend confirmation instructions
+          %p If it happened you din't get your email confirmation instructions. Please fill in the email address you used to signup and we'll re-send the instructions for you
+          .row
+            .col-md-12= render 'shared/flash'
+            .form-group.col-sm-12
+              %label{:for => "email"}
+                Your email:
+                %span *
+              .input-group
+                %span.input-group-addon
+                  %i.fa.fa-envelope
+                = f.email_field :email, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "form-control", placeholder: "Your email: ", required: true
+          .pull-left
+            = button_tag(:class => "btn", :type => "submit") do
+              %i.fa.fa-paper-plane
+              Resend confirmation instructions
+    .text-center{:style => "margin-top: 30px;"}
+      = render "devise/shared/links"

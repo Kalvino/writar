@@ -1,0 +1,8 @@
+= form_for [:student, order, review], url: student_order_reviews_path(order) do |f|
+  = errors_for review
+
+  .form-group
+    = f.label :message
+    = f.text_area :content, class: "form-control", rows: 10, placeholder: "Tell us your experience placing an order with us"
+
+  = f.submit class: "btn btn-primary btn-block"

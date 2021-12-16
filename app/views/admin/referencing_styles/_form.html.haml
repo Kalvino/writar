@@ -1,0 +1,6 @@
+= form_for [:admin, @style], html: {class: "form-inline"} do |f|
+  = errors_for @style
+  .form-group
+    %label.sr-only{:for => "exampleInputEmail2"} Name
+    = f.text_field :name, placeholder: "Name", class: "form-control"
+  = f.submit class: "btn btn-white"

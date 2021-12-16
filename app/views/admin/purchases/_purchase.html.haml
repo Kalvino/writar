@@ -1,0 +1,7 @@
+%tr
+  %td= purchase.payer_name
+  %td= purchase.payer_email
+  %td= link_to truncate(purchase.essay.title, length: 20), [:admin, purchase.essay]
+  %td= purchase.payment_status
+  %td= purchase.payment_date.nil? ? "-" : purchase.payment_date.strftime("%d/%m/%Y - %I:%M%p")
+  %td= link_to "<i class='fa fa-eye'></i> View".html_safe, admin_purchase_path(purchase), class: "btn-white btn btn-xs"

@@ -1,0 +1,30 @@
+- heading "Writers"
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Writers
+          .ibox-tools
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %i.fa.fa-wrench
+            %ul.dropdown-menu.dropdown-user
+              %li
+                = link_to "Add Writer", new_admin_writer_path
+        .ibox-content
+          - if @writers.any?
+            %table.table
+              %thead
+                %tr
+                  %th First Name
+                  %th Last Name
+                  %th Email
+                  %th Phone
+                  %th Orders
+                  %th Actions
+              %tbody
+                = render @writers
+          - else
+            %p No writers found.
+

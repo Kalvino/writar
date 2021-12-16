@@ -1,0 +1,128 @@
+- heading @writer.name
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row.m-b-lg.m-t-lg
+    .col-md-5
+      .profile-image
+        = gravatar_for(@writer.email, 96, "circle-border m-b-md")
+      .profile-info
+        %div
+          %div
+            %h2.no-margins
+              = @writer.name.upcase
+            %h4
+              Rate: #{number_to_currency(@writer.rate_per_page)} / page
+            %small
+              = bio(@writer, false)
+    .col-md-4
+      %table.table.small.m-b-xs
+        %tbody
+          %tr
+            %td
+              %strong= @writer.orders_count
+              Total Orders
+            %td
+              %strong= @writer.orders.cancelled.count
+              Orders Cancelled
+          %tr
+            %td
+              %strong= @writer.orders.in_progress.count
+              Orders in progress
+            %td
+              %strong= @writer.orders.completed.count
+              Orders Completed
+          %tr.text-center
+            %td{ colspan: 2 }
+              Bank Balance:
+              %b #{number_to_currency(@writer.balance)}
+    .col-md-3
+      %small Orders past 30 days
+      %h2.no-margins= @writer.orders.past_30_days.count
+      #sparkline{"data-items" => "#{orders_per_day(@writer.orders.past_30_days)}"}
+        %canvas{:height => "50", :style => "display: inline-block; width: 228px; height: 50px; vertical-align: top;", :width => "228"}
+  .row
+    .col-md-12
+      .tabs-container
+        %ul.nav.nav-tabs
+          %li.active
+            %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab-1"} Orders
+          %li
+            %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab-2"} Transactions
+          %li
+            %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab-3"} Profile Info
+          %li
+            %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab-4"} Update Profile
+        .tab-content
+          #tab-1.tab-pane.active
+            .panel-body
+              %p
+                %strong
+                  = @writer.first_name.titleize
+                  's Orders
+              %br/
+              %table#writer-orders.table.table-striped.table-hover.table-highlight{"data-source" => "#{admin_orders_path(assigned_to_id: @writer.id, is_admin: true, format: "json")}"}
+                %thead
+                  %tr
+                    %th Order ID
+                    %th Topic
+                    %th Created At
+                    %th Status
+                    %th Due On
+                    %th
+                %tbody
+          #tab-2.tab-pane
+            .panel-body
+              %strong
+                = @writer.first_name.titleize
+                's Transactions
+              .pull-right
+                - if @writer.balance > 0
+                  = form_for [:admin,Payout.new] do |f|
+                    = f.hidden_field :user_id, value: @writer.id
+                    = f.submit "Pay #{number_to_currency(@writer.balance)}", class: "btn btn-primary btn-sm"
+                - else
+                  Pay #{number_to_currency(@writer.balance)}
+
+              %p
+                %br/
+                %br/
+              %table#writer-transactions.table.table-striped.table-hover.table-highlight{"data-writer-id" => "#{encrypt(@writer.id)}", "data-source" => "#{admin_transactions_path(format: "json")}", :style => "width: 100%"}
+                %thead
+                  %tr
+                    %th Date
+                    %th Type
+                    %th Amount
+                    %th Bal Before
+                    %th Bal After
+                    %th Description
+                    %th Ref ID
+                %tbody
+          #tab-3.tab-pane
+            .panel-body
+              %strong Profile Details
+              %p
+                %br/
+              %table.table.table-striped.table-bordered.table-hover.table-highlight
+                %tbody
+                  %tr
+                    %th{:scope => "row"} Name
+                    %td= @writer.name
+                  %tr
+                    %th{:scope => "row"} Email
+                    %td= @writer.email
+
+                  %tr
+                    %th{:scope => "row"} Rate per page
+                    %td= number_to_currency(@writer.rate_per_page) + " / page"
+
+                  %tr
+                    %th{:scope => "row"} Phone
+                    %td= @writer.phone
+                  %tr
+                    %th{:scope => "row"} Created On
+                    %td= @writer.created_at.strftime("%d %B, %Y at  %I:%M%p")
+          #tab-4.tab-pane
+            .panel-body
+              = render 'form'
+
+

@@ -1,0 +1,24 @@
+= title t("meta_tags.papers.category.title", category_name: @category.name)
+- content_for :meta_tags do
+  %meta{:content => "#{t("meta_tags.papers.category.description", category_name: @category.name)}", :name => "description"}/
+  = open_graph_tags(t("meta_tags.papers.category.title"), category_essays_url(@category), "website", t("meta_tags.papers.category.description"),image_url("banner.jpg"))
+.search-row-wrapper
+  .container
+    .row.search-row.animated.fadeInUp
+      = render 'shared/search'
+.main-container
+  = render 'shared/breadcrumbs'
+  .container
+    .row
+      .col-sm-12.page-content.col-thin-right
+        .inner-box.category-content
+          %h2.title-2
+            = @category.name
+            Essays
+          .row
+            .col-md-12
+              - if @essays.any?
+                = render @essays
+                = will_paginate @essays, renderer: BootstrapPagination::Rails
+              - else
+                %p No essays were found.

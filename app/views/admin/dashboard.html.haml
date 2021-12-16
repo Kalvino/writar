@@ -1,0 +1,183 @@
+- heading "Dashboard"
+- if cannot? :view_dashboard
+  .wrapper.wrapper-content
+    .middle-box.text-center.animated.fadeInRightBig
+      %h3.font-bold This is page content
+      .error-desc
+        You can create here any grid layout you want. And any variation layout you imagine:) Check out
+        main dashboard and other site. It use many different layout.
+        %br/
+        %a.btn.btn-primary.m-t{:href => "index.html"} Dashboard
+- if can? :view_dashboard
+  .wrapper.wrapper-content
+    .row
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %span.label.label-primary.pull-right Annual
+            %h5 Order Revenue
+          .ibox-content
+            .row
+              .col-md-6
+                %h1.no-margins= number_to_currency(@order_annual_revenue)
+                - change = difference(Invoice, :year, "value")
+                .font-bold.text-navy{  class: change < 0 ? "text-danger" : "" }
+                  = number_to_percentage(change, precision: 0)
+                  %i.fa{ class: change < 0 ? "fa-level-down" : "fa-level-up"}
+                  %small from last year
+              .col-md-6.text-right
+                %h1.no-margins= number_with_delimiter(@orders_this_year)
+                - change = difference(Order, :year, "value")
+                .font-bold.text-navy{  class: change < 0 ? "text-danger" : "" }
+                  = number_to_percentage(change, precision: 0)
+                  %i.fa{ class: change < 0 ? "fa-level-down" : "fa-level-up" }
+                  %small from last year
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %span.label.label-info.pull-right Annual
+            %h5 Paper Sales
+          .ibox-content
+            .row
+              .col-md-6
+                %h1.no-margins= number_to_currency(@sales)
+                - change = difference(Transaction, :year, "value")
+                .font-bold.text-navy{  class: change < 0 ? "text-danger" : "" }
+                  = number_to_percentage(change, precision: 0)
+                  %i.fa{ class: change < 0 ? "fa-level-down" : "fa-level-up"}
+                  %small from last year
+              .col-md-6.text-right
+                %h1.no-margins= number_with_delimiter(@downloads)
+                - change = difference(Purchase, :year, "value")
+                .font-bold.text-navy{  class: change < 0 ? "text-danger" : "" }
+                  = number_to_percentage(change, precision: 0)
+                  %i.fa{ class: change < 0 ? "fa-level-down" : "fa-level-up" }
+                  %small from last year
+      .col-lg-4
+        .ibox.float-e-margins
+          .ibox-title
+            %span.label.label-success.pull-right Annual
+            %h5 Students and Sellers
+          .ibox-content
+            .row
+              .col-md-6
+                %h1.no-margins= number_with_delimiter(@students)
+                - change = difference(Student, :year, "value")
+                .font-bold.text-navy{  class: change < 0 ? "text-danger" : "" }
+                  = number_to_percentage(change, precision: 0)
+                  %i.fa{ class: change < 0 ? "fa-level-down" : "fa-level-up"}
+                  %small from last year
+              .col-md-6.text-right
+                %h1.no-margins= number_with_delimiter(@sellers)
+                - change = difference(Seller, :year, "value")
+                .font-bold.text-navy{  class: change < 0 ? "text-danger" : "" }
+                  = number_to_percentage(change, precision: 0)
+                  %i.fa{ class: change < 0 ? "fa-level-down" : "fa-level-up" }
+                  %small from last year
+    .row
+      .col-lg-12
+        .ibox.float-e-margins
+          .ibox-title
+            %h5 Orders Revenue
+            .pull-right
+              .btn-group
+                - current_year = Date.today.year
+                - (2017..current_year).each do |year|
+                  %button.btn.btn-xs.btn-white.orders_by_year{ class: current_year == year ? "active" : "", type: "button", data: { source:  admin_dashboard_orders_path(year: year) } }= year
+
+          .ibox-content
+            .row
+              .col-lg-9
+                #dashboard-orders{"data-href" => admin_dashboard_orders_path, :style => "height: 400px;"}
+              .col-lg-3
+                %ul.stat-list
+                  - [[:day, @orders_today], [:week, @orders_this_week], [:month, @orders_this_month], [:year, @orders_this_year]].each do |interval|
+                    %li
+                      %h2.no-margins= number_with_delimiter(interval[1])
+                      %small= "Orders #{translate_duration(interval[0])}"
+                      = difference(Order, interval[0]).html_safe
+                      - diff = difference(Order, interval[0], "value")
+                      - width = diff < 0 ? diff *-1 : diff
+                      .progress.progress-mini
+                        .progress-bar{:style => "width: #{width}%;", class: diff < 0 ? "progress-bar-danger" : ""}
+                  %li
+                    %h2.no-margins= number_to_currency(@order_revenue)
+                    %small Revenue this month
+                    = difference(Invoice, :month).html_safe
+                    - diff = difference(Invoice, :month, "value")
+                    - width = diff < 0 ? diff *-1 : diff
+                    .progress.progress-mini
+                      .progress-bar{:style => "width: #{width}%;", class: diff < 0 ? "progress-bar-danger" : ""}
+
+      .col-lg-12
+        .ibox.float-e-margins
+          .ibox-title
+            %h5 Paper Sales
+            .pull-right
+              .btn-group
+                - current_year = Date.today.year
+                - (2016..current_year).each do |year|
+                  %button.btn.btn-xs.btn-white.purchase_by_year{ class: current_year == year ? "active" : "", type: "button", data: { source:  admin_dashboard_purchases_path(year: year) } }= year
+
+          .ibox-content
+            .row
+              .col-lg-12
+                #dashboard-purchases{"data-href" => admin_dashboard_purchases_path, :style => "height: 400px;"}
+    .row
+      .col-lg-12
+        .ibox.float-e-margins
+          .ibox-title
+            %h5 Recent Purchases
+            .ibox-tools
+              %a.collapse-link
+                %i.fa.fa-chevron-up
+              %a.close-link
+                %i.fa.fa-times
+          .ibox-content
+            .row
+              .col-lg-6
+                %table.table.table-hover.margin.bottom
+                  %thead
+                    %tr
+                      %th Name
+                      %th Country
+                      %th Date
+                      %th Amount
+                  %tbody
+                    - @purchases.each do |purchase|
+                      %tr
+                        %td= purchase.payer_name
+                        %td= purchase.country
+                        %td.small= purchase.created_at.strftime("%d %b %Y")
+                        %td= price_for(purchase)
+              .col-lg-6
+                #purchase-heat-map{"data-url" => heat_map_admin_purchases_path, :style => "height: 400px;"}
+    .row
+      .col-lg-12
+        .ibox.float-e-margins
+          .ibox-title
+            %h5 Recent Papers
+            .ibox-tools
+              %a.collapse-link
+                %i.fa.fa-chevron-up
+              %a.close-link
+                %i.fa.fa-times
+          .ibox-content
+            .row
+              .col-lg-6
+                %table.table.table-hover.margin.bottom
+                  %thead
+                    %tr
+                      %th Title
+                      %th Price
+                      %th Status
+                      %th User
+                  %tbody
+                    - @papers.each do |paper|
+                      %tr
+                        %td= link_to truncate(paper.title.titleize, length: 30), [:admin, paper]
+                        %td= number_to_currency(paper.price)
+                        %td= label_for(paper.status)
+                        %td= link_to(paper.owner.first_name.titleize, [:admin, paper.owner])
+              .col-lg-6
+                #papers-chart{"data-url" => admin_paper_statuses_path}

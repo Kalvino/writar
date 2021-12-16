@@ -1,0 +1,65 @@
+%nav#sidebar
+  %ul#main-nav.open-active
+    %li{:class => "#{active_section(:dashboard)}"}
+      = link_to marketplace_dashboard_path do
+        %i.fa.fa-dashboard
+        Dashboard
+    %li{:class => "dropdown #{active_section(:essays)}"}
+      = link_to "javascript:;" do
+        %i.fa.fa-file-text
+        Papers
+        %span.caret
+      %ul.sub-nav
+        %li
+          = link_to marketplace_essays_path do
+            %i.fa.fa-book
+            Papers
+        %li
+          = link_to new_marketplace_essay_path do
+            %i.fa.fa-upload
+            Upload Paper
+        %li
+          = link_to pricing_guide_marketplace_essays_path do
+            %i.fa.fa-map-signs
+            Pricing Guide
+    %li{:class => "dropdown #{active_section(:bank)}"}
+      = link_to "javascript:;" do
+        %i.fa.fa-bank
+        Bank
+        %span.caret
+      %ul.sub-nav
+        %li
+          = link_to marketplace_transactions_path do
+            %i.fa.fa-money
+            Transactions
+        %li
+          = link_to new_marketplace_withdrawal_path do
+            %i.fa.fa-paypal
+            Get Paid
+        %li
+          = link_to marketplace_withdrawals_path do
+            %i.fa.fa-history
+            Payment History
+    %li{:class => "dropdown #{active_section(:profile)}"}
+      = link_to "javascript:;" do
+        %i.fa.fa-tint
+        Profile
+        %span.caret
+      %ul.sub-nav
+        %li
+          = link_to marketplace_seller_path(current_seller) do
+            %i.fa.fa-user
+            My Profile
+        %li
+          = link_to edit_seller_registration_path do
+            %i.fa.fa-cogs
+            Update Profile
+        %li
+          = link_to edit_marketplace_password_path do
+            %i.fa.fa-lock
+            Update Password
+    %li
+      = link_to contact_path,  class: "open-chat" do
+        %i.fa.fa-comments
+        Contact Support
+/ #sidebar

@@ -1,0 +1,7 @@
+%tr
+  %td= category.name
+  %td= category.posts ? category.posts.count : category.essays_count
+  %td
+    .btn-group{:role => "group"}
+      = link_to "<i class='fa fa-eye'></i> View".html_safe, admin_category_path(category), class: "btn-white btn btn-xs" if can? :read, category
+      = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, edit_admin_category_path(category), class: "btn-white btn btn-xs" if can? :update, category

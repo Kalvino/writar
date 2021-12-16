@@ -1,0 +1,9 @@
+= form_for [:admin, order, invoice], url: admin_order_invoices_path(order) do |f|
+  = errors_for invoice
+  .form-group
+    = f.label :amount, "Amount in $"
+    = f.number_field :amount, value: order.cost, class: "form-control", step: 1, placeholder: "e.g. 40"
+  .form-group
+    = f.label :message
+    = f.text_area :message, class: "form-control", rows: 6, placeholder: "Short Message to student"
+  = f.submit class: "btn btn-primary btn-block"

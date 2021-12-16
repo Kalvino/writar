@@ -1,0 +1,14 @@
+%tr
+  %td= link_to truncate(post.title, length: 50), [:admin, post]
+  %td= post.category ? post.category.name : "-"
+  %td
+    - if post.draft
+      %span.label.label-warning False
+    - else
+      %span.label.label-primary True
+  %td= post.created_at.strftime("%d %b %Y")
+  %td
+    .btn-group{"aria-label" => "", :role => "group"}
+      = link_to "<i class='fa fa-eye'></i> View".html_safe, [:admin, post], class: "btn btn-white btn-xs" if can? :read, post
+      = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, edit_admin_post_path(post), class: "btn btn-white btn-xs" if can? :update, post
+      = link_to "<i class='fa fa-trash'></i> Delete".html_safe, admin_post_path(post), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-danger btn-xs" if can? :destroy, post

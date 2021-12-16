@@ -1,0 +1,162 @@
+%nav.navbar-default.navbar-static-side{:role => "navigation"}
+  .sidebar-collapse
+    %ul#side-menu.nav.metismenu
+      %li.nav-header
+        .dropdown.profile-element
+          %span
+            = gravatar_for(current_admin.email, 48, "img-circle")
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            %span.clear
+              %span.block.m-t-xs
+                %strong.font-bold= current_admin.name
+              %span.text-muted.text-xs.block
+                = current_admin.role.titleize
+                %b.caret
+          %ul.dropdown-menu.animated.fadeInRight.m-t-xs
+            %li= link_to "Profile", [:admin, current_admin]
+            %li
+              %a{:href => "#"} Contacts
+            %li
+              %a{:href => "#"} Mailbox
+            %li.divider
+            %li
+              = link_to 'Logout', destroy_admin_session_path, :method => :delete
+        .logo-element
+          PMP+
+      %li{:class => "#{active_section(:dashboard)}"}
+        = link_to admin_dashboard_path do
+          %i.fa.fa-th-large
+          %span.nav-label Dashboard
+      - if can? :read, Admin
+        %li{:class => "#{active_section(:admins)}"}
+          = link_to admin_admins_path do
+            %i.fa.fa-user-secret
+            %span.nav-label Admins
+            %span.fa.arrow
+          %ul.nav.nav-second-level.collapse
+            %li{:class => "#{current_action(:index)}"}= link_to "Show Admins", admin_admins_path
+            - if can? :create, Admin
+              %li{:class => "#{current_action(:new)}"}= link_to "Add Admin", new_admin_admin_path
+      - if can? :read, Writer
+        %li{:class => "#{active_section(:writers)}"}
+          = link_to admin_writers_path do
+            %i.fa.fa-user
+            %span.nav-label Writers
+            %span.fa.arrow
+          %ul.nav.nav-second-level.collapse
+            %li{:class => "#{current_action(:index)}"}= link_to "Show Writers", admin_writers_path
+            - if can? :create, Writer
+              %li{:class => "#{current_action(:new)}"}= link_to "Add Writer", new_admin_writer_path
+      - if can? :read, Post
+        %li{:class => "#{active_section(:posts)}"}
+          = link_to admin_posts_path do
+            %i.fa.fa-newspaper-o
+            %span.nav-label Posts
+            %span.fa.arrow
+          %ul.nav.nav-second-level.collapse
+            %li{:class => "#{current_action(:index)}"}= link_to "Show Posts", admin_posts_path
+            - if can? :create, Post
+              %li{:class => "#{current_action(:new)}"}= link_to "Add Post", new_admin_post_path
+      - if can? :read, Page
+        %li{:class => "#{active_section(:pages)}"}
+          = link_to admin_pages_path do
+            %i.fa.fa-files-o
+            %span.nav-label Pages
+            %span.fa.arrow
+          %ul.nav.nav-second-level.collapse
+            %li{:class => "#{current_action(:index)}"}= link_to "Show Pages", admin_pages_path
+            - if can? :create, Page
+              %li{:class => "#{current_action(:new)}"}= link_to "Add Page", new_admin_page_path
+      - if can? :read, Essay
+        %li{:class => "#{active_section(:essays)}"}
+          = link_to "#" do
+            %i.fa.fa-book
+            %span.nav-label Papers
+            %span.fa.arrow
+          %ul.nav.nav-second-level.collapse
+            %li{:class => "#{current_action(:index)}"}= link_to "List Papers", admin_essays_path
+            - if can? :create, Essay
+              %li{:class => "#{current_action(:new)}"}= link_to "Add Paper", new_admin_essay_path
+      - if can? :read, Question
+        %li{:class => "#{active_section(:questions)}"}
+          = link_to "#" do
+            %i.fa.fa-paper-plane
+            %span.nav-label Questions
+            %span.fa.arrow
+          %ul.nav.nav-second-level.collapse
+            %li{:class => "#{current_action(:index)}"}= link_to "List Questions", admin_questions_path
+            %li{:class => "#{current_action(:new)}"}= link_to "Add Question", new_admin_question_path
+      - if can? :read, Faq
+        %li{:class => "#{active_section(:faqs)}"}
+          = link_to "#" do
+            %i.fa.fa-question-circle
+            %span.nav-label FAQs
+            %span.fa.arrow
+          %ul.nav.nav-second-level.collapse
+            %li{:class => "#{current_action(:index)}"}= link_to "List FAQs", admin_faqs_path
+            %li{:class => "#{current_action(:new)}"}= link_to "Add FAQ", new_admin_faq_path
+      - if can? :read, Category
+        %li{:class => "#{active_section(:categories)}"}
+          = link_to admin_categories_path do
+            %i.fa.fa-sitemap
+            %span.nav-label Categories
+            %span.fa.arrow
+          %ul.nav.nav-second-level.collapse
+            %li{:class => "#{current_action(:index)}"}= link_to "Show Categories", admin_categories_path
+            - if can? :create, Category
+              %li{:class => "#{current_action(:new)}"}= link_to "New Category", new_admin_category_path
+      - if can? :read, Coupon
+        %li{:class => "#{active_section(:coupons)}"}
+          = link_to "#" do
+            %i.fa.fa-gift
+            %span.nav-label Coupons
+            %span.fa.arrow
+          %ul.nav.nav-second-level.collapse
+            %li{:class => "#{current_action(:index)}"}= link_to "List Coupons", admin_coupons_path
+            %li{:class => "#{current_action(:new)}"}= link_to "Add Coupons", new_admin_coupon_path
+
+      - if can? :read, ReferencingStyle
+        %li{:class => "#{active_section(:referencing_styles)}"}
+          = link_to "#" do
+            %i.fa.fa-file-text
+            %span.nav-label Paper Formats
+            %span.fa.arrow
+          %ul.nav.nav-second-level.collapse
+            %li{:class => "#{current_action(:index)}"}= link_to "Show Formats", admin_referencing_styles_path
+            - if can? :create, ReferencingStyle
+              %li{:class => "#{current_action(:new)}"}= link_to "Add Format", new_admin_referencing_style_path
+      - if can? :read, Order
+        %li{:class => "#{active_section(:orders)}"}
+          = link_to admin_orders_path do
+            %i.fa.fa-shopping-basket
+            %span.nav-label Orders
+      - if can? :read, Student
+        %li{:class => "#{active_section(:students)}"}
+          = link_to admin_students_path do
+            %i.fa.fa-graduation-cap
+            %span.nav-label Students
+      - if can? :read, Seller
+        %li{:class => "#{active_section(:sellers)}"}
+          = link_to admin_sellers_path do
+            %i.fa.fa-users
+            %span.nav-label Sellers
+      - if can? :read, Purchase
+        %li{:class => "#{active_section(:purchases)}"}
+          = link_to admin_purchases_path do
+            %i.fa.fa-cart-plus
+            %span.nav-label Purchases
+      - if can? :read, Transaction
+        %li{:class => "#{active_section(:transactions)}"}
+          = link_to admin_transactions_path do
+            %i.fa.fa-money
+            %span.nav-label Transactions
+      - if can? :read, Withdrawal
+        %li{:class => "#{active_section(:withdrawals)}"}
+          = link_to admin_withdrawals_path do
+            %i.fa.fa-dollar
+            %span.nav-label Withdrawals
+      - if current_admin.admin?
+        %li.special_link
+          = link_to sidekiq_web_path, target: "_blank" do
+            %i.fa.fa-external-link
+            %span.nav-label Sidekiq

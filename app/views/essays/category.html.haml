@@ -1,0 +1,43 @@
+= title t("meta_tags.papers.category.title", category_name: @category.name)
+- content_for :meta_tags do
+  %meta{:content => "#{t("meta_tags.papers.category.description", category_name: @category.name)}", :name => "description"}/
+  = open_graph_tags(t("meta_tags.papers.category.title", category_name: @category.name), category_essays_url(@category), "website", t("meta_tags.papers.category.description", category_name: @category.name),image_url("banner.jpg"))
+%section.breadcrumb-wrapper
+  .container
+    %h2
+      = @category.name
+      Papers
+    %ol.breadcrumb
+      = render_breadcrumbs :tag => :li, :separator => ""
+%section.content.content-separator
+  .container
+    %h2 Search our Repository
+    .row
+      .col-md-6.col-md-offset-3
+        = render 'shared/search_lg'
+= render 'shared/flash'
+%section#eshop.content.bg-color-2
+  .container
+    .row.eshop-main.eshop-list
+      / ESHOP SIDEBAR - START
+      .col-md-3.eshop-sidebar
+        %h3 Categories
+        %ul.nav.vertical-nav
+          - @categories.each do |category|
+            %li
+              = link_to  category_essays_path(category), title: "#{category.name} papers" do
+                %i.fa.fa-angle-double-right
+                = category.name
+      .col-md-9.eshop-content
+        - if @essays.any?
+          = render @essays
+        - else
+          .eshop-product
+            .row
+              .col-md-12.text-center{:style => "padding: 30px;font-size: 20px;"}
+                %p
+                  %i.fa.fa-bell
+                  No papers were found in this category
+    .row.eshop-footer
+      .col-md-6.col-md-offset-6.text-right
+        = will_paginate @essays, renderer: BootstrapPagination::Rails

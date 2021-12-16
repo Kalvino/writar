@@ -1,0 +1,28 @@
+#addcomment.comments-form
+  %h2 Leave a comment
+  = form_for [@post, Comment.new] do |f|
+    %fieldset
+      .row
+        .form-group.col-sm-6
+          %label{:for => "name"}
+            Your name:
+            %span *
+          = f.text_field :name, class: "form-control", placeholder: "Your name: ", required: true
+        .form-group.col-sm-6
+          %label{:for => "name"}
+            Your email:
+            %span *
+          = f.email_field :email, class: "form-control", placeholder: "Your email: ", required: true
+      .row
+        .form-group.col-sm-12
+          %label{:for => "message"}
+            Your comment:
+            %span *
+          = f.text_area :body, placeholder: "Your comment: ", class: "form-control m-b-30", required: true
+          = recaptcha_tags
+          = button_tag(type: 'submit', class: "btn btn-primary btn-sm") do
+            %i.fa.fa-paper-plane
+            Submit
+          %span.form-info
+            %span.required *
+            These fields are required

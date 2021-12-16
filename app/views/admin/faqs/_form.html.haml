@@ -1,0 +1,13 @@
+.row
+  = form_for [:admin, @faq], html: {  id: "faq-editor", role: "form" } do |f|
+    .col-md-12
+      = errors_for @faq
+    .col-md-12
+      .form-group
+        = f.label :question
+        = f.text_field :question, class: "form-control"
+      .form-group
+        = f.label :answer
+        = f.text_area :answer, class: "form-control"
+    .col-md-12
+      = f.submit class: "btn btn-sm btn-primary pull-right"
